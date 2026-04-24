@@ -59,9 +59,9 @@ interpret_p(0.03, context = "treatment vs control group")
 
 Most R output gives you numbers. statease gives you **numbers + meaning**.
 Perfect for:
-- 📚 Students learning statistics
-- 🔬 Researchers who want fast readable output
-- 🏫 Educators teaching statistical concepts
+- Students learning statistics
+- Researchers who want fast readable output
+- Educators teaching statistical concepts
 
 ## License
 MIT

@@ -42,6 +42,14 @@ interpret_p(0.03, context = "treatment vs control")
 }
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/DevWebWacky/statease}
+  \item Report bugs at \url{https://github.com/DevWebWacky/statease/issues}
+}
+
+}
 \author{
 Uwakmfon Usen Paul
 }

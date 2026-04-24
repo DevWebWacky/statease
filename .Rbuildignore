@@ -4,3 +4,4 @@
 ^\.claude$
 ^LICENSE\.md$
 ^statease\.Rproj$
+^cran-comments\.md$

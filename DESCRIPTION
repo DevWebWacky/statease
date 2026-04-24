@@ -1,6 +1,6 @@
 Package: statease
 Title: Simplified Statistical Analysis with Plain-English Interpretation
-Version: 0.1.0
+Version: 1.0.0
 Authors@R:
     person("Uwakmfon", "Paul", , "uwakmfon31@gmail.com", role = c("aut", "cre", "cph"))
 Description: It provides functions for descriptive statistics, t-tests, and ANOVA with automatic plain-English interpretation of results.

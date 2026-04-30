@@ -3,7 +3,7 @@ Title: Simplified Statistical Analysis with Plain-English Interpretation
 Version: 1.0.0
 Authors@R:
     person("Uwakmfon", "Paul", , "uwakmfon31@gmail.com", role = c("aut", "cre", "cph"))
-Description: Provides a suite of functions for common statistcal analyses including descriptive statistics,Student's t-tests (one-sample, independent, and paired), and one-way Analyses of Variance (ANOVA).Each of these function automatically interprets results in plain English, reporting effect sizes (Cohen's d, eta-squared), confidence intervals, and p-value interpretations. Post-hoc Tukey HSD tests are automatically applied following significant ANOVA results. A master function automatically detects the appropriate test based on the structure of the input data.
+Description: A toolkit for common statistical analyses including descriptive statistics, Student's t-test (one-sample, independent, and paired), and one-way Analysis of Variance (ANOVA). Each function automatically interprets results in plain English, reporting effect sizes (Cohen's d, eta-squared), confidence intervals, and p-value interpretations. Post-hoc Tukey Honestly Significant Difference (HSD) tests are automatically applied following significant ANOVA results. A master function automatically detects the appropriate test based on the structure of the input data. Methods are based on Cohen, J. (1988) <doi:10.4324/9780203771587>, Tukey, J. W. (1949) <doi:10.2307/3001913>, and Shapiro and Wilk (1965) <doi:10.2307/2333709>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

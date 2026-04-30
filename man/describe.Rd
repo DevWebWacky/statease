@@ -12,11 +12,14 @@ describe(x, var_name = "Variable")
 \item{var_name}{Optional name for the variable (used in the report)}
 }
 \value{
-A printed summary report
+An object of class \code{statease_describe} containing
+descriptive statistics and interpretation. Use \code{print()} to
+display the formatted report.
 }
 \description{
 Descriptive Statistics with Interpretation
 }
 \examples{
-describe(c(23, 45, 12, 67, 34, 89, 56))
+result <- describe(c(23, 45, 12, 67, 34, 89, 56))
+print(result)
 }

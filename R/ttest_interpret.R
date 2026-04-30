@@ -7,28 +7,27 @@
 #' @param conf.level Confidence level. Default 0.95.
 #' @param var_name Optional label for the report. Default "Variable"
 #'
-#' @return A printed t-test report with interpretation
+#' @return An object of class \code{statease_ttest} containing test
+#'   results and interpretation. Use \code{print()} to display the
+#'   formatted report.
 #' @export
 #'
 #' @examples
-#' ttest_interpret(c(23,45,12,67,34), c(19,38,22,51,29))
+#' result <- ttest_interpret(c(23,45,12,67,34), c(19,38,22,51,29))
+#' print(result)
 ttest_interpret <- function(x, y = NULL, mu = 0, paired = FALSE,
                             conf.level = 0.95, var_name = "Variable") {
 
-  # --- Guard clauses ---
   if (!is.numeric(x)) stop("x must be a numeric vector.")
   if (!is.null(y) && !is.numeric(y)) stop("y must be a numeric vector.")
   if (conf.level <= 0 || conf.level >= 1) stop("conf.level must be between 0 and 1.")
   if (length(na.omit(x)) < 2) stop("x must have at least 2 non-missing values.")
 
   x_clean <- na.omit(x)
-
-  # --- Small sample warning ---
   if (length(x_clean) < 10) {
     warning("Sample size in x is small (n < 10). Interpret results with caution.")
   }
 
-  # --- Normality check ---
   normality_note <- NULL
   if (length(x_clean) >= 3 && length(x_clean) <= 5000) {
     sw_x <- shapiro.test(x_clean)
@@ -52,17 +51,15 @@ ttest_interpret <- function(x, y = NULL, mu = 0, paired = FALSE,
     }
   }
 
-  # --- Equal variance check (Levene approximation via F-test) ---
   variance_note <- NULL
   if (!is.null(y) && !paired) {
-    y_clean <- na.omit(y)
-    var_test <- var.test(x_clean, y_clean)
+    y_clean   <- na.omit(y)
+    var_test  <- var.test(x_clean, y_clean)
     if (var_test$p.value < 0.05) {
-      variance_note <- "WARNING: Variances appear unequal (F-test p < .05). Welch correction applied."
+      variance_note <- "WARNING: Variances appear unequal. Welch correction applied."
     }
   }
 
-  # --- Detect test type ---
   if (is.null(y)) {
     test_type  <- "One-Sample T-Test"
     result     <- t.test(x, mu = mu, conf.level = conf.level)
@@ -82,14 +79,12 @@ ttest_interpret <- function(x, y = NULL, mu = 0, paired = FALSE,
                           length(x_clean), length(na.omit(y)))
   }
 
-  # --- Extract values ---
   t_val <- result$statistic
   df    <- result$parameter
   p_val <- result$p.value
   ci    <- result$conf.int
   alpha <- 1 - conf.level
 
-  # --- Cohen's d ---
   if (is.null(y)) {
     d <- (mean(x_clean) - mu) / sd(x_clean)
   } else if (paired) {
@@ -124,28 +119,50 @@ ttest_interpret <- function(x, y = NULL, mu = 0, paired = FALSE,
                          mean(x_clean), mu)
   }
 
-  # --- Print report ---
+  output <- list(
+    test_type      = test_type,
+    var_name       = var_name,
+    group_info     = group_info,
+    t_val          = t_val,
+    df             = df,
+    p_val          = p_val,
+    ci             = ci,
+    conf.level     = conf.level,
+    cohens_d       = d,
+    effect_label   = effect_label,
+    sig_label      = sig_label,
+    direction      = direction,
+    normality_note = normality_note,
+    variance_note  = variance_note
+  )
+
+  class(output) <- "statease_ttest"
+  output
+}
+
+#' @export
+print.statease_ttest <- function(x, ...) {
   cat("\n")
-  cat("- statease T-Test Report -\n")
-  cat(sprintf("  Test         : %s\n", test_type))
-  cat(sprintf("  Variable     : %s\n", var_name))
-  cat(sprintf("  Groups       : %s\n", group_info))
-  cat("-\n")
-  cat(sprintf("  t-statistic  : %.3f\n", t_val))
-  cat(sprintf("  df           : %.1f\n", df))
-  cat(sprintf("  p-value      : %.4f\n", p_val))
+  cat("-- statease T-Test Report ----------------------------------------\n")
+  cat(sprintf("  Test         : %s\n", x$test_type))
+  cat(sprintf("  Variable     : %s\n", x$var_name))
+  cat(sprintf("  Groups       : %s\n", x$group_info))
+  cat("-----------------------------------------------------------------\n")
+  cat(sprintf("  t-statistic  : %.3f\n", x$t_val))
+  cat(sprintf("  df           : %.1f\n", x$df))
+  cat(sprintf("  p-value      : %.4f\n", x$p_val))
   cat(sprintf("  %d%% CI      : [%.3f, %.3f]\n",
-              as.integer(conf.level * 100), ci[1], ci[2]))
-  cat(sprintf("  Cohen's d    : %.3f (%s effect)\n", d, effect_label))
-  cat("-\n")
+              as.integer(x$conf.level * 100), x$ci[1], x$ci[2]))
+  cat(sprintf("  Cohen's d    : %.3f (%s effect)\n", x$cohens_d, x$effect_label))
+  cat("-----------------------------------------------------------------\n")
   cat("  Interpretation:\n")
-  cat(sprintf("  The result is %s.\n", sig_label))
-  cat(sprintf("  %s\n", direction))
-  cat(sprintf("  Effect size is %s (d = %.3f).\n", effect_label, d))
-  cat(sprintf("  %d%% CI suggests the true difference lies between\n",
-              as.integer(conf.level * 100)))
-  cat(sprintf("  %.3f and %.3f.\n", ci[1], ci[2]))
-  if (!is.null(normality_note)) cat(sprintf("\n  %s\n", normality_note))
-  if (!is.null(variance_note)) cat(sprintf("  %s\n", variance_note))
-  cat("-\n\n")
+  cat(sprintf("  The result is %s.\n", x$sig_label))
+  cat(sprintf("  %s\n", x$direction))
+  cat(sprintf("  Effect size is %s (d = %.3f).\n", x$effect_label, x$cohens_d))
+  cat(sprintf("  %d%% CI: true difference lies between %.3f and %.3f.\n",
+              as.integer(x$conf.level * 100), x$ci[1], x$ci[2]))
+  if (!is.null(x$normality_note)) cat(sprintf("\n  %s\n", x$normality_note))
+  if (!is.null(x$variance_note)) cat(sprintf("  %s\n", x$variance_note))
+  cat("-----------------------------------------------------------------\n\n")
+  invisible(x)
 }

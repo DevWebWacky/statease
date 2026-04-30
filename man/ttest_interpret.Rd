@@ -27,11 +27,14 @@ ttest_interpret(
 \item{var_name}{Optional label for the report. Default "Variable"}
 }
 \value{
-A printed t-test report with interpretation
+An object of class \code{statease_ttest} containing test
+results and interpretation. Use \code{print()} to display the
+formatted report.
 }
 \description{
 T-Test with Plain-English Interpretation
 }
 \examples{
-ttest_interpret(c(23,45,12,67,34), c(19,38,22,51,29))
+result <- ttest_interpret(c(23,45,12,67,34), c(19,38,22,51,29))
+print(result)
 }

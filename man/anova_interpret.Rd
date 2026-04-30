@@ -14,7 +14,9 @@ anova_interpret(formula, data, conf.level = 0.95)
 \item{conf.level}{Confidence level. Default 0.95}
 }
 \value{
-A printed ANOVA report with interpretation and post-hoc results
+An object of class \code{statease_anova} containing ANOVA
+results, effect size, and post-hoc comparisons. Use \code{print()}
+to display the formatted report.
 }
 \description{
 One-Way ANOVA with Post-Hoc Tukey and Plain-English Interpretation
@@ -24,5 +26,6 @@ df <- data.frame(
   score = c(23,45,12,67,34,89,56,43,78,90,11,34),
   group = rep(c("A","B","C"), each = 4)
 )
-anova_interpret(score ~ group, data = df)
+result <- anova_interpret(score ~ group, data = df)
+print(result)
 }

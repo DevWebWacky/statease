@@ -14,12 +14,16 @@ interpret_p(p, alpha = 0.05, context = NULL)
 \item{context}{Optional string describing the test context}
 }
 \value{
-A printed plain-English interpretation of the p-value
+An object of class \code{statease_pvalue} containing the
+p-value interpretation. Use \code{print()} to display the report.
 }
 \description{
 Standalone P-Value Interpreter
 }
 \examples{
-interpret_p(0.03)
-interpret_p(0.12, alpha = 0.05, context = "comparing treatment vs control")
+result <- interpret_p(0.03)
+print(result)
+
+result2 <- interpret_p(0.12, alpha = 0.05, context = "treatment vs control")
+print(result2)
 }

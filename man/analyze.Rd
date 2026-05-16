@@ -12,17 +12,21 @@ analyze(
   mu = 0,
   paired = FALSE,
   conf.level = 0.95,
-  var_name = "Variable"
+  var_name = "Variable",
+  var1_name = "Variable 1",
+  var2_name = "Variable 2",
+  method = "pearson"
 )
 }
 \arguments{
 \item{x}{A numeric vector (required always)}
 
-\item{y}{A numeric vector or factor/character group variable (optional)}
+\item{y}{A numeric vector, factor, or character group variable (optional)}
 
 \item{data}{A data frame (required if using a formula)}
 
-\item{formula}{A formula of the form outcome ~ group (optional)}
+\item{formula}{A formula of the form outcome ~ predictor or
+outcome ~ group1 * group2 (optional)}
 
 \item{mu}{Hypothesised mean for one-sample t-test. Default 0.}
 
@@ -31,9 +35,16 @@ analyze(
 \item{conf.level}{Confidence level. Default 0.95.}
 
 \item{var_name}{Optional label for the report.}
+
+\item{var1_name}{Optional name for first variable in correlation.}
+
+\item{var2_name}{Optional name for second variable in correlation.}
+
+\item{method}{Correlation method: "pearson", "spearman", or "kendall".
+Default "pearson".}
 }
 \value{
-A printed analysis report
+A printed analysis report from the appropriate test
 }
 \description{
 Master Analysis Function - Auto-detects and runs the right test
@@ -45,10 +56,35 @@ analyze(x = c(23, 45, 12, 67, 34))
 # Auto t-test
 analyze(x = c(23,45,12,67,34), y = c(19,38,22,51,29))
 
-# Auto ANOVA
+# Auto correlation
+analyze(x = c(23,45,12,67,34), y = c(19,38,22,51,29),
+        var1_name = "Scores", var2_name = "Hours")
+
+# Auto One-Way ANOVA
 df <- data.frame(
   score = c(23,45,12,67,34,89,56,43,78,90,11,34),
   group = rep(c("A","B","C"), each = 4)
 )
 analyze(formula = score ~ group, data = df)
+
+# Auto Two-Way ANOVA
+df2 <- data.frame(
+  score  = c(23,45,12,67,34,89,56,43,78,90,11,34),
+  method = rep(c("Online","Traditional"), each = 6),
+  gender = rep(c("Male","Female"), times = 6)
+)
+analyze(formula = score ~ method * gender, data = df2)
+
+# Auto Regression
+df3 <- data.frame(
+  exam_score  = c(23,45,12,67,34,89,56,43,78,90),
+  study_hours = c(2,5,1,7,3,9,6,4,8,10)
+)
+analyze(formula = exam_score ~ study_hours, data = df3)
+
+# Auto Chi-square
+analyze(
+  x = c("Yes","No","Yes","Yes","No"),
+  y = c("Male","Female","Male","Female","Male")
+)
 }

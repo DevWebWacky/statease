@@ -89,10 +89,10 @@ reg_interpret <- function(formula, data, conf.level = 0.95) {
 
   # --- Slope direction ---
   slope_direction <- if (slope > 0) {
-    sprintf("positive — as %s increases by 1 unit, %s increases by %.3f units",
+    sprintf("positive - as %s increases by 1 unit, %s increases by %.3f units",
             predictor, outcome, slope)
   } else {
-    sprintf("negative — as %s increases by 1 unit, %s decreases by %.3f units",
+    sprintf("negative - as %s increases by 1 unit, %s decreases by %.3f units",
             predictor, outcome, abs(slope))
   }
 

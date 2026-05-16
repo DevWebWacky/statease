@@ -35,7 +35,7 @@
 #'
 #' @author Uwakmfon Usen Paul
 #'
-#' @importFrom stats IQR TukeyHSD aov bartlett.test median na.omit quantile sd shapiro.test t.test var.test chisq.test cor.test lm confint residuals fitted pf
+#' @importFrom stats IQR TukeyHSD aov bartlett.test median na.omit quantile sd shapiro.test t.test var.test chisq.test cor.test lm confint residuals fitted pf coef
 #' @docType package
 #' @name statease
 "_PACKAGE"

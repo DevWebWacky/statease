@@ -35,9 +35,7 @@
 #'
 #' @author Uwakmfon Usen Paul
 #'
+#' @importFrom stats IQR TukeyHSD aov bartlett.test median na.omit quantile sd shapiro.test t.test var.test chisq.test
 #' @docType package
 #' @name statease
 "_PACKAGE"
-#' @importFrom stats IQR TukeyHSD aov bartlett.test median na.omit
-#'   quantile sd shapiro.test t.test var.test
-NULL

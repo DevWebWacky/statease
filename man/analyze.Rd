@@ -11,6 +11,7 @@ analyze(
   formula = NULL,
   mu = 0,
   paired = FALSE,
+  nonparam = FALSE,
   conf.level = 0.95,
   var_name = "Variable",
   var1_name = "Variable 1",
@@ -26,11 +27,13 @@ analyze(
 \item{data}{A data frame (required if using a formula)}
 
 \item{formula}{A formula of the form outcome ~ predictor or
-outcome ~ group1 * group2 (optional)}
+outcome ~ group1 * group2 or cbind(y1, y2) ~ group (optional)}
 
 \item{mu}{Hypothesised mean for one-sample t-test. Default 0.}
 
 \item{paired}{Logical. TRUE for paired t-test. Default FALSE.}
+
+\item{nonparam}{Logical. TRUE to use non-parametric tests. Default FALSE.}
 
 \item{conf.level}{Confidence level. Default 0.95.}
 
@@ -56,6 +59,10 @@ analyze(x = c(23, 45, 12, 67, 34))
 # Auto t-test
 analyze(x = c(23,45,12,67,34), y = c(19,38,22,51,29))
 
+# Auto Mann-Whitney (non-parametric)
+analyze(x = c(23,45,12,67,34), y = c(19,38,22,51,29),
+        nonparam = TRUE)
+
 # Auto correlation
 analyze(x = c(23,45,12,67,34), y = c(19,38,22,51,29),
         var1_name = "Scores", var2_name = "Hours")
@@ -66,6 +73,9 @@ df <- data.frame(
   group = rep(c("A","B","C"), each = 4)
 )
 analyze(formula = score ~ group, data = df)
+
+# Auto Kruskal-Wallis (non-parametric)
+analyze(formula = score ~ group, data = df, nonparam = TRUE)
 
 # Auto Two-Way ANOVA
 df2 <- data.frame(
@@ -82,7 +92,23 @@ df3 <- data.frame(
 )
 analyze(formula = exam_score ~ study_hours, data = df3)
 
-# Auto Chi-square
+# Auto Multiple Regression
+df4 <- data.frame(
+  exam_score  = c(23,45,12,67,34,89,56,43,78,90),
+  study_hours = c(2,5,1,7,3,9,6,4,8,10),
+  attendance  = c(60,80,50,90,70,95,85,75,88,92)
+)
+analyze(formula = exam_score ~ study_hours + attendance, data = df4)
+
+# Auto MANOVA
+df5 <- data.frame(
+  math    = c(23,45,12,67,34,89,56,43,78,90,11,34),
+  english = c(34,56,23,78,45,90,67,54,89,95,22,45),
+  group   = rep(c("A","B","C"), each = 4)
+)
+analyze(formula = cbind(math, english) ~ group, data = df5)
+
+# Chi-square
 analyze(
   x = c("Yes","No","Yes","Yes","No"),
   y = c("Male","Female","Male","Female","Male")

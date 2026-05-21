@@ -1,0 +1,393 @@
+---
+title: "Introduction to statease"
+author: "Uwakmfon Paul"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to statease}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(statease)
+```
+
+## Overview
+
+**statease** is an R package designed to simplify statistical analysis
+by combining a wide range of tests with automatic plain-English
+interpretation of results. Whether you are a student, researcher, or
+educator, statease gives you numbers and meaning in one command.
+
+---
+
+## Installation
+
+```{r eval=FALSE}
+# Install from CRAN
+install.packages("statease")
+
+# Load the package
+library(statease)
+```
+
+---
+
+## Dataset
+
+Throughout this vignette we use a simulated dataset of 90 students
+examining the effect of teaching methods on exam performance.
+
+```{r}
+set.seed(42)
+
+tutorial_data <- data.frame(
+  student_id = 1:90,
+  method     = rep(c("Traditional", "Online", "Hybrid"), each = 30),
+  gender     = rep(c("Male", "Female"), times = 45),
+  exam_score = c(
+    round(rnorm(30, mean = 65, sd = 10)),
+    round(rnorm(30, mean = 72, sd = 10)),
+    round(rnorm(30, mean = 78, sd = 10))
+  ),
+  pre_test = c(
+    round(rnorm(30, mean = 55, sd = 10)),
+    round(rnorm(30, mean = 58, sd = 10)),
+    round(rnorm(30, mean = 57, sd = 10))
+  ),
+  age        = round(rnorm(90, mean = 22, sd = 3)),
+  passed     = rbinom(90, 1, prob = 0.7)
+)
+
+head(tutorial_data)
+```
+
+---
+
+## 1. Descriptive Statistics
+
+The `describe()` function provides a full summary of a numeric variable
+including measures of central tendency, spread, and a normality check.
+
+```{r}
+result <- describe(tutorial_data$exam_score,
+                   var_name = "Exam Score")
+print(result)
+```
+
+You can also extract individual values:
+
+```{r}
+result$mean
+result$sd
+result$skew_label
+```
+
+---
+
+## 2. T-Tests
+
+### Independent Samples T-Test
+
+Compare exam scores between male and female students:
+
+```{r}
+males   <- tutorial_data$exam_score[tutorial_data$gender == "Male"]
+females <- tutorial_data$exam_score[tutorial_data$gender == "Female"]
+
+result <- ttest_interpret(
+  males, females,
+  var_name = "Exam Score by Gender"
+)
+print(result)
+```
+
+### One-Sample T-Test
+
+Test whether the average exam score is significantly different from 70:
+
+```{r}
+result <- ttest_interpret(
+  tutorial_data$exam_score,
+  mu = 70,
+  var_name = "Exam Score"
+)
+print(result)
+```
+
+### Paired T-Test
+
+Test whether students improved from pre-test to final exam:
+
+```{r}
+result <- ttest_interpret(
+  tutorial_data$exam_score,
+  tutorial_data$pre_test,
+  paired   = TRUE,
+  var_name = "Score Improvement"
+)
+print(result)
+```
+
+---
+
+## 3. One-Way ANOVA
+
+Test whether teaching method affects exam scores:
+
+```{r}
+result <- anova_interpret(
+  exam_score ~ method,
+  data = tutorial_data
+)
+print(result)
+```
+
+---
+
+## 4. Two-Way ANOVA
+
+Test the effect of both teaching method and gender on exam scores:
+
+```{r}
+result <- anova2_interpret(
+  exam_score ~ method * gender,
+  data = tutorial_data
+)
+print(result)
+```
+
+---
+
+## 5. MANOVA
+
+Test the combined effect of teaching method on both exam score
+and pre-test score simultaneously:
+
+```{r}
+result <- manova_interpret(
+  cbind(exam_score, pre_test) ~ method,
+  data = tutorial_data
+)
+print(result)
+```
+
+---
+
+## 6. Chi-Square Test
+
+Test whether there is an association between teaching method
+and pass/fail outcome:
+
+```{r}
+tutorial_data$passed_label <- ifelse(tutorial_data$passed == 1,
+                                      "Pass", "Fail")
+
+result <- chisq_interpret(
+  tutorial_data$method,
+  tutorial_data$passed_label
+)
+print(result)
+```
+
+---
+
+## 7. Correlation Analysis
+
+Test the relationship between pre-test scores and exam scores:
+
+```{r}
+result <- cor_interpret(
+  tutorial_data$pre_test,
+  tutorial_data$exam_score,
+  var1_name = "Pre-Test Score",
+  var2_name = "Exam Score"
+)
+print(result)
+```
+
+### Spearman Correlation
+
+```{r}
+result <- cor_interpret(
+  tutorial_data$pre_test,
+  tutorial_data$exam_score,
+  method    = "spearman",
+  var1_name = "Pre-Test Score",
+  var2_name = "Exam Score"
+)
+print(result)
+```
+
+---
+
+## 8. Simple Linear Regression
+
+Predict exam score from pre-test score:
+
+```{r}
+result <- reg_interpret(
+  exam_score ~ pre_test,
+  data = tutorial_data
+)
+print(result)
+```
+
+---
+
+## 9. Multiple Linear Regression
+
+Predict exam score from both pre-test score and age:
+
+```{r}
+result <- mlr_interpret(
+  exam_score ~ pre_test + age,
+  data = tutorial_data
+)
+print(result)
+```
+
+---
+
+## 10. Logistic Regression
+
+Predict pass/fail outcome from pre-test score and age:
+
+```{r}
+result <- logistic_interpret(
+  passed ~ pre_test + age,
+  data = tutorial_data
+)
+print(result)
+```
+
+---
+
+## 11. Non-Parametric Tests
+
+### Mann-Whitney U Test
+
+Non-parametric alternative to the independent samples t-test:
+
+```{r}
+result <- mannwhitney_interpret(
+  males, females,
+  var_name = "Exam Score by Gender"
+)
+print(result)
+```
+
+### Wilcoxon Signed Rank Test
+
+Non-parametric alternative to the paired t-test:
+
+```{r}
+result <- wilcoxon_interpret(
+  tutorial_data$exam_score,
+  tutorial_data$pre_test,
+  var_name = "Score Improvement"
+)
+print(result)
+```
+
+### Kruskal-Wallis Test
+
+Non-parametric alternative to one-way ANOVA:
+
+```{r}
+result <- kruskal_interpret(
+  exam_score ~ method,
+  data = tutorial_data
+)
+print(result)
+```
+
+---
+
+## 12. P-Value Interpretation
+
+Interpret any p-value in plain English:
+
+```{r}
+result <- interpret_p(
+  0.03,
+  context = "teaching method effect on exam scores"
+)
+print(result)
+```
+
+---
+
+## 13. The Master Function
+
+The `analyze()` function automatically detects the right test
+based on your input — no need to remember which function to use!
+
+```{r}
+# Descriptive statistics
+analyze(x = tutorial_data$exam_score, var_name = "Exam Score")
+```
+
+```{r}
+# Auto t-test
+analyze(
+  x        = males,
+  y        = females,
+  var_name = "Exam Score by Gender"
+)
+```
+
+```{r}
+# Auto ANOVA
+analyze(formula = exam_score ~ method, data = tutorial_data)
+```
+
+```{r}
+# Auto non-parametric
+analyze(
+  formula  = exam_score ~ method,
+  data     = tutorial_data,
+  nonparam = TRUE
+)
+```
+
+```{r}
+# Auto regression
+analyze(formula = exam_score ~ pre_test, data = tutorial_data)
+```
+
+```{r}
+# Auto MANOVA
+analyze(
+  formula = cbind(exam_score, pre_test) ~ method,
+  data    = tutorial_data
+)
+```
+
+---
+
+## Summary
+
+| Test | Function | analyze() support |
+|---|---|---|
+| Descriptive stats | `describe()` | ✔ |
+| Independent t-test | `ttest_interpret()` | ✔ |
+| One-sample t-test | `ttest_interpret()` | ✔ |
+| Paired t-test | `ttest_interpret()` | ✔ |
+| One-way ANOVA | `anova_interpret()` | ✔ |
+| Two-way ANOVA | `anova2_interpret()` | ✔ |
+| MANOVA | `manova_interpret()` | ✔ |
+| Chi-square | `chisq_interpret()` | ✔ |
+| Correlation | `cor_interpret()` | ✔ |
+| Simple regression | `reg_interpret()` | ✔ |
+| Multiple regression | `mlr_interpret()` | ✔ |
+| Logistic regression | `logistic_interpret()` | ✔ |
+| Mann-Whitney U | `mannwhitney_interpret()` | ✔ |
+| Wilcoxon Signed Rank | `wilcoxon_interpret()` | ✔ |
+| Kruskal-Wallis | `kruskal_interpret()` | ✔ |
+| P-value interpretation | `interpret_p()` | - |

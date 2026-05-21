@@ -6,3 +6,5 @@
 ^statease\.Rproj$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^doc$
+^Meta$

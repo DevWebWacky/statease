@@ -10,3 +10,7 @@ Roxygen: list(markdown = TRUE)
 URL: https://github.com/DevWebWacky/statease
 BugReports: https://github.com/DevWebWacky/statease/issues
 Config/roxygen2/version: 8.0.0
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

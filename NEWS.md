@@ -1,3 +1,5 @@
+# statease 1.2.0
+
 # statease 1.1.0
 
 # statease 1.0.0

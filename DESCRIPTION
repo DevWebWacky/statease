@@ -7,7 +7,7 @@ Description: A toolkit for common statistical analyses including descriptive sta
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/DevWebWacky/statease
+URL: https://github.com/DevWebWacky/statease, https://devwebwacky.github.io/statease/
 BugReports: https://github.com/DevWebWacky/statease/issues
 Config/roxygen2/version: 8.0.0
 Suggests: 

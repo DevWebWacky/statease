@@ -271,12 +271,12 @@ result <- anova2_interpret(
 )
 print(result)
 #> 
-#> -- statease Two-Way ANOVA Report --------------------------------
+#>  statease Two-Way ANOVA Report 
 #>   Outcome      : exam_score
 #>   Factor 1     : method
 #>   Factor 2     : gender
 #>   N            : 90
-#> -----------------------------------------------------------------
+#> 
 #>   Means by method:
 #>     Hybrid          : 79.90
 #>     Online          : 70.77
@@ -291,18 +291,18 @@ print(result)
 #> Hybrid       81.27 78.53
 #> Online       71.60 69.93
 #> Traditional  63.33 67.93
-#> -----------------------------------------------------------------
+#> 
 #>   ANOVA Results:
 #>   method               : F = 14.123  df = 2,84  significant (p = 0.0000)  eta^2 = 0.2470 (large)
 #>   gender               : F = 0.001  df = 1,84  not significant (p = 0.9761)  eta^2 = 0.0000 (negligible)
 #>   Interaction          : F = 1.061  df = 2,84  not significant (p = 0.3506)  eta^2 = 0.0186 (small)
-#> -----------------------------------------------------------------
+#> 
 #>   Interpretation:
 #>   Main effect of method is significant (p = 0.0000).
 #>   Main effect of gender is not significant (p = 0.9761).
-#>   Interaction effect (method x gender) is not significant (p = 0.3506).
+#>   Interaction (method x gender) is not significant (p = 0.3506).
 #> 
-#> -- Post-Hoc Tukey HSD (method) ---
+#> -- Post-Hoc Tukey HSD (method) ------------------------------
 #>   Online-Hybrid : diff = -9.133  p adj = 0.0033  [significant]
 #>   Traditional-Hybrid : diff = -14.267  p adj = 0.0000  [significant]
 #>   Traditional-Online : diff = -5.133  p adj = 0.1485  [not significant]

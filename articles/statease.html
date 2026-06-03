@@ -59,7 +59,7 @@
                         <h4 data-toc-skip class="author">Uwakmfon
 Paul</h4>
             
-            <h4 data-toc-skip class="date">2026-05-21</h4>
+            <h4 data-toc-skip class="date">2026-06-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/DevWebWacky/statease/blob/master/vignettes/statease.Rmd" class="external-link"><code>vignettes/statease.Rmd</code></a></small>
       <div class="d-none name"><code>statease.Rmd</code></div>
@@ -319,12 +319,12 @@ scores:</p>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; -- statease Two-Way ANOVA Report --------------------------------</span></span>
+<span><span class="co">#&gt;  statease Two-Way ANOVA Report </span></span>
 <span><span class="co">#&gt;   Outcome      : exam_score</span></span>
 <span><span class="co">#&gt;   Factor 1     : method</span></span>
 <span><span class="co">#&gt;   Factor 2     : gender</span></span>
 <span><span class="co">#&gt;   N            : 90</span></span>
-<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Means by method:</span></span>
 <span><span class="co">#&gt;     Hybrid          : 79.90</span></span>
 <span><span class="co">#&gt;     Online          : 70.77</span></span>
@@ -339,18 +339,18 @@ scores:</p>
 <span><span class="co">#&gt; Hybrid       81.27 78.53</span></span>
 <span><span class="co">#&gt; Online       71.60 69.93</span></span>
 <span><span class="co">#&gt; Traditional  63.33 67.93</span></span>
-<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   ANOVA Results:</span></span>
 <span><span class="co">#&gt;   method               : F = 14.123  df = 2,84  significant (p = 0.0000)  eta^2 = 0.2470 (large)</span></span>
 <span><span class="co">#&gt;   gender               : F = 0.001  df = 1,84  not significant (p = 0.9761)  eta^2 = 0.0000 (negligible)</span></span>
 <span><span class="co">#&gt;   Interaction          : F = 1.061  df = 2,84  not significant (p = 0.3506)  eta^2 = 0.0186 (small)</span></span>
-<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Interpretation:</span></span>
 <span><span class="co">#&gt;   Main effect of method is significant (p = 0.0000).</span></span>
 <span><span class="co">#&gt;   Main effect of gender is not significant (p = 0.9761).</span></span>
-<span><span class="co">#&gt;   Interaction effect (method x gender) is not significant (p = 0.3506).</span></span>
+<span><span class="co">#&gt;   Interaction (method x gender) is not significant (p = 0.3506).</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; -- Post-Hoc Tukey HSD (method) ---</span></span>
+<span><span class="co">#&gt; -- Post-Hoc Tukey HSD (method) ------------------------------</span></span>
 <span><span class="co">#&gt;   Online-Hybrid : diff = -9.133  p adj = 0.0033  [significant]</span></span>
 <span><span class="co">#&gt;   Traditional-Hybrid : diff = -14.267  p adj = 0.0000  [significant]</span></span>
 <span><span class="co">#&gt;   Traditional-Online : diff = -5.133  p adj = 0.1485  [not significant]</span></span>

@@ -153,6 +153,10 @@ want fast readable output - Educators teaching statistical concepts
 - Updated
   [`analyze()`](https://devwebwacky.github.io/statease/reference/analyze.md)
   with `nonparam` argument for non-parametric routing
+- Fixed
+  [`anova2_interpret()`](https://devwebwacky.github.io/statease/reference/anova2_interpret.md)
+  to use Type II/III SS via car::Anova() instead of Type I SS for
+  order-independent results
 
 ### v1.1.0
 

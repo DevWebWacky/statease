@@ -53,6 +53,8 @@ Useful links:
 
 - <https://github.com/DevWebWacky/statease>
 
+- <https://devwebwacky.github.io/statease/>
+
 - Report bugs at <https://github.com/DevWebWacky/statease/issues>
 
 ## Author

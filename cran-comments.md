@@ -12,3 +12,6 @@ New functions added in this version:
 5. wilcoxon_interpret() - Wilcoxon Signed Rank test with effect size
 6. kruskal_interpret() - Kruskal-Wallis test with post-hoc comparisons
 7. analyze() updated with nonparam argument for non-parametric routing
+
+Bug fixes:
+- anova2_interpret() now uses car::Anova() with Type II/III SS instead of Type I SS for order-independent results

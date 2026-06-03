@@ -46,6 +46,7 @@ interpret_p(0.03, context = "treatment vs control")
 Useful links:
 \itemize{
   \item \url{https://github.com/DevWebWacky/statease}
+  \item \url{https://devwebwacky.github.io/statease/}
   \item Report bugs at \url{https://github.com/DevWebWacky/statease/issues}
 }
 

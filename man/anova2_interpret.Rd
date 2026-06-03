@@ -4,12 +4,15 @@
 \alias{anova2_interpret}
 \title{Two-Way ANOVA with Plain-English Interpretation}
 \usage{
-anova2_interpret(formula, data, conf.level = 0.95)
+anova2_interpret(formula, data, type = 2, conf.level = 0.95)
 }
 \arguments{
 \item{formula}{A formula of the form outcome ~ group1 * group2}
 
 \item{data}{A data frame containing the variables}
+
+\item{type}{ANOVA type: 2 or 3. Default is 2. Type 3 is automatically
+used when an interaction term is detected in the formula.}
 
 \item{conf.level}{Confidence level. Default 0.95.}
 }
@@ -19,7 +22,10 @@ ANOVA results and interpretation. Use \code{print()} to display
 the formatted report.
 }
 \description{
-Two-Way ANOVA with Plain-English Interpretation
+Uses Type-2 SS by default (safe for unbalanced designs). Automatically
+switches to Type-3 SS when an interaction term is detected and sets
+the correct contrasts. Users are warned when interpreting main effects
+in the presence of a significant interaction.
 }
 \examples{
 df <- data.frame(

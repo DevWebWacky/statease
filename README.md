@@ -135,6 +135,8 @@ Perfect for:
 - Added `wilcoxon_interpret()` for Wilcoxon Signed Rank test
 - Added `kruskal_interpret()` for Kruskal-Wallis test
 - Updated `analyze()` with `nonparam` argument for non-parametric routing
+- Fixed `anova2_interpret()` to use Type II/III SS via car::Anova()
+  instead of Type I SS for order-independent results
 
 ### v1.1.0
 - Added `chisq_interpret()` for chi-square tests

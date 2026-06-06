@@ -54,8 +54,10 @@ print(result)
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.1094 > alpha 0.05).
-#>   Post-measurement median higher (45.00 vs 38.00).
+#>   Post-measurement values appear stochastically greater than pre-measurement values. (Reported medians: Post = 45.00, Pre = 38.00)
 #>   Effect size is large (r = 0.605).
+#>   Note: Wilcoxon test assesses stochastic superiority,
+#>   not differences in medians.
 #> -----------------------------------------------------------------
 #> 
 ```

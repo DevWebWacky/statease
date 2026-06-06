@@ -661,8 +661,10 @@ print(result)
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.9120 > alpha 0.05).
-#>   Group 2 had a higher median (75.00 vs 74.00).
+#>   Values in Group 2 appear stochastically greater than values in Group 1. (Reported medians: Group 1 = 74.00, Group 2 = 75.00)
 #>   Effect size is negligible (r = 0.012).
+#>   Note: Mann-Whitney tests stochastic superiority,
+#>   not differences in medians.
 #> -----------------------------------------------------------------
 ```
 
@@ -692,8 +694,10 @@ print(result)
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is statistically significant (p = 0.0000 < alpha 0.05).
-#>   Post-measurement median higher (74.00 vs 55.00).
+#>   Post-measurement values appear stochastically greater than pre-measurement values. (Reported medians: Post = 74.00, Pre = 55.00)
 #>   Effect size is large (r = 0.737).
+#>   Note: Wilcoxon test assesses stochastic superiority,
+#>   not differences in medians.
 #> -----------------------------------------------------------------
 ```
 
@@ -726,7 +730,11 @@ print(result)
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is statistically significant (p = 0.0000 < alpha 0.05).
+#>   The result is statistically significant (p = 0.0000 < alpha 0.05).
 #>   Effect size is large (eta^2 = 0.2420).
+#>   Note: Kruskal-Wallis tests stochastic superiority
+#>   across groups, not differences in medians.
+#>   Medians are reported for descriptive purposes only.
 #> 
 #> -- Post-Hoc Pairwise Comparisons (Wilcoxon) ---------------------
 #>   Hybrid vs Online
@@ -896,7 +904,11 @@ analyze(
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is statistically significant (p = 0.0000 < alpha 0.05).
+#>   The result is statistically significant (p = 0.0000 < alpha 0.05).
 #>   Effect size is large (eta^2 = 0.2420).
+#>   Note: Kruskal-Wallis tests stochastic superiority
+#>   across groups, not differences in medians.
+#>   Medians are reported for descriptive purposes only.
 #> 
 #> -- Post-Hoc Pairwise Comparisons (Wilcoxon) ---------------------
 #>   Hybrid vs Online

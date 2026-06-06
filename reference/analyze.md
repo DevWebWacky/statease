@@ -146,8 +146,10 @@ analyze(x = c(23,45,12,67,34), y = c(19,38,22,51,29),
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.8413 > alpha 0.05).
-#>   Group 1 had a higher median (34.00 vs 29.00).
+#>   Values in Group 1 appear stochastically greater than values in Group 2. (Reported medians: Group 1 = 34.00, Group 2 = 29.00)
 #>   Effect size is negligible (r = 0.063).
+#>   Note: Mann-Whitney tests stochastic superiority,
+#>   not differences in medians.
 #> -----------------------------------------------------------------
 #> 
 
@@ -229,7 +231,11 @@ analyze(formula = score ~ group, data = df, nonparam = TRUE)
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.6831 > alpha 0.05).
+#>   The result is not statistically significant (p = 0.6831 > alpha 0.05).
 #>   Effect size is negligible (eta^2 = 0.0000).
+#>   Note: Kruskal-Wallis tests stochastic superiority
+#>   across groups, not differences in medians.
+#>   Medians are reported for descriptive purposes only.
 #> 
 #>   Post-hoc tests not run (overall result not significant).
 #> -----------------------------------------------------------------

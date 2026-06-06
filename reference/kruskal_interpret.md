@@ -56,7 +56,11 @@ print(result)
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.6831 > alpha 0.05).
+#>   The result is not statistically significant (p = 0.6831 > alpha 0.05).
 #>   Effect size is negligible (eta^2 = 0.0000).
+#>   Note: Kruskal-Wallis tests stochastic superiority
+#>   across groups, not differences in medians.
+#>   Medians are reported for descriptive purposes only.
 #> 
 #>   Post-hoc tests not run (overall result not significant).
 #> -----------------------------------------------------------------

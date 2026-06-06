@@ -53,8 +53,10 @@ print(result)
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.6200 > alpha 0.05).
-#>   Group 1 had a higher median (45.00 vs 38.00).
+#>   Values in Group 1 appear stochastically greater than values in Group 2. (Reported medians: Group 1 = 45.00, Group 2 = 38.00)
 #>   Effect size is small (r = 0.133).
+#>   Note: Mann-Whitney tests stochastic superiority,
+#>   not differences in medians.
 #> -----------------------------------------------------------------
 #> 
 ```

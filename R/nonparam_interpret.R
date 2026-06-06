@@ -62,9 +62,15 @@ mannwhitney_interpret <- function(x, y, conf.level = 0.95,
   med_y <- median(y_clean)
 
   direction <- if (med_x > med_y) {
-    sprintf("Group 1 had a higher median (%.2f vs %.2f).", med_x, med_y)
+    sprintf(paste("Values in Group 1 appear stochastically greater",
+                  "than values in Group 2.",
+                  "(Reported medians: Group 1 = %.2f, Group 2 = %.2f)"),
+            med_x, med_y)
   } else {
-    sprintf("Group 2 had a higher median (%.2f vs %.2f).", med_y, med_x)
+    sprintf(paste("Values in Group 2 appear stochastically greater",
+                  "than values in Group 1.",
+                  "(Reported medians: Group 1 = %.2f, Group 2 = %.2f)"),
+            med_x, med_y)
   }
 
   sig_label <- if (p_val < alpha) {
@@ -113,6 +119,8 @@ print.statease_mannwhitney <- function(x, ...) {
   cat(sprintf("  %s\n", x$direction))
   cat(sprintf("  Effect size is %s (r = %.3f).\n",
               x$effect_label, x$r_effect))
+  cat("  Note: Mann-Whitney tests stochastic superiority,\n")
+  cat("  not differences in medians.\n")
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)
 }
@@ -184,9 +192,15 @@ wilcoxon_interpret <- function(x, y, conf.level = 0.95,
   med_y <- median(y_clean)
 
   direction <- if (med_x > med_y) {
-    sprintf("Post-measurement median higher (%.2f vs %.2f).", med_x, med_y)
+    sprintf(paste("Post-measurement values appear stochastically",
+                  "greater than pre-measurement values.",
+                  "(Reported medians: Post = %.2f, Pre = %.2f)"),
+            med_x, med_y)
   } else {
-    sprintf("Pre-measurement median higher (%.2f vs %.2f).", med_y, med_x)
+    sprintf(paste("Pre-measurement values appear stochastically",
+                  "greater than post-measurement values.",
+                  "(Reported medians: Post = %.2f, Pre = %.2f)"),
+            med_x, med_y)
   }
 
   sig_label <- if (p_val < alpha) {
@@ -235,6 +249,8 @@ print.statease_wilcoxon <- function(x, ...) {
   cat(sprintf("  %s\n", x$direction))
   cat(sprintf("  Effect size is %s (r = %.3f).\n",
               x$effect_label, x$r_effect))
+  cat("  Note: Wilcoxon test assesses stochastic superiority,\n")
+  cat("  not differences in medians.\n")
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)
 }
@@ -396,9 +412,12 @@ print.statease_kruskal <- function(x, ...) {
   cat("-----------------------------------------------------------------\n")
   cat("  Interpretation:\n")
   cat(sprintf("  The result is %s.\n", x$sig_label))
+  cat(sprintf("  The result is %s.\n", x$sig_label))
   cat(sprintf("  Effect size is %s (eta^2 = %.4f).\n",
               x$effect_label, x$eta_sq))
-
+  cat("  Note: Kruskal-Wallis tests stochastic superiority\n")
+  cat("  across groups, not differences in medians.\n")
+  cat("  Medians are reported for descriptive purposes only.\n")
   if (!is.null(x$dunn_results)) {
     cat("\n")
     cat("-- Post-Hoc Pairwise Comparisons (Wilcoxon) ---------------------\n")

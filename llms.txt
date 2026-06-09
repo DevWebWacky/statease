@@ -20,8 +20,7 @@ you the full picture.
 install.packages("statease")
 ```
 
-For the development version from GitHub (include bug fixes pending
-approval):
+For the development version from GitHub:
 
 ``` r
 

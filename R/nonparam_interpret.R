@@ -249,8 +249,10 @@ print.statease_wilcoxon <- function(x, ...) {
   cat(sprintf("  %s\n", x$direction))
   cat(sprintf("  Effect size is %s (r = %.3f).\n",
               x$effect_label, x$r_effect))
-  cat("  Note: Wilcoxon test assesses stochastic superiority,\n")
-  cat("  not differences in medians.\n")
+  cat("  Note: Wilcoxon test compares groups using ranked values.\n")
+  cat("  A significant result sugegsts one group tends to have larger or smaller observation than the other.\n")
+  cat("  This can be interpreted as evidence of stochastic superiority, but only under typical distribution assumptions.")
+  cat("  It does not specifically test differences in medians.\n")
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)
 }
@@ -415,8 +417,8 @@ print.statease_kruskal <- function(x, ...) {
   cat(sprintf("  The result is %s.\n", x$sig_label))
   cat(sprintf("  Effect size is %s (eta^2 = %.4f).\n",
               x$effect_label, x$eta_sq))
-  cat("  Note: Kruskal-Wallis tests stochastic superiority\n")
-  cat("  across groups, not differences in medians.\n")
+  cat("  Note: Kruskal-Wallis test compares multiple groups using ranked values\n")
+  cat("  not differences in medians.\n")
   cat("  Medians are reported for descriptive purposes only.\n")
   if (!is.null(x$dunn_results)) {
     cat("\n")

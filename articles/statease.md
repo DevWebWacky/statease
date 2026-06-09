@@ -696,8 +696,9 @@ print(result)
 #>   The result is statistically significant (p = 0.0000 < alpha 0.05).
 #>   Post-measurement values appear stochastically greater than pre-measurement values. (Reported medians: Post = 74.00, Pre = 55.00)
 #>   Effect size is large (r = 0.737).
-#>   Note: Wilcoxon test assesses stochastic superiority,
-#>   not differences in medians.
+#>   Note: Wilcoxon test compares groups using ranked values.
+#>   A significant result sugegsts one group tends to have larger or smaller observation than the other.
+#>   This can be interpreted as evidence of stochastic superiority, but only under typical distribution assumptions.  It does not specifically test differences in medians.
 #> -----------------------------------------------------------------
 ```
 
@@ -732,8 +733,8 @@ print(result)
 #>   The result is statistically significant (p = 0.0000 < alpha 0.05).
 #>   The result is statistically significant (p = 0.0000 < alpha 0.05).
 #>   Effect size is large (eta^2 = 0.2420).
-#>   Note: Kruskal-Wallis tests stochastic superiority
-#>   across groups, not differences in medians.
+#>   Note: Kruskal-Wallis test compares multiple groups using ranked values
+#>   not differences in medians.
 #>   Medians are reported for descriptive purposes only.
 #> 
 #> -- Post-Hoc Pairwise Comparisons (Wilcoxon) ---------------------
@@ -906,8 +907,8 @@ analyze(
 #>   The result is statistically significant (p = 0.0000 < alpha 0.05).
 #>   The result is statistically significant (p = 0.0000 < alpha 0.05).
 #>   Effect size is large (eta^2 = 0.2420).
-#>   Note: Kruskal-Wallis tests stochastic superiority
-#>   across groups, not differences in medians.
+#>   Note: Kruskal-Wallis test compares multiple groups using ranked values
+#>   not differences in medians.
 #>   Medians are reported for descriptive purposes only.
 #> 
 #> -- Post-Hoc Pairwise Comparisons (Wilcoxon) ---------------------

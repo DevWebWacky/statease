@@ -59,7 +59,7 @@
                         <h4 data-toc-skip class="author">Uwakmfon
 Paul</h4>
             
-            <h4 data-toc-skip class="date">2026-06-06</h4>
+            <h4 data-toc-skip class="date">2026-06-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/DevWebWacky/statease/blob/master/vignettes/statease.Rmd" class="external-link"><code>vignettes/statease.Rmd</code></a></small>
       <div class="d-none name"><code>statease.Rmd</code></div>
@@ -721,8 +721,9 @@ pass/fail outcome:</p>
 <span><span class="co">#&gt;   The result is statistically significant (p = 0.0000 &lt; alpha 0.05).</span></span>
 <span><span class="co">#&gt;   Post-measurement values appear stochastically greater than pre-measurement values. (Reported medians: Post = 74.00, Pre = 55.00)</span></span>
 <span><span class="co">#&gt;   Effect size is large (r = 0.737).</span></span>
-<span><span class="co">#&gt;   Note: Wilcoxon test assesses stochastic superiority,</span></span>
-<span><span class="co">#&gt;   not differences in medians.</span></span>
+<span><span class="co">#&gt;   Note: Wilcoxon test compares groups using ranked values.</span></span>
+<span><span class="co">#&gt;   A significant result sugegsts one group tends to have larger or smaller observation than the other.</span></span>
+<span><span class="co">#&gt;   This can be interpreted as evidence of stochastic superiority, but only under typical distribution assumptions.  It does not specifically test differences in medians.</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -755,8 +756,8 @@ pass/fail outcome:</p>
 <span><span class="co">#&gt;   The result is statistically significant (p = 0.0000 &lt; alpha 0.05).</span></span>
 <span><span class="co">#&gt;   The result is statistically significant (p = 0.0000 &lt; alpha 0.05).</span></span>
 <span><span class="co">#&gt;   Effect size is large (eta^2 = 0.2420).</span></span>
-<span><span class="co">#&gt;   Note: Kruskal-Wallis tests stochastic superiority</span></span>
-<span><span class="co">#&gt;   across groups, not differences in medians.</span></span>
+<span><span class="co">#&gt;   Note: Kruskal-Wallis test compares multiple groups using ranked values</span></span>
+<span><span class="co">#&gt;   not differences in medians.</span></span>
 <span><span class="co">#&gt;   Medians are reported for descriptive purposes only.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; -- Post-Hoc Pairwise Comparisons (Wilcoxon) ---------------------</span></span>
@@ -914,8 +915,8 @@ use!</p>
 <span><span class="co">#&gt;   The result is statistically significant (p = 0.0000 &lt; alpha 0.05).</span></span>
 <span><span class="co">#&gt;   The result is statistically significant (p = 0.0000 &lt; alpha 0.05).</span></span>
 <span><span class="co">#&gt;   Effect size is large (eta^2 = 0.2420).</span></span>
-<span><span class="co">#&gt;   Note: Kruskal-Wallis tests stochastic superiority</span></span>
-<span><span class="co">#&gt;   across groups, not differences in medians.</span></span>
+<span><span class="co">#&gt;   Note: Kruskal-Wallis test compares multiple groups using ranked values</span></span>
+<span><span class="co">#&gt;   not differences in medians.</span></span>
 <span><span class="co">#&gt;   Medians are reported for descriptive purposes only.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; -- Post-Hoc Pairwise Comparisons (Wilcoxon) ---------------------</span></span>

@@ -16,5 +16,9 @@ Suggests:
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Imports: 
-    car
+    car,
+    DT,
+    shiny,
+    shinydashboard,
+    shinyjs
 Config/testthat/edition: 3

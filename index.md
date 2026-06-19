@@ -29,6 +29,11 @@ For the development version from GitHub:
 devtools::install_github("DevWebWacky/statease")
 ```
 
+## Live App
+
+Try statease without installing R: 🌐
+<https://your-username.shinyapps.io/statease/>
+
 ## Functions
 
 | Function | What it does |

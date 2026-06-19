@@ -1,0 +1,10 @@
+name: statease
+title:
+username: devwebwacky
+account: devwebwacky
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17529360
+bundleId: 12147919
+url: https://devwebwacky.shinyapps.io/statease/
+version: 1

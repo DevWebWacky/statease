@@ -1,6 +1,7 @@
 # statease
 
-![CRAN Downloads](https://cranlogs.r-pkg.org/badges/statease)![CRAN
+![CRAN
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/statease)![CRAN
 Version](https://www.r-pkg.org/badges/version/statease)
 
 > Simplified statistical analysis with plain-English interpretation for

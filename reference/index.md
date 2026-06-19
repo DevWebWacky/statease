@@ -28,6 +28,8 @@
   : Multiple Linear Regression with Plain-English Interpretation
 - [`reg_interpret()`](https://devwebwacky.github.io/statease/reference/reg_interpret.md)
   : Simple Linear Regression with Plain-English Interpretation
+- [`run_app()`](https://devwebwacky.github.io/statease/reference/run_app.md)
+  : Launch the statease Shiny App
 - [`statease-package`](https://devwebwacky.github.io/statease/reference/statease.md)
   [`statease`](https://devwebwacky.github.io/statease/reference/statease.md)
   : statease: Simplified Statistical Analysis with Plain-English

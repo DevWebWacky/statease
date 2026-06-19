@@ -32,7 +32,7 @@ devtools::install_github("DevWebWacky/statease")
 ## Live App
 
 Try statease without installing R: 🌐
-<https://your-username.shinyapps.io/statease/>
+<https://devwebwacky.shinyapps.io/statease/>
 
 ## Functions
 

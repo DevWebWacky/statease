@@ -25,8 +25,13 @@ devtools::install_github("DevWebWacky/statease")
 ```
 
 ## Live App
-Try statease without installing R:
-🌐 https://devwebwacky.shinyapps.io/statease/
+Try statease directly in your browser 
+without installing R:
+
+🌐 [Launch statease App](https://devwebwacky.shinyapps.io/statease/)
+
+No installation required, just upload 
+your data and start analyzing
 
 ## Functions
 

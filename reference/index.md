@@ -26,6 +26,8 @@
   : Mann-Whitney U Test with Plain-English Interpretation
 - [`manova_interpret()`](https://devwebwacky.github.io/statease/reference/manova_interpret.md)
   : MANOVA with Plain-English Interpretation
+- [`mcnemar_interpret()`](https://devwebwacky.github.io/statease/reference/mcnemar_interpret.md)
+  : McNemar's Test with Plain-English Interpretation
 - [`mlr_interpret()`](https://devwebwacky.github.io/statease/reference/mlr_interpret.md)
   : Multiple Linear Regression with Plain-English Interpretation
 - [`reg_interpret()`](https://devwebwacky.github.io/statease/reference/reg_interpret.md)

@@ -8,6 +8,8 @@
   : Two-Way ANOVA with Plain-English Interpretation
 - [`anova_interpret()`](https://devwebwacky.github.io/statease/reference/anova_interpret.md)
   : One-Way ANOVA with Post-Hoc Tukey and Plain-English Interpretation
+- [`check_assumptions()`](https://devwebwacky.github.io/statease/reference/check_assumptions.md)
+  : Check Statistical Assumptions Before Running a Test
 - [`chisq_interpret()`](https://devwebwacky.github.io/statease/reference/chisq_interpret.md)
   : Chi-Square Test with Plain-English Interpretation
 - [`cor_interpret()`](https://devwebwacky.github.io/statease/reference/cor_interpret.md)
@@ -32,6 +34,8 @@
   : McNemar's Test with Plain-English Interpretation
 - [`mlr_interpret()`](https://devwebwacky.github.io/statease/reference/mlr_interpret.md)
   : Multiple Linear Regression with Plain-English Interpretation
+- [`power_interpret()`](https://devwebwacky.github.io/statease/reference/power_interpret.md)
+  : Power Analysis with Plain English Interpretation
 - [`reg_interpret()`](https://devwebwacky.github.io/statease/reference/reg_interpret.md)
   : Simple Linear Regression with Plain-English Interpretation
 - [`run_app()`](https://devwebwacky.github.io/statease/reference/run_app.md)

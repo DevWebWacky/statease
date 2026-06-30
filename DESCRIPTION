@@ -18,6 +18,7 @@ VignetteBuilder: knitr
 Imports: 
     car,
     DT,
+    pwr,
     shiny,
     shinydashboard,
     shinyjs

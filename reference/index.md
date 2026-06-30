@@ -16,6 +16,8 @@
   : Descriptive Statistics with Interpretation
 - [`fisher_interpret()`](https://devwebwacky.github.io/statease/reference/fisher_interpret.md)
   : Fisher's Exact Test with Plain-English Interpretation
+- [`friedman_interpret()`](https://devwebwacky.github.io/statease/reference/friedman_interpret.md)
+  : Friedman Test with Plain-English Interpretation
 - [`interpret_p()`](https://devwebwacky.github.io/statease/reference/interpret_p.md)
   : Standalone P-Value Interpreter
 - [`kruskal_interpret()`](https://devwebwacky.github.io/statease/reference/kruskal_interpret.md)

@@ -51,7 +51,13 @@
 <span>  var_name <span class="op">=</span> <span class="st">"Variable"</span>,</span>
 <span>  var1_name <span class="op">=</span> <span class="st">"Variable 1"</span>,</span>
 <span>  var2_name <span class="op">=</span> <span class="st">"Variable 2"</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"pearson"</span></span>
+<span>  method <span class="op">=</span> <span class="st">"pearson"</span>,</span>
+<span>  test_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  effect_size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  power <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>  n_groups <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  n_predictors <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  check <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -107,6 +113,33 @@ outcome ~ group1 * group2 or cbind(y1, y2) ~ group (optional)</p></dd>
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>Correlation method: "pearson", "spearman", or "kendall".
 Default "pearson".</p></dd>
+
+
+<dt id="arg-test-type">test_type<a class="anchor" aria-label="anchor" href="#arg-test-type"></a></dt>
+<dd><p>For power analysis: one of "ttest.one", "ttest.two",
+"ttest.paired", "anova", "correlation", "chisq", "regression".</p></dd>
+
+
+<dt id="arg-effect-size">effect_size<a class="anchor" aria-label="anchor" href="#arg-effect-size"></a></dt>
+<dd><p>For power analysis: the expected effect size.</p></dd>
+
+
+<dt id="arg-power">power<a class="anchor" aria-label="anchor" href="#arg-power"></a></dt>
+<dd><p>For power analysis: desired power level. Default 0.80.</p></dd>
+
+
+<dt id="arg-n-groups">n_groups<a class="anchor" aria-label="anchor" href="#arg-n-groups"></a></dt>
+<dd><p>For power analysis ANOVA: number of groups. Default 2.</p></dd>
+
+
+<dt id="arg-n-predictors">n_predictors<a class="anchor" aria-label="anchor" href="#arg-n-predictors"></a></dt>
+<dd><p>For power analysis regression: number of predictors.
+Default 1.</p></dd>
+
+
+<dt id="arg-check">check<a class="anchor" aria-label="anchor" href="#arg-check"></a></dt>
+<dd><p>Logical. TRUE to run assumption checks before analysis.
+Default FALSE.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -164,56 +197,7 @@ Default "pearson".</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Auto Mann-Whitney (non-parametric)</span></span></span>
-<span class="r-in"><span><span class="fu">analyze</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">19</span>,<span class="fl">38</span>,<span class="fl">22</span>,<span class="fl">51</span>,<span class="fl">29</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>        nonparam <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [statease] nonparam = TRUE -&gt; Running Mann-Whitney U Test</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Sample size is small (n &lt; 10). Interpret results with caution.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -- statease Mann-Whitney U Test Report --------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Variable     : Variable</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Group 1      : n = 5  |  Median = 34.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Group 2      : n = 5  |  Median = 29.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   W statistic  : 14.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   p-value      : 0.8413</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   95% CI      : [-26.000, 38.000]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Effect size  : 0.063 (negligible)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Interpretation:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   The result is not statistically significant (p = 0.8413 &gt; alpha 0.05).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Values in Group 1 appear stochastically greater than values in Group 2. (Reported medians: Group 1 = 34.00, Group 2 = 29.00)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Effect size is negligible (r = 0.063).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Note: Mann-Whitney tests stochastic superiority,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   not differences in medians.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Auto correlation</span></span></span>
-<span class="r-in"><span><span class="fu">analyze</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">19</span>,<span class="fl">38</span>,<span class="fl">22</span>,<span class="fl">51</span>,<span class="fl">29</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>        var1_name <span class="op">=</span> <span class="st">"Scores"</span>, var2_name <span class="op">=</span> <span class="st">"Hours"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [statease] Two numeric vectors with variable names -&gt; Running Correlation</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Sample size is small (n &lt; 10). Interpret correlation with caution.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -- statease Correlation Report -----------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Method       : Pearson Product-Moment Correlation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Variables    : Scores &amp; Hours</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   N            : 5  |  Missing: 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   r            : 0.9626</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   p-value      : 0.0086</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   95% CI      : [0.5332, 0.9976]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Strength     : very large</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Direction    : positive (as one variable increases, the other tends to increase)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Interpretation:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   The correlation is statistically significant (p = 0.0086 &lt; alpha 0.05).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   The relationship between Scores and Hours is</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   very large and positive (as one variable increases, the other tends to increase) in direction.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Auto One-Way ANOVA</span></span></span>
+<span class="r-in"><span><span class="co"># Auto ANOVA</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  score <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span>,<span class="fl">89</span>,<span class="fl">56</span>,<span class="fl">43</span>,<span class="fl">78</span>,<span class="fl">90</span>,<span class="fl">11</span>,<span class="fl">34</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
@@ -245,254 +229,66 @@ Default "pearson".</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Auto Kruskal-Wallis (non-parametric)</span></span></span>
-<span class="r-in"><span><span class="fu">analyze</span><span class="op">(</span>formula <span class="op">=</span> <span class="va">score</span> <span class="op">~</span> <span class="va">group</span>, data <span class="op">=</span> <span class="va">df</span>, nonparam <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [statease] 3+ groups + nonparam = TRUE -&gt; Running Kruskal-Wallis Test</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>One or more groups have very small sample sizes (n &lt; 5).</span>
+<span class="r-in"><span><span class="co"># Power analysis</span></span></span>
+<span class="r-in"><span><span class="fu">analyze</span><span class="op">(</span>test_type <span class="op">=</span> <span class="st">"ttest.two"</span>, effect_size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [statease] Power analysis requested -&gt; Running Power Analysis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -- statease Kruskal-Wallis Test Report --------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Outcome      : score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Group        : group  (3 levels)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   N            : 12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -- statease Power Analysis Report  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Test         : Independent Samples T-Test</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Mode         : Calculate required sample size</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Group Medians:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     A            : Median = 34.00  (n = 4)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     B            : Median = 49.50  (n = 4)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     C            : Median = 56.00  (n = 4)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   H statistic  : 0.762</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   df           : 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   p-value      : 0.6831</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Eta squared  : 0.0000 (negligible effect)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Effect size  : 0.500 (large)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Alpha        : 0.05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Desired power: 0.80 (80%)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Required n   : 64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Total N      : 128 (2 groups x 64)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Interpretation:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   The result is not statistically significant (p = 0.6831 &gt; alpha 0.05).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   The result is not statistically significant (p = 0.6831 &gt; alpha 0.05).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Effect size is negligible (eta^2 = 0.0000).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Note: Kruskal-Wallis test compares multiple groups using ranked values</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   not differences in medians.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Medians are reported for descriptive purposes only.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   To detect a large effect (effect size = 0.50) with 80% power at alpha = 0.05, you need at least 64 participants per group (128 total for 2 groups).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Post-hoc tests not run (overall result not significant).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   NOTE: Power analysis results are estimates based on assumptions about effect size, alpha, and power. Actual results may differ depending on the true effect size in the population.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   NOTE: Effect sizes should ideally be based on previous research, pilot studies, or theoretically justified values — not chosen arbitrarily to reduce required sample size.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   NOTE: A power of 0.80 is a conventional minimum. In high stakes research such as clinical trials, a higher power of 0.90 or 0.95 is often recommended.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   NOTE: Power analysis assumes that the chosen statistical test and its assumptions are appropriate for the data.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Auto Two-Way ANOVA</span></span></span>
-<span class="r-in"><span><span class="va">df2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  score  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span>,<span class="fl">89</span>,<span class="fl">56</span>,<span class="fl">43</span>,<span class="fl">78</span>,<span class="fl">90</span>,<span class="fl">11</span>,<span class="fl">34</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Online"</span>,<span class="st">"Traditional"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  gender <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Male"</span>,<span class="st">"Female"</span><span class="op">)</span>, times <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">analyze</span><span class="op">(</span>formula <span class="op">=</span> <span class="va">score</span> <span class="op">~</span> <span class="va">method</span> <span class="op">*</span> <span class="va">gender</span>, data <span class="op">=</span> <span class="va">df2</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [statease] Two grouping variables detected -&gt; Running Two-Way ANOVA</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Sample size is small (n &lt; 20). Interpret results with caution.</span>
+<span class="r-in"><span><span class="co"># Check assumptions</span></span></span>
+<span class="r-in"><span><span class="fu">analyze</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">19</span>,<span class="fl">38</span>,<span class="fl">22</span>,<span class="fl">51</span>,<span class="fl">29</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [statease] check = TRUE -&gt; Checking assumptions for ttest</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  statease Two-Way ANOVA Report </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Outcome      : score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Factor 1     : method</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Factor 2     : gender</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   N            : 12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -- statease Assumption Check Report -------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Test         : ttest</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Means by method:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Online          : 45.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Traditional     : 52.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [PASSED] Normality (x)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Shapiro-Wilk test: statistic = 0.979, p = 0.9276. Normality assumption appears satisfied.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Means by gender:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Female          : 61.33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Male            : 35.67</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [WARNING] Sample size guidance (x)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n = 5. Small sample size. There is no formal assumption of sample size adequacy, but results should be interpreted with caution.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Interaction Means:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Female  Male</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Online       67.00 23.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Traditional  55.67 48.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [PASSED] Normality (y)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Shapiro-Wilk test: statistic = 0.936, p = 0.6369. Normality assumption appears satisfied.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ANOVA Results:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   method               : F = 0.220  df = 1,8  not significant (p = 0.6517)  eta^2 = 0.0173 (small)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   gender               : F = 2.955  df = 1,8  not significant (p = 0.1240)  eta^2 = 0.2330 (large)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Interaction          : F = 1.507  df = 1,8  not significant (p = 0.2544)  eta^2 = 0.1189 (moderate)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [WARNING] Sample size guidance (y)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n = 5. Small sample size. There is no formal assumption of sample size adequacy, but results should be interpreted with caution.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Interpretation:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Main effect of method is not significant (p = 0.6517).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Main effect of gender is not significant (p = 0.1240).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Interaction (method x gender) is not significant (p = 0.2544).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [PASSED] Homogeneity of variance</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Levene's Test: p = 0.4080. Variances appear approximately equal.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Auto Regression</span></span></span>
-<span class="r-in"><span><span class="va">df3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  exam_score  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span>,<span class="fl">89</span>,<span class="fl">56</span>,<span class="fl">43</span>,<span class="fl">78</span>,<span class="fl">90</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  study_hours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span>,<span class="fl">1</span>,<span class="fl">7</span>,<span class="fl">3</span>,<span class="fl">9</span>,<span class="fl">6</span>,<span class="fl">4</span>,<span class="fl">8</span>,<span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">analyze</span><span class="op">(</span>formula <span class="op">=</span> <span class="va">exam_score</span> <span class="op">~</span> <span class="va">study_hours</span>, data <span class="op">=</span> <span class="va">df3</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [statease] Numeric predictor detected -&gt; Running Simple Linear Regression</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   NOTE: Assumption checks are based on statistical tests and</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   heuristics. They provide guidance but should not be</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   interpreted as definitive proof that assumptions are met</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   or violated.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -- statease Simple Linear Regression Report ---------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Outcome      : exam_score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Predictor    : study_hours</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   N            : 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Model Equation:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   exam_score = 4.800 + 8.891 * study_hours</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Intercept    : 4.800</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Slope        : 8.891  (SE = 0.336)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   t-statistic  : 26.442</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   p-value      : 0.0000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   95% CI      : [8.116, 9.666]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Model Fit:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   R-squared    : 0.9887</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Adj R-squared: 0.9873</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   F-statistic  : 699.184 (df = 1, 8)  p = 0.0000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Interpretation:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   The predictor study_hours is statistically significant (p = 0.0000 &lt; alpha 0.05).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   The slope is positive - as study_hours increases by 1 unit, exam_score increases by 8.891 units.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   R-squared = 0.9887: study_hours explains 98.9% of the</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variance in exam_score (large effect).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   NOTE: Failure to reject an assumption test does not prove</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   that the assumption has been satisfied.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Auto Multiple Regression</span></span></span>
-<span class="r-in"><span><span class="va">df4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  exam_score  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span>,<span class="fl">89</span>,<span class="fl">56</span>,<span class="fl">43</span>,<span class="fl">78</span>,<span class="fl">90</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  study_hours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span>,<span class="fl">1</span>,<span class="fl">7</span>,<span class="fl">3</span>,<span class="fl">9</span>,<span class="fl">6</span>,<span class="fl">4</span>,<span class="fl">8</span>,<span class="fl">10</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  attendance  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">60</span>,<span class="fl">80</span>,<span class="fl">50</span>,<span class="fl">90</span>,<span class="fl">70</span>,<span class="fl">95</span>,<span class="fl">85</span>,<span class="fl">75</span>,<span class="fl">88</span>,<span class="fl">92</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">analyze</span><span class="op">(</span>formula <span class="op">=</span> <span class="va">exam_score</span> <span class="op">~</span> <span class="va">study_hours</span> <span class="op">+</span> <span class="va">attendance</span>, data <span class="op">=</span> <span class="va">df4</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [statease] Multiple numeric predictors -&gt; Running Multiple Linear Regression</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Sample size is small (n &lt; 20). Interpret results with caution.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -- statease Multiple Linear Regression Report -------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Outcome      : exam_score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Predictors   : study_hours, attendance</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   N            : 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Model Equation:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   exam_score = -2.664 + 8.240*study_hours + 0.141*attendance</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Overall Model Fit:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   R-squared    : 0.9893 (large effect)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Adj R-squared: 0.9862</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   F-statistic  : 322.885 (df = 2, 7)  p = 0.0000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   The overall model is statistically significant (p = 0.0000 &lt; alpha 0.05).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Individual Predictors:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   study_hours</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Coefficient  : 8.240  (SE = 1.106)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     t-statistic  : 7.452</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     p-value      : 0.0001  [significant]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI      : [5.626, 10.855]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Direction    : positive (b = 8.240)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   attendance</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Coefficient  : 0.141  (SE = 0.227)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     t-statistic  : 0.620</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     p-value      : 0.5549  [not significant]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI      : [-0.396, 0.677]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Direction    : positive (b = 0.141)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Interpretation:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   The model explains 98.9% of the variance in exam_score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   (R-squared = 0.9893, large effect).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Adjusted R-squared = 0.9862 accounting for</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   the number of predictors in the model.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Significant predictors: study_hours</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Non-significant predictors: attendance</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Auto MANOVA</span></span></span>
-<span class="r-in"><span><span class="va">df5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  math    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span>,<span class="fl">89</span>,<span class="fl">56</span>,<span class="fl">43</span>,<span class="fl">78</span>,<span class="fl">90</span>,<span class="fl">11</span>,<span class="fl">34</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  english <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">34</span>,<span class="fl">56</span>,<span class="fl">23</span>,<span class="fl">78</span>,<span class="fl">45</span>,<span class="fl">90</span>,<span class="fl">67</span>,<span class="fl">54</span>,<span class="fl">89</span>,<span class="fl">95</span>,<span class="fl">22</span>,<span class="fl">45</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  group   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">analyze</span><span class="op">(</span>formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">math</span>, <span class="va">english</span><span class="op">)</span> <span class="op">~</span> <span class="va">group</span>, data <span class="op">=</span> <span class="va">df5</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [statease] Multiple outcomes detected -&gt; Running MANOVA</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Sample size is small (n &lt; 20). Interpret results with caution.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -- statease MANOVA Report ----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Outcomes     : math, english</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Group        : group  (3 levels)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   N            : 12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Group Means:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   math:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     A            : 36.75</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     B            : 55.50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     C            : 53.25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   english:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     A            : 47.75</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     B            : 64.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     C            : 62.75</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Multivariate Test Results:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Pillai's Trace : 0.1372</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Wilks' Lambda  : 0.8645</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   F-statistic    : 0.331  (df = 4, 18)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   p-value        : 0.8532</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Effect size    : small (Pillai = 0.1372)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Interpretation:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   The overall MANOVA result is not statistically significant (p = 0.8532 &gt; alpha 0.05).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Pillai's Trace = 0.1372 indicates a small effect.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Follow-Up Univariate ANOVAs:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   math</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     F = 0.494  (df = 2, 9)  p = 0.6260  [not significant]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   english</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     F = 0.444  (df = 2, 9)  p = 0.6550  [not significant]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Note: Follow-up ANOVAs identify which outcomes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   differ significantly across groups.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Chi-square</span></span></span>
-<span class="r-in"><span><span class="fu">analyze</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Yes"</span>,<span class="st">"No"</span>,<span class="st">"Yes"</span>,<span class="st">"Yes"</span>,<span class="st">"No"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Male"</span>,<span class="st">"Female"</span>,<span class="st">"Male"</span>,<span class="st">"Female"</span>,<span class="st">"Male"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [statease] Two categorical vectors detected -&gt; Running Chi-Square Test</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Chi-squared approximation may be incorrect</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Chi-squared approximation may be incorrect</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -- statease Chi-Square Test Report ------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   N            : 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Contingency Table (Observed):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x     Female Male</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   No       1    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Yes      1    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Expected Frequencies:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> x     Female Male</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   No     0.8  1.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Yes    1.2  1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Chi-square   : 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   df           : 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   p-value      : 1.0000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Cramer's V   : 0.000 (negligible effect)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Interpretation:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   The result is not statistically significant (p = 1.0000 &gt; alpha 0.05).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   There is no significant association between the two variables.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Effect size is negligible (V = 0.000).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   WARNING: Some expected frequencies are less than 5. Interpret with caution.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   NOTE: Visual inspection of residual plots is always</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   recommended alongside formal assumption tests.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

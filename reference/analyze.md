@@ -17,7 +17,13 @@ analyze(
   var_name = "Variable",
   var1_name = "Variable 1",
   var2_name = "Variable 2",
-  method = "pearson"
+  method = "pearson",
+  test_type = NULL,
+  effect_size = NULL,
+  power = 0.8,
+  n_groups = 2,
+  n_predictors = 1,
+  check = FALSE
 )
 ```
 
@@ -72,6 +78,31 @@ analyze(
 
   Correlation method: "pearson", "spearman", or "kendall". Default
   "pearson".
+
+- test_type:
+
+  For power analysis: one of "ttest.one", "ttest.two", "ttest.paired",
+  "anova", "correlation", "chisq", "regression".
+
+- effect_size:
+
+  For power analysis: the expected effect size.
+
+- power:
+
+  For power analysis: desired power level. Default 0.80.
+
+- n_groups:
+
+  For power analysis ANOVA: number of groups. Default 2.
+
+- n_predictors:
+
+  For power analysis regression: number of predictors. Default 1.
+
+- check:
+
+  Logical. TRUE to run assumption checks before analysis. Default FALSE.
 
 ## Value
 
@@ -128,56 +159,7 @@ analyze(x = c(23,45,12,67,34), y = c(19,38,22,51,29))
 #> -----------------------------------------------------------------
 #> 
 
-# Auto Mann-Whitney (non-parametric)
-analyze(x = c(23,45,12,67,34), y = c(19,38,22,51,29),
-        nonparam = TRUE)
-#> [statease] nonparam = TRUE -> Running Mann-Whitney U Test
-#> Warning: Sample size is small (n < 10). Interpret results with caution.
-#> 
-#> -- statease Mann-Whitney U Test Report --------------------------
-#>   Variable     : Variable
-#>   Group 1      : n = 5  |  Median = 34.00
-#>   Group 2      : n = 5  |  Median = 29.00
-#> -----------------------------------------------------------------
-#>   W statistic  : 14.000
-#>   p-value      : 0.8413
-#>   95% CI      : [-26.000, 38.000]
-#>   Effect size  : 0.063 (negligible)
-#> -----------------------------------------------------------------
-#>   Interpretation:
-#>   The result is not statistically significant (p = 0.8413 > alpha 0.05).
-#>   Values in Group 1 appear stochastically greater than values in Group 2. (Reported medians: Group 1 = 34.00, Group 2 = 29.00)
-#>   Effect size is negligible (r = 0.063).
-#>   Note: Mann-Whitney tests stochastic superiority,
-#>   not differences in medians.
-#> -----------------------------------------------------------------
-#> 
-
-# Auto correlation
-analyze(x = c(23,45,12,67,34), y = c(19,38,22,51,29),
-        var1_name = "Scores", var2_name = "Hours")
-#> [statease] Two numeric vectors with variable names -> Running Correlation
-#> Warning: Sample size is small (n < 10). Interpret correlation with caution.
-#> 
-#> -- statease Correlation Report -----------------------------------
-#>   Method       : Pearson Product-Moment Correlation
-#>   Variables    : Scores & Hours
-#>   N            : 5  |  Missing: 0
-#> -----------------------------------------------------------------
-#>   r            : 0.9626
-#>   p-value      : 0.0086
-#>   95% CI      : [0.5332, 0.9976]
-#>   Strength     : very large
-#>   Direction    : positive (as one variable increases, the other tends to increase)
-#> -----------------------------------------------------------------
-#>   Interpretation:
-#>   The correlation is statistically significant (p = 0.0086 < alpha 0.05).
-#>   The relationship between Scores and Hours is
-#>   very large and positive (as one variable increases, the other tends to increase) in direction.
-#> -----------------------------------------------------------------
-#> 
-
-# Auto One-Way ANOVA
+# Auto ANOVA
 df <- data.frame(
   score = c(23,45,12,67,34,89,56,43,78,90,11,34),
   group = rep(c("A","B","C"), each = 4)
@@ -209,253 +191,65 @@ analyze(formula = score ~ group, data = df)
 #> -----------------------------------------------------------------
 #> 
 
-# Auto Kruskal-Wallis (non-parametric)
-analyze(formula = score ~ group, data = df, nonparam = TRUE)
-#> [statease] 3+ groups + nonparam = TRUE -> Running Kruskal-Wallis Test
-#> Warning: One or more groups have very small sample sizes (n < 5).
+# Power analysis
+analyze(test_type = "ttest.two", effect_size = 0.5)
+#> [statease] Power analysis requested -> Running Power Analysis
 #> 
-#> -- statease Kruskal-Wallis Test Report --------------------------
-#>   Outcome      : score
-#>   Group        : group  (3 levels)
-#>   N            : 12
+#> -- statease Power Analysis Report  
+#>   Test         : Independent Samples T-Test
+#>   Mode         : Calculate required sample size
 #> -----------------------------------------------------------------
-#>   Group Medians:
-#>     A            : Median = 34.00  (n = 4)
-#>     B            : Median = 49.50  (n = 4)
-#>     C            : Median = 56.00  (n = 4)
-#> -----------------------------------------------------------------
-#>   H statistic  : 0.762
-#>   df           : 2
-#>   p-value      : 0.6831
-#>   Eta squared  : 0.0000 (negligible effect)
+#>   Effect size  : 0.500 (large)
+#>   Alpha        : 0.05
+#>   Desired power: 0.80 (80%)
+#>   Required n   : 64
+#>   Total N      : 128 (2 groups x 64)
 #> -----------------------------------------------------------------
 #>   Interpretation:
-#>   The result is not statistically significant (p = 0.6831 > alpha 0.05).
-#>   The result is not statistically significant (p = 0.6831 > alpha 0.05).
-#>   Effect size is negligible (eta^2 = 0.0000).
-#>   Note: Kruskal-Wallis test compares multiple groups using ranked values
-#>   not differences in medians.
-#>   Medians are reported for descriptive purposes only.
+#>   To detect a large effect (effect size = 0.50) with 80% power at alpha = 0.05, you need at least 64 participants per group (128 total for 2 groups).
 #> 
-#>   Post-hoc tests not run (overall result not significant).
+#>   NOTE: Power analysis results are estimates based on assumptions about effect size, alpha, and power. Actual results may differ depending on the true effect size in the population.
+#>   NOTE: Effect sizes should ideally be based on previous research, pilot studies, or theoretically justified values — not chosen arbitrarily to reduce required sample size.
+#>   NOTE: A power of 0.80 is a conventional minimum. In high stakes research such as clinical trials, a higher power of 0.90 or 0.95 is often recommended.
+#>   NOTE: Power analysis assumes that the chosen statistical test and its assumptions are appropriate for the data.
 #> -----------------------------------------------------------------
 #> 
 
-# Auto Two-Way ANOVA
-df2 <- data.frame(
-  score  = c(23,45,12,67,34,89,56,43,78,90,11,34),
-  method = rep(c("Online","Traditional"), each = 6),
-  gender = rep(c("Male","Female"), times = 6)
-)
-analyze(formula = score ~ method * gender, data = df2)
-#> [statease] Two grouping variables detected -> Running Two-Way ANOVA
-#> Warning: Sample size is small (n < 20). Interpret results with caution.
+# Check assumptions
+analyze(x = c(23,45,12,67,34), y = c(19,38,22,51,29),
+        check = TRUE)
+#> [statease] check = TRUE -> Checking assumptions for ttest
 #> 
-#>  statease Two-Way ANOVA Report 
-#>   Outcome      : score
-#>   Factor 1     : method
-#>   Factor 2     : gender
-#>   N            : 12
+#> -- statease Assumption Check Report -------------------------------
+#>   Test         : ttest
+#> ---------------------------------------------------------------------
 #> 
-#>   Means by method:
-#>     Online          : 45.00
-#>     Traditional     : 52.00
+#>   [PASSED] Normality (x)
+#>     Shapiro-Wilk test: statistic = 0.979, p = 0.9276. Normality assumption appears satisfied.
 #> 
-#>   Means by gender:
-#>     Female          : 61.33
-#>     Male            : 35.67
+#>   [WARNING] Sample size guidance (x)
+#>     n = 5. Small sample size. There is no formal assumption of sample size adequacy, but results should be interpreted with caution.
 #> 
-#>   Interaction Means:
-#>             Female  Male
-#> Online       67.00 23.00
-#> Traditional  55.67 48.33
+#>   [PASSED] Normality (y)
+#>     Shapiro-Wilk test: statistic = 0.936, p = 0.6369. Normality assumption appears satisfied.
 #> 
-#>   ANOVA Results:
-#>   method               : F = 0.220  df = 1,8  not significant (p = 0.6517)  eta^2 = 0.0173 (small)
-#>   gender               : F = 2.955  df = 1,8  not significant (p = 0.1240)  eta^2 = 0.2330 (large)
-#>   Interaction          : F = 1.507  df = 1,8  not significant (p = 0.2544)  eta^2 = 0.1189 (moderate)
+#>   [WARNING] Sample size guidance (y)
+#>     n = 5. Small sample size. There is no formal assumption of sample size adequacy, but results should be interpreted with caution.
 #> 
-#>   Interpretation:
-#>   Main effect of method is not significant (p = 0.6517).
-#>   Main effect of gender is not significant (p = 0.1240).
-#>   Interaction (method x gender) is not significant (p = 0.2544).
-#> -----------------------------------------------------------------
+#>   [PASSED] Homogeneity of variance
+#>     Levene's Test: p = 0.4080. Variances appear approximately equal.
 #> 
-
-# Auto Regression
-df3 <- data.frame(
-  exam_score  = c(23,45,12,67,34,89,56,43,78,90),
-  study_hours = c(2,5,1,7,3,9,6,4,8,10)
-)
-analyze(formula = exam_score ~ study_hours, data = df3)
-#> [statease] Numeric predictor detected -> Running Simple Linear Regression
+#> ---------------------------------------------------------------------
+#>   NOTE: Assumption checks are based on statistical tests and
+#>   heuristics. They provide guidance but should not be
+#>   interpreted as definitive proof that assumptions are met
+#>   or violated.
 #> 
-#> -- statease Simple Linear Regression Report ---------------------
-#>   Outcome      : exam_score
-#>   Predictor    : study_hours
-#>   N            : 10
-#> -----------------------------------------------------------------
-#>   Model Equation:
-#>   exam_score = 4.800 + 8.891 * study_hours
-#> -----------------------------------------------------------------
-#>   Coefficients:
-#>   Intercept    : 4.800
-#>   Slope        : 8.891  (SE = 0.336)
-#>   t-statistic  : 26.442
-#>   p-value      : 0.0000
-#>   95% CI      : [8.116, 9.666]
-#> -----------------------------------------------------------------
-#>   Model Fit:
-#>   R-squared    : 0.9887
-#>   Adj R-squared: 0.9873
-#>   F-statistic  : 699.184 (df = 1, 8)  p = 0.0000
-#> -----------------------------------------------------------------
-#>   Interpretation:
-#>   The predictor study_hours is statistically significant (p = 0.0000 < alpha 0.05).
-#>   The slope is positive - as study_hours increases by 1 unit, exam_score increases by 8.891 units.
-#>   R-squared = 0.9887: study_hours explains 98.9% of the
-#>   variance in exam_score (large effect).
-#> -----------------------------------------------------------------
+#>   NOTE: Failure to reject an assumption test does not prove
+#>   that the assumption has been satisfied.
 #> 
-
-# Auto Multiple Regression
-df4 <- data.frame(
-  exam_score  = c(23,45,12,67,34,89,56,43,78,90),
-  study_hours = c(2,5,1,7,3,9,6,4,8,10),
-  attendance  = c(60,80,50,90,70,95,85,75,88,92)
-)
-analyze(formula = exam_score ~ study_hours + attendance, data = df4)
-#> [statease] Multiple numeric predictors -> Running Multiple Linear Regression
-#> Warning: Sample size is small (n < 20). Interpret results with caution.
-#> 
-#> -- statease Multiple Linear Regression Report -------------------
-#>   Outcome      : exam_score
-#>   Predictors   : study_hours, attendance
-#>   N            : 10
-#> -----------------------------------------------------------------
-#>   Model Equation:
-#>   exam_score = -2.664 + 8.240*study_hours + 0.141*attendance
-#> -----------------------------------------------------------------
-#>   Overall Model Fit:
-#>   R-squared    : 0.9893 (large effect)
-#>   Adj R-squared: 0.9862
-#>   F-statistic  : 322.885 (df = 2, 7)  p = 0.0000
-#>   The overall model is statistically significant (p = 0.0000 < alpha 0.05).
-#> -----------------------------------------------------------------
-#>   Individual Predictors:
-#> 
-#>   study_hours
-#>     Coefficient  : 8.240  (SE = 1.106)
-#>     t-statistic  : 7.452
-#>     p-value      : 0.0001  [significant]
-#>     95% CI      : [5.626, 10.855]
-#>     Direction    : positive (b = 8.240)
-#> 
-#>   attendance
-#>     Coefficient  : 0.141  (SE = 0.227)
-#>     t-statistic  : 0.620
-#>     p-value      : 0.5549  [not significant]
-#>     95% CI      : [-0.396, 0.677]
-#>     Direction    : positive (b = 0.141)
-#> -----------------------------------------------------------------
-#>   Interpretation:
-#>   The model explains 98.9% of the variance in exam_score
-#>   (R-squared = 0.9893, large effect).
-#>   Adjusted R-squared = 0.9862 accounting for
-#>   the number of predictors in the model.
-#> 
-#>   Significant predictors: study_hours
-#>   Non-significant predictors: attendance
-#> -----------------------------------------------------------------
-#> 
-
-# Auto MANOVA
-df5 <- data.frame(
-  math    = c(23,45,12,67,34,89,56,43,78,90,11,34),
-  english = c(34,56,23,78,45,90,67,54,89,95,22,45),
-  group   = rep(c("A","B","C"), each = 4)
-)
-analyze(formula = cbind(math, english) ~ group, data = df5)
-#> [statease] Multiple outcomes detected -> Running MANOVA
-#> Warning: Sample size is small (n < 20). Interpret results with caution.
-#> 
-#> -- statease MANOVA Report ----------------------------------------
-#>   Outcomes     : math, english
-#>   Group        : group  (3 levels)
-#>   N            : 12
-#> -----------------------------------------------------------------
-#>   Group Means:
-#> 
-#>   math:
-#>     A            : 36.75
-#>     B            : 55.50
-#>     C            : 53.25
-#> 
-#>   english:
-#>     A            : 47.75
-#>     B            : 64.00
-#>     C            : 62.75
-#> -----------------------------------------------------------------
-#>   Multivariate Test Results:
-#>   Pillai's Trace : 0.1372
-#>   Wilks' Lambda  : 0.8645
-#>   F-statistic    : 0.331  (df = 4, 18)
-#>   p-value        : 0.8532
-#>   Effect size    : small (Pillai = 0.1372)
-#> -----------------------------------------------------------------
-#>   Interpretation:
-#>   The overall MANOVA result is not statistically significant (p = 0.8532 > alpha 0.05).
-#>   Pillai's Trace = 0.1372 indicates a small effect.
-#> -----------------------------------------------------------------
-#>   Follow-Up Univariate ANOVAs:
-#> 
-#>   math
-#>     F = 0.494  (df = 2, 9)  p = 0.6260  [not significant]
-#> 
-#>   english
-#>     F = 0.444  (df = 2, 9)  p = 0.6550  [not significant]
-#> 
-#>   Note: Follow-up ANOVAs identify which outcomes
-#>   differ significantly across groups.
-#> -----------------------------------------------------------------
-#> 
-
-# Chi-square
-analyze(
-  x = c("Yes","No","Yes","Yes","No"),
-  y = c("Male","Female","Male","Female","Male")
-)
-#> [statease] Two categorical vectors detected -> Running Chi-Square Test
-#> Warning: Chi-squared approximation may be incorrect
-#> Warning: Chi-squared approximation may be incorrect
-#> 
-#> -- statease Chi-Square Test Report ------------------------------
-#>   N            : 5
-#> -----------------------------------------------------------------
-#>   Contingency Table (Observed):
-#>      y
-#> x     Female Male
-#>   No       1    1
-#>   Yes      1    2
-#> 
-#>   Expected Frequencies:
-#>      y
-#> x     Female Male
-#>   No     0.8  1.2
-#>   Yes    1.2  1.8
-#> 
-#> -----------------------------------------------------------------
-#>   Chi-square   : 0.000
-#>   df           : 1
-#>   p-value      : 1.0000
-#>   Cramer's V   : 0.000 (negligible effect)
-#> -----------------------------------------------------------------
-#>   Interpretation:
-#>   The result is not statistically significant (p = 1.0000 > alpha 0.05).
-#>   There is no significant association between the two variables.
-#>   Effect size is negligible (V = 0.000).
-#> 
-#>   WARNING: Some expected frequencies are less than 5. Interpret with caution.
-#> -----------------------------------------------------------------
+#>   NOTE: Visual inspection of residual plots is always
+#>   recommended alongside formal assumption tests.
+#> ---------------------------------------------------------------------
 #> 
 ```

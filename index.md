@@ -1,6 +1,6 @@
 # statease
 
-![CRAN Downloads](https://cranlogs.r-pkg.org/badges/statease)![CRAN
+![CRAN
 Total](https://cranlogs.r-pkg.org/badges/grand-total/statease)![CRAN
 Version](https://www.r-pkg.org/badges/version/statease)
 

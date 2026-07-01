@@ -56,12 +56,12 @@ print(result)
 #>   Individual Predictors:
 #> 
 #>   study_hours
-#>     Coefficient  : 30.250  (SE = 140113.494)
+#>     Coefficient  : 30.250  (SE = 140113.493)
 #>     z-statistic  : 0.000
 #>     p-value      : 0.9998  [not significant]
-#>     Odds Ratio   : 13716360294019.434
+#>     Odds Ratio   : 13716359765703.211
 #>     95% CI (OR) : [0.000, Inf]
-#>     Interpretation: each unit increase in study_hours increases the odds by 1371636029401843.2%.
+#>     Interpretation: each unit increase in study_hours increases the odds by 1371635976570221.0%.
 #> 
 #>   attendance
 #>     Coefficient  : -2.253  (SE = 18616.367)

@@ -1,7 +1,7 @@
 # statease
 
-![CRAN
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/statease)![CRAN
+![CRAN Downloads](https://cranlogs.r-pkg.org/badges/statease)![CRAN
+Total](https://cranlogs.r-pkg.org/badges/grand-total/statease)![CRAN
 Version](https://www.r-pkg.org/badges/version/statease)
 
 > Simplified statistical analysis with plain-English interpretation for
@@ -33,9 +33,8 @@ devtools::install_github("DevWebWacky/statease")
 
 Try statease directly in your browser without installing R:
 
-🌐 [Launch statease App](https://devwebwacky.shinyapps.io/statease/)
-
-No installation required, just upload your data and start analyzing
+🌐 [Launch statease Shiny
+App](https://devwebwacky.shinyapps.io/statease/)
 
 ## Functions
 
@@ -45,9 +44,11 @@ No installation required, just upload your data and start analyzing
 | [`describe()`](https://devwebwacky.github.io/statease/reference/describe.md) | Descriptive statistics with interpretation |
 | [`ttest_interpret()`](https://devwebwacky.github.io/statease/reference/ttest_interpret.md) | T-tests with Cohen’s d and CI interpretation |
 | [`anova_interpret()`](https://devwebwacky.github.io/statease/reference/anova_interpret.md) | One-way ANOVA with Tukey post-hoc and eta squared |
-| [`anova2_interpret()`](https://devwebwacky.github.io/statease/reference/anova2_interpret.md) | Two-way ANOVA with interaction effects |
+| [`anova2_interpret()`](https://devwebwacky.github.io/statease/reference/anova2_interpret.md) | Two-way ANOVA with Type II/III SS |
 | [`manova_interpret()`](https://devwebwacky.github.io/statease/reference/manova_interpret.md) | MANOVA with Pillai’s trace and follow-up ANOVAs |
 | [`chisq_interpret()`](https://devwebwacky.github.io/statease/reference/chisq_interpret.md) | Chi-square test with Cramer’s V effect size |
+| [`fisher_interpret()`](https://devwebwacky.github.io/statease/reference/fisher_interpret.md) | Fisher’s Exact Test with Odds Ratio |
+| [`mcnemar_interpret()`](https://devwebwacky.github.io/statease/reference/mcnemar_interpret.md) | McNemar’s Test for paired categorical data |
 | [`cor_interpret()`](https://devwebwacky.github.io/statease/reference/cor_interpret.md) | Correlation analysis (Pearson, Spearman, Kendall) |
 | [`reg_interpret()`](https://devwebwacky.github.io/statease/reference/reg_interpret.md) | Simple linear regression with diagnostics |
 | [`mlr_interpret()`](https://devwebwacky.github.io/statease/reference/mlr_interpret.md) | Multiple linear regression with diagnostics |
@@ -55,6 +56,9 @@ No installation required, just upload your data and start analyzing
 | [`mannwhitney_interpret()`](https://devwebwacky.github.io/statease/reference/mannwhitney_interpret.md) | Mann-Whitney U test (non-parametric) |
 | [`wilcoxon_interpret()`](https://devwebwacky.github.io/statease/reference/wilcoxon_interpret.md) | Wilcoxon Signed Rank test (non-parametric) |
 | [`kruskal_interpret()`](https://devwebwacky.github.io/statease/reference/kruskal_interpret.md) | Kruskal-Wallis test with post-hoc comparisons |
+| [`friedman_interpret()`](https://devwebwacky.github.io/statease/reference/friedman_interpret.md) | Friedman Test with Kendall’s W |
+| [`check_assumptions()`](https://devwebwacky.github.io/statease/reference/check_assumptions.md) | Automated assumption checking before analysis |
+| [`power_interpret()`](https://devwebwacky.github.io/statease/reference/power_interpret.md) | Statistical power analysis and sample size calculation |
 | [`interpret_p()`](https://devwebwacky.github.io/statease/reference/interpret_p.md) | Standalone p-value interpreter |
 
 ## Usage
@@ -71,6 +75,10 @@ analyze(x = c(23, 45, 12, 67, 34), var_name = "Exam Scores")
 # Independent samples t-test (auto-detected)
 analyze(x = c(23,45,12,67,34), y = c(19,38,22,51,29),
         var_name = "Scores")
+
+# Check assumptions first
+analyze(x = c(23,45,12,67,34), y = c(19,38,22,51,29),
+        check = TRUE)
 
 # Non-parametric alternative (auto-detected)
 analyze(x = c(23,45,12,67,34), y = c(19,38,22,51,29),
@@ -93,9 +101,6 @@ df <- data.frame(
 )
 analyze(formula = score ~ group, data = df)
 
-# Kruskal-Wallis (non-parametric ANOVA alternative)
-analyze(formula = score ~ group, data = df, nonparam = TRUE)
-
 # Two-way ANOVA (auto-detected)
 df2 <- data.frame(
   score  = c(23,45,12,67,34,89,56,43,78,90,11,34),
@@ -111,21 +116,8 @@ df3 <- data.frame(
 )
 analyze(formula = exam_score ~ study_hours, data = df3)
 
-# Multiple linear regression (auto-detected)
-df4 <- data.frame(
-  exam_score  = c(23,45,12,67,34,89,56,43,78,90),
-  study_hours = c(2,5,1,7,3,9,6,4,8,10),
-  attendance  = c(60,80,50,90,70,95,85,75,88,92)
-)
-analyze(formula = exam_score ~ study_hours + attendance, data = df4)
-
-# MANOVA (auto-detected)
-df5 <- data.frame(
-  math    = c(23,45,12,67,34,89,56,43,78,90,11,34),
-  english = c(34,56,23,78,45,90,67,54,89,95,22,45),
-  group   = rep(c("A","B","C"), each = 4)
-)
-analyze(formula = cbind(math, english) ~ group, data = df5)
+# Power analysis
+analyze(test_type = "ttest.two", effect_size = 0.5)
 
 # Interpret any p-value
 interpret_p(0.03, context = "treatment vs control group")
@@ -138,6 +130,35 @@ meaning**. Perfect for: - Students learning statistics - Researchers who
 want fast readable output - Educators teaching statistical concepts
 
 ## Changelog
+
+### v1.3.0
+
+- Added
+  [`fisher_interpret()`](https://devwebwacky.github.io/statease/reference/fisher_interpret.md)
+  for Fisher’s Exact Test
+- Added
+  [`mcnemar_interpret()`](https://devwebwacky.github.io/statease/reference/mcnemar_interpret.md)
+  for McNemar’s Test
+- Added
+  [`friedman_interpret()`](https://devwebwacky.github.io/statease/reference/friedman_interpret.md)
+  for Friedman Test
+- Added
+  [`check_assumptions()`](https://devwebwacky.github.io/statease/reference/check_assumptions.md)
+  for automated assumption checking
+- Added
+  [`power_interpret()`](https://devwebwacky.github.io/statease/reference/power_interpret.md)
+  for power analysis and sample size
+- Added Shiny app via
+  [`run_app()`](https://devwebwacky.github.io/statease/reference/run_app.md)
+  for point-and-click analysis
+- Updated
+  [`analyze()`](https://devwebwacky.github.io/statease/reference/analyze.md)
+  with `check` and `test_type` arguments
+
+### v1.2.1
+
+- Fixed non-parametric interpretation — stochastic superiority correctly
+  reported instead of median differences
 
 ### v1.2.0
 
@@ -161,11 +182,7 @@ want fast readable output - Educators teaching statistical concepts
   for Kruskal-Wallis test
 - Updated
   [`analyze()`](https://devwebwacky.github.io/statease/reference/analyze.md)
-  with `nonparam` argument for non-parametric routing
-- Fixed
-  [`anova2_interpret()`](https://devwebwacky.github.io/statease/reference/anova2_interpret.md)
-  to use Type II/III SS via car::Anova() instead of Type I SS for
-  order-independent results
+  with `nonparam` argument
 
 ### v1.1.0
 

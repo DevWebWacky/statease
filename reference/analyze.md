@@ -209,7 +209,7 @@ analyze(test_type = "ttest.two", effect_size = 0.5)
 #>   To detect a large effect (effect size = 0.50) with 80% power at alpha = 0.05, you need at least 64 participants per group (128 total for 2 groups).
 #> 
 #>   NOTE: Power analysis results are estimates based on assumptions about effect size, alpha, and power. Actual results may differ depending on the true effect size in the population.
-#>   NOTE: Effect sizes should ideally be based on previous research, pilot studies, or theoretically justified values — not chosen arbitrarily to reduce required sample size.
+#>   NOTE: Effect sizes should ideally be based on previous research, pilot studies, or theoretically justified values, not chosen arbitrarily to reduce required sample size.
 #>   NOTE: A power of 0.80 is a conventional minimum. In high stakes research such as clinical trials, a higher power of 0.90 or 0.95 is often recommended.
 #>   NOTE: Power analysis assumes that the chosen statistical test and its assumptions are appropriate for the data.
 #> -----------------------------------------------------------------

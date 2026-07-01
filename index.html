@@ -16,8 +16,8 @@
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Simplified Statistical Analysis with Plain-English Interpretation">
-<meta name="description" content="A toolkit for common statistical analyses including descriptive statistics, Student's t-tests (one-sample, independent, and paired), one-way and two-way Analysis of Variance (ANOVA), Multivariate Analysis of Variance (MANOVA), chi-square tests, correlation analysis, simple and multiple linear regression, logistic regression, and non-parametric tests (Mann-Whitney U, Wilcoxon Signed Rank, and Kruskal-Wallis). Each function automatically interprets results in plain English, reporting effect sizes, confidence intervals, and p-value interpretations. Post-hoc tests are automatically applied following significant results. A master function automatically detects the appropriate test based on the structure of the input data. Methods are based on Cohen, J. (1988) &lt;doi:10.4324/9780203771587&gt;, Tukey, J. W. (1949) &lt;doi:10.2307/3001913&gt;, and Shapiro and Wilk (1965) &lt;doi:10.2307/2333709&gt;.">
-<meta property="og:description" content="A toolkit for common statistical analyses including descriptive statistics, Student's t-tests (one-sample, independent, and paired), one-way and two-way Analysis of Variance (ANOVA), Multivariate Analysis of Variance (MANOVA), chi-square tests, correlation analysis, simple and multiple linear regression, logistic regression, and non-parametric tests (Mann-Whitney U, Wilcoxon Signed Rank, and Kruskal-Wallis). Each function automatically interprets results in plain English, reporting effect sizes, confidence intervals, and p-value interpretations. Post-hoc tests are automatically applied following significant results. A master function automatically detects the appropriate test based on the structure of the input data. Methods are based on Cohen, J. (1988) &lt;doi:10.4324/9780203771587&gt;, Tukey, J. W. (1949) &lt;doi:10.2307/3001913&gt;, and Shapiro and Wilk (1965) &lt;doi:10.2307/2333709&gt;.">
+<meta name="description" content="A toolkit for common statistical analyses including descriptive statistics, Students t-tests (one-sample, independent, and paired), one-way and two-way Analysis of Variance (ANOVA), Multivariate Analysis of Variance (MANOVA), chi-square tests, Fishers Exact Test, McNemar's Test, correlation analysis, simple and multiple linear regression, logistic regression, Friedman Test, and non-parametric tests (Mann-Whitney U, Wilcoxon Signed Rank, and Kruskal-Wallis). Additional tools include statistical power analysis and automated assumption checking. Each function automatically interprets results in plain English, reporting effect sizes, confidence intervals, and p-value interpretations. Post-hoc tests are automatically applied following significant results. A master function automatically detects the appropriate test based on the structure of the input data. Methods are based on Cohen, J. (1988) &lt;doi:10.4324/9780203771587&gt;, Tukey, J. W. (1949) &lt;doi:10.2307/3001913&gt;, and Shapiro and Wilk (1965) &lt;doi:10.2307/2333709&gt;.">
+<meta property="og:description" content="A toolkit for common statistical analyses including descriptive statistics, Students t-tests (one-sample, independent, and paired), one-way and two-way Analysis of Variance (ANOVA), Multivariate Analysis of Variance (MANOVA), chi-square tests, Fishers Exact Test, McNemar's Test, correlation analysis, simple and multiple linear regression, logistic regression, Friedman Test, and non-parametric tests (Mann-Whitney U, Wilcoxon Signed Rank, and Kruskal-Wallis). Additional tools include statistical power analysis and automated assumption checking. Each function automatically interprets results in plain English, reporting effect sizes, confidence intervals, and p-value interpretations. Post-hoc tests are automatically applied following significant results. A master function automatically detects the appropriate test based on the structure of the input data. Methods are based on Cohen, J. (1988) &lt;doi:10.4324/9780203771587&gt;, Tukey, J. W. (1949) &lt;doi:10.2307/3001913&gt;, and Shapiro and Wilk (1965) &lt;doi:10.2307/2333709&gt;.">
 <meta property="og:image" content="https://devwebwacky.github.io/statease/logo.png">
 </head>
 <body>
@@ -58,7 +58,7 @@
 <img src="logo.png" class="logo" alt=""><h1 id="statease-">statease <a class="anchor" aria-label="anchor" href="#statease-"></a>
 </h1>
 </div>
-<p><img src="https://cranlogs.r-pkg.org/badges/grand-total/statease" alt="CRAN Downloads"><img src="https://www.r-pkg.org/badges/version/statease" alt="CRAN Version"></p>
+<p><img src="https://cranlogs.r-pkg.org/badges/statease" alt="CRAN Downloads"><img src="https://cranlogs.r-pkg.org/badges/grand-total/statease" alt="CRAN Total"><img src="https://www.r-pkg.org/badges/version/statease" alt="CRAN Version"></p>
 <blockquote>
 <p>Simplified statistical analysis with plain-English interpretation for R</p>
 </blockquote>
@@ -81,8 +81,7 @@
 <h2 id="live-app">Live App<a class="anchor" aria-label="anchor" href="#live-app"></a>
 </h2>
 <p>Try statease directly in your browser without installing R:</p>
-<p>🌐 <a href="https://devwebwacky.shinyapps.io/statease/" class="external-link">Launch statease App</a></p>
-<p>No installation required, just upload your data and start analyzing</p>
+<p>🌐 <a href="https://devwebwacky.shinyapps.io/statease/" class="external-link">Launch statease Shiny App</a></p>
 </div>
 <div class="section level2">
 <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
@@ -115,7 +114,7 @@
 </tr>
 <tr>
 <td><code><a href="reference/anova2_interpret.html">anova2_interpret()</a></code></td>
-<td>Two-way ANOVA with interaction effects</td>
+<td>Two-way ANOVA with Type II/III SS</td>
 </tr>
 <tr>
 <td><code><a href="reference/manova_interpret.html">manova_interpret()</a></code></td>
@@ -124,6 +123,14 @@
 <tr>
 <td><code><a href="reference/chisq_interpret.html">chisq_interpret()</a></code></td>
 <td>Chi-square test with Cramer’s V effect size</td>
+</tr>
+<tr>
+<td><code><a href="reference/fisher_interpret.html">fisher_interpret()</a></code></td>
+<td>Fisher’s Exact Test with Odds Ratio</td>
+</tr>
+<tr>
+<td><code><a href="reference/mcnemar_interpret.html">mcnemar_interpret()</a></code></td>
+<td>McNemar’s Test for paired categorical data</td>
 </tr>
 <tr>
 <td><code><a href="reference/cor_interpret.html">cor_interpret()</a></code></td>
@@ -154,6 +161,18 @@
 <td>Kruskal-Wallis test with post-hoc comparisons</td>
 </tr>
 <tr>
+<td><code><a href="reference/friedman_interpret.html">friedman_interpret()</a></code></td>
+<td>Friedman Test with Kendall’s W</td>
+</tr>
+<tr>
+<td><code><a href="reference/check_assumptions.html">check_assumptions()</a></code></td>
+<td>Automated assumption checking before analysis</td>
+</tr>
+<tr>
+<td><code><a href="reference/power_interpret.html">power_interpret()</a></code></td>
+<td>Statistical power analysis and sample size calculation</td>
+</tr>
+<tr>
 <td><code><a href="reference/interpret_p.html">interpret_p()</a></code></td>
 <td>Standalone p-value interpreter</td>
 </tr>
@@ -176,6 +195,10 @@
 <span><span class="fu"><a href="reference/analyze.html">analyze</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">19</span>,<span class="fl">38</span>,<span class="fl">22</span>,<span class="fl">51</span>,<span class="fl">29</span><span class="op">)</span>,</span>
 <span>        var_name <span class="op">=</span> <span class="st">"Scores"</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># Check assumptions first</span></span>
+<span><span class="fu"><a href="reference/analyze.html">analyze</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">19</span>,<span class="fl">38</span>,<span class="fl">22</span>,<span class="fl">51</span>,<span class="fl">29</span><span class="op">)</span>,</span>
+<span>        check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># Non-parametric alternative (auto-detected)</span></span>
 <span><span class="fu"><a href="reference/analyze.html">analyze</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">19</span>,<span class="fl">38</span>,<span class="fl">22</span>,<span class="fl">51</span>,<span class="fl">29</span><span class="op">)</span>,</span>
 <span>        nonparam <span class="op">=</span> <span class="cn">TRUE</span>, var_name <span class="op">=</span> <span class="st">"Scores"</span><span class="op">)</span></span>
@@ -197,9 +220,6 @@
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/analyze.html">analyze</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">score</span> <span class="op">~</span> <span class="va">group</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Kruskal-Wallis (non-parametric ANOVA alternative)</span></span>
-<span><span class="fu"><a href="reference/analyze.html">analyze</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">score</span> <span class="op">~</span> <span class="va">group</span>, data <span class="op">=</span> <span class="va">df</span>, nonparam <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
 <span><span class="co"># Two-way ANOVA (auto-detected)</span></span>
 <span><span class="va">df2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  score  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span>,<span class="fl">89</span>,<span class="fl">56</span>,<span class="fl">43</span>,<span class="fl">78</span>,<span class="fl">90</span>,<span class="fl">11</span>,<span class="fl">34</span><span class="op">)</span>,</span>
@@ -215,21 +235,8 @@
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/analyze.html">analyze</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">exam_score</span> <span class="op">~</span> <span class="va">study_hours</span>, data <span class="op">=</span> <span class="va">df3</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Multiple linear regression (auto-detected)</span></span>
-<span><span class="va">df4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  exam_score  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span>,<span class="fl">89</span>,<span class="fl">56</span>,<span class="fl">43</span>,<span class="fl">78</span>,<span class="fl">90</span><span class="op">)</span>,</span>
-<span>  study_hours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span>,<span class="fl">1</span>,<span class="fl">7</span>,<span class="fl">3</span>,<span class="fl">9</span>,<span class="fl">6</span>,<span class="fl">4</span>,<span class="fl">8</span>,<span class="fl">10</span><span class="op">)</span>,</span>
-<span>  attendance  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">60</span>,<span class="fl">80</span>,<span class="fl">50</span>,<span class="fl">90</span>,<span class="fl">70</span>,<span class="fl">95</span>,<span class="fl">85</span>,<span class="fl">75</span>,<span class="fl">88</span>,<span class="fl">92</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/analyze.html">analyze</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">exam_score</span> <span class="op">~</span> <span class="va">study_hours</span> <span class="op">+</span> <span class="va">attendance</span>, data <span class="op">=</span> <span class="va">df4</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># MANOVA (auto-detected)</span></span>
-<span><span class="va">df5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  math    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span>,<span class="fl">89</span>,<span class="fl">56</span>,<span class="fl">43</span>,<span class="fl">78</span>,<span class="fl">90</span>,<span class="fl">11</span>,<span class="fl">34</span><span class="op">)</span>,</span>
-<span>  english <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">34</span>,<span class="fl">56</span>,<span class="fl">23</span>,<span class="fl">78</span>,<span class="fl">45</span>,<span class="fl">90</span>,<span class="fl">67</span>,<span class="fl">54</span>,<span class="fl">89</span>,<span class="fl">95</span>,<span class="fl">22</span>,<span class="fl">45</span><span class="op">)</span>,</span>
-<span>  group   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/analyze.html">analyze</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">math</span>, <span class="va">english</span><span class="op">)</span> <span class="op">~</span> <span class="va">group</span>, data <span class="op">=</span> <span class="va">df5</span><span class="op">)</span></span>
+<span><span class="co"># Power analysis</span></span>
+<span><span class="fu"><a href="reference/analyze.html">analyze</a></span><span class="op">(</span>test_type <span class="op">=</span> <span class="st">"ttest.two"</span>, effect_size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Interpret any p-value</span></span>
 <span><span class="fu"><a href="reference/interpret_p.html">interpret_p</a></span><span class="op">(</span><span class="fl">0.03</span>, context <span class="op">=</span> <span class="st">"treatment vs control group"</span><span class="op">)</span></span></code></pre></div>
@@ -244,6 +251,26 @@
 <h2 id="changelog">Changelog<a class="anchor" aria-label="anchor" href="#changelog"></a>
 </h2>
 <div class="section level3">
+<h3 id="v130">v1.3.0<a class="anchor" aria-label="anchor" href="#v130"></a>
+</h3>
+<ul>
+<li>Added <code><a href="reference/fisher_interpret.html">fisher_interpret()</a></code> for Fisher’s Exact Test</li>
+<li>Added <code><a href="reference/mcnemar_interpret.html">mcnemar_interpret()</a></code> for McNemar’s Test</li>
+<li>Added <code><a href="reference/friedman_interpret.html">friedman_interpret()</a></code> for Friedman Test</li>
+<li>Added <code><a href="reference/check_assumptions.html">check_assumptions()</a></code> for automated assumption checking</li>
+<li>Added <code><a href="reference/power_interpret.html">power_interpret()</a></code> for power analysis and sample size</li>
+<li>Added Shiny app via <code><a href="reference/run_app.html">run_app()</a></code> for point-and-click analysis</li>
+<li>Updated <code><a href="reference/analyze.html">analyze()</a></code> with <code>check</code> and <code>test_type</code> arguments</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="v121">v1.2.1<a class="anchor" aria-label="anchor" href="#v121"></a>
+</h3>
+<ul>
+<li>Fixed non-parametric interpretation — stochastic superiority correctly reported instead of median differences</li>
+</ul>
+</div>
+<div class="section level3">
 <h3 id="v120">v1.2.0<a class="anchor" aria-label="anchor" href="#v120"></a>
 </h3>
 <ul>
@@ -253,8 +280,7 @@
 <li>Added <code><a href="reference/mannwhitney_interpret.html">mannwhitney_interpret()</a></code> for Mann-Whitney U test</li>
 <li>Added <code><a href="reference/wilcoxon_interpret.html">wilcoxon_interpret()</a></code> for Wilcoxon Signed Rank test</li>
 <li>Added <code><a href="reference/kruskal_interpret.html">kruskal_interpret()</a></code> for Kruskal-Wallis test</li>
-<li>Updated <code><a href="reference/analyze.html">analyze()</a></code> with <code>nonparam</code> argument for non-parametric routing</li>
-<li>Fixed <code><a href="reference/anova2_interpret.html">anova2_interpret()</a></code> to use Type II/III SS via car::Anova() instead of Type I SS for order-independent results</li>
+<li>Updated <code><a href="reference/analyze.html">analyze()</a></code> with <code>nonparam</code> argument</li>
 </ul>
 </div>
 <div class="section level3">

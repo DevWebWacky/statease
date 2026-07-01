@@ -1,17 +1,18 @@
 ## R CMD check results
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note
+
+## Notes
+* checking for future file timestamps: unable to verify current time
+  This is a local network issue and not related to the package itself.
 
 ## Comments to CRAN
-This is a submission of statease v1.2.0.
+This is a submission of statease v1.3.0.
 
 New functions added in this version:
-1. mlr_interpret() - Multiple linear regression with diagnostics
-2. logistic_interpret() - Logistic regression with odds ratios
-3. manova_interpret() - MANOVA with Pillai's trace and follow-up ANOVAs
-4. mannwhitney_interpret() - Mann-Whitney U test with effect size
-5. wilcoxon_interpret() - Wilcoxon Signed Rank test with effect size
-6. kruskal_interpret() - Kruskal-Wallis test with post-hoc comparisons
-7. analyze() updated with nonparam argument for non-parametric routing
-
-Bug fixes:
-- anova2_interpret() now uses car::Anova() with Type II/III SS instead of Type I SS for order-independent results
+1. fisher_interpret() - Fisher's Exact Test with Odds Ratio
+2. mcnemar_interpret() - McNemar's Test for paired categorical data
+3. friedman_interpret() - Friedman Test with Kendall's W and post-hoc
+4. check_assumptions() - Automated assumption checking before analysis
+5. power_interpret() - Statistical power analysis and sample size calculation
+6. run_app() - Interactive Shiny app for point-and-click analysis
+7. analyze() updated with 'check' and 'test_type' arguments

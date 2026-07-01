@@ -219,7 +219,7 @@ power_interpret <- function(test, effect_size, n = NULL,
   if (mode == "power" && result_val < 0.80) {
     warnings_list <- c(warnings_list,
                        paste("Power is less than 0.80. The study may be",
-                             "underpowered — there is a meaningful risk of",
+                             "underpowered, there is a meaningful risk of",
                              "failing to detect a true effect (Type II error).",
                              "Consider increasing the sample size."))
   }
@@ -249,7 +249,7 @@ power_interpret <- function(test, effect_size, n = NULL,
   notes_list <- c(notes_list,
                   paste("Effect sizes should ideally be based on previous",
                         "research, pilot studies, or theoretically justified",
-                        "values — not chosen arbitrarily to reduce required",
+                        "values, not chosen arbitrarily to reduce required",
                         "sample size."))
 
   notes_list <- c(notes_list,

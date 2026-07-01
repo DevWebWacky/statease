@@ -371,6 +371,88 @@ analyze(
 
 ---
 
+## 14. Fisher's Exact Test
+
+Test the association between two categorical variables 
+when sample sizes are small:
+
+```{r}
+result <- fisher_interpret(
+  tutorial_data$method,
+  tutorial_data$passed_label
+)
+print(result)
+```
+
+## 15. McNemar's Test
+
+Test whether there is a significant difference in paired 
+proportions between two related measurements:
+
+```{r}
+pre_pass  <- sample(c("Yes","No"), 90, replace = TRUE, 
+                    prob = c(0.4, 0.6))
+post_pass <- sample(c("Yes","No"), 90, replace = TRUE, 
+                    prob = c(0.7, 0.3))
+
+result <- mcnemar_interpret(pre_pass, post_pass)
+print(result)
+```
+
+## 16. Friedman Test
+
+Non-parametric alternative to repeated measures ANOVA:
+
+```{r}
+friedman_data <- data.frame(
+  score   = c(23,45,12,67,34,89,56,43,78,90,11,34),
+  time    = rep(c("T1","T2","T3"), each = 4),
+  subject = rep(1:4, times = 3)
+)
+
+result <- friedman_interpret(score ~ time | subject, 
+                             data = friedman_data)
+print(result)
+```
+
+## 17. Checking Assumptions
+
+Before running a test, check its assumptions automatically:
+
+```{r}
+result <- check_assumptions(
+  "ttest",
+  x = males,
+  y = females
+)
+print(result)
+```
+
+## 18. Power Analysis
+
+Determine the sample size needed to detect an effect:
+
+```{r}
+result <- power_interpret(
+  "ttest.two",
+  effect_size = 0.5
+)
+print(result)
+```
+
+## 19. The Shiny App
+
+For users who prefer a point-and-click interface, statease 
+includes a built-in Shiny app:
+
+```{r eval=FALSE}
+statease::run_app()
+```
+
+This launches an interactive web application where you can 
+upload your data, select variables, and run any statease 
+function without writing code.
+
 ## Summary
 
 | Test | Function | analyze() support |
@@ -390,4 +472,9 @@ analyze(
 | Mann-Whitney U | `mannwhitney_interpret()` | ✔ |
 | Wilcoxon Signed Rank | `wilcoxon_interpret()` | ✔ |
 | Kruskal-Wallis | `kruskal_interpret()` | ✔ |
+| Fisher's Exact | `fisher_interpret()` | ✔ |
+| McNemar's Test | `mcnemar_interpret()` | ✔ |
+| Friedman Test | `friedman_interpret()` | ✔ |
+| Check Assumptions | `check_assumptions()` | ✔ |
+| Power Analysis | `power_interpret()` | ✔ |
 | P-value interpretation | `interpret_p()` | - |

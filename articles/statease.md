@@ -1013,6 +1013,236 @@ analyze(
 
 ------------------------------------------------------------------------
 
+## 14. Fisher’s Exact Test
+
+Test the association between two categorical variables when sample sizes
+are small:
+
+``` r
+
+result <- fisher_interpret(
+  tutorial_data$method,
+  tutorial_data$passed_label
+)
+print(result)
+#> 
+#> --- statease Fisher's Exact Test Report ---------------
+#>   N            : 90
+#>   Table size   : 3 x 2
+#> 
+#>   Contingency Table (Observed):
+#>              y
+#> x             Fail Pass
+#>   Hybrid         6   24
+#>   Online         8   22
+#>   Traditional   10   20
+#> 
+#>   Expected Frequencies:
+#>              y
+#> x             Fail Pass
+#>   Hybrid         8   22
+#>   Online         8   22
+#>   Traditional    8   22
+#> 
+#> -----------------------------------------------------------------
+#>   p-value      : 0.5541
+#> -----------------------------------------------------------------
+#>   Interpretation:
+#>   The result is not statistically significant (p = 0.5541 > alpha 0.05).
+#>   There is insufficient evidence of an association between the two variables.
+#> 
+#>   WARNING: The contingency table is larger than 2x2. Fisher's Exact Test may require simulation or approximation methods, which can increase computation time and reduce exactness. Interpret results with caution. If simulate.p.value = TRUE was used, explicitly state this in your report.
+#> 
+#>   NOTE: All expected frequencies exceed 5. A Chi-square test would also be appropriate and may be preferred for larger samples. Consider using chisq_interpret().
+#> -----------------------------------------------------------------
+```
+
+## 15. McNemar’s Test
+
+Test whether there is a significant difference in paired proportions
+between two related measurements:
+
+``` r
+
+pre_pass  <- sample(c("Yes","No"), 90, replace = TRUE, 
+                    prob = c(0.4, 0.6))
+post_pass <- sample(c("Yes","No"), 90, replace = TRUE, 
+                    prob = c(0.7, 0.3))
+
+result <- mcnemar_interpret(pre_pass, post_pass)
+print(result)
+#> 
+#> statease McNemar's Test Report --------------------------------
+#>   N            : 90
+#>   Table size   : 2 x 2
+#>   Discordant   : 49 pairs
+#> -----------------------------------------------------------------
+#>   Contingency Table:
+#>      y
+#> x     No Yes
+#>   No  14  39
+#>   Yes 10  27
+#> 
+#> -----------------------------------------------------------------
+#>   p-value      : 0.0001
+#>   Matched OR   : 3.900
+#>   95% CI      : [1.947, 7.812]
+#> -----------------------------------------------------------------
+#>   Interpretation:
+#>   The result is statistically significant (p = 0.0001 < alpha 0.05).
+#>   There is evidence of a significant difference in paired proportions between the two measurements.
+#>   Matched OR = 3.900: More subjects changed from the first category to the second category than vice versa.
+#>   95% CI [1.947, 7.812] excludes 1: Evidence of a significant difference in paired proportions between measurements.
+#> 
+#>   WARNING: McNemar's Test assumes that observations are paired and independent across pairs. Violation of this assumption may affect the validity of the results.
+#> 
+#>   NOTE: McNemar's Test requires paired or matched data. Ensure that each row in your data represents the same subject measured twice or a matched pair.
+#> -----------------------------------------------------------------
+```
+
+## 16. Friedman Test
+
+Non-parametric alternative to repeated measures ANOVA:
+
+``` r
+
+friedman_data <- data.frame(
+  score   = c(23,45,12,67,34,89,56,43,78,90,11,34),
+  time    = rep(c("T1","T2","T3"), each = 4),
+  subject = rep(1:4, times = 3)
+)
+
+result <- friedman_interpret(score ~ time | subject, 
+                             data = friedman_data)
+#> Warning in friedman_interpret(score ~ time | subject, data = friedman_data):
+#> The Friedman Test may have low statistical power with very small sample sizes.
+#> Interpret non-significant results with caution.
+print(result)
+#> 
+#> -- statease Friedman Test Report 
+#>   Outcome      : score
+#>   Time/Group   : time (3 levels)
+#>   Subjects     : subject (n = 4)
+#> -----------------------------------------------------------------
+#>   Group Medians (descriptive only):
+#>     T1           : 34.00
+#>     T2           : 49.50
+#>     T3           : 56.00
+#> -----------------------------------------------------------------
+#>   Chi-square   : 0.500
+#>   df           : 2
+#>   p-value      : 0.7788
+#>   Kendall's W  : 0.0625 (negligible effect)
+#> -----------------------------------------------------------------
+#>   Interpretation:
+#>   The result is not statistically significant (p = 0.7788 > alpha 0.05).
+#>   There is insufficient evidence of a significant difference in ranks across the related groups or repeated measurements.
+#> 
+#>   NOTE: Medians are reported for descriptive purposes only.
+#>   The Friedman Test assesses whether rank distributions
+#>   differ across groups and does not directly test for
+#>   differences in medians.
+#> 
+#>   Post-hoc tests not run (overall result not significant).
+#> 
+#>   WARNING: The Friedman Test assumes that the blocks (subjects) are independent of each other. Violation of this assumption may affect the validity of the results.
+#> 
+#>   NOTE: Normality assumption appears reasonable. If the assumptions of repeated measures ANOVA are met, consider using repeated measures ANOVA for greater statistical power.
+#> -----------------------------------------------------------------
+```
+
+## 17. Checking Assumptions
+
+Before running a test, check its assumptions automatically:
+
+``` r
+
+result <- check_assumptions(
+  "ttest",
+  x = males,
+  y = females
+)
+print(result)
+#> 
+#> -- statease Assumption Check Report -------------------------------
+#>   Test         : ttest
+#> ---------------------------------------------------------------------
+#> 
+#>   [PASSED] Normality (x)
+#>     Shapiro-Wilk test: statistic = 0.950, p = 0.0502. Normality assumption appears satisfied.
+#> 
+#>   [PASSED] Sample size guidance (x)
+#>     n = 45. Sample size appears reasonable.
+#> 
+#>   [PASSED] Normality (y)
+#>     Shapiro-Wilk test: statistic = 0.963, p = 0.1561. Normality assumption appears satisfied.
+#> 
+#>   [PASSED] Sample size guidance (y)
+#>     n = 45. Sample size appears reasonable.
+#> 
+#>   [PASSED] Homogeneity of variance
+#>     Levene's Test: p = 0.8482. Variances appear approximately equal.
+#> 
+#> ---------------------------------------------------------------------
+#>   NOTE: Assumption checks are based on statistical tests and
+#>   heuristics. They provide guidance but should not be
+#>   interpreted as definitive proof that assumptions are met
+#>   or violated.
+#> 
+#>   NOTE: Failure to reject an assumption test does not prove
+#>   that the assumption has been satisfied.
+#> 
+#>   NOTE: Visual inspection of residual plots is always
+#>   recommended alongside formal assumption tests.
+#> ---------------------------------------------------------------------
+```
+
+## 18. Power Analysis
+
+Determine the sample size needed to detect an effect:
+
+``` r
+
+result <- power_interpret(
+  "ttest.two",
+  effect_size = 0.5
+)
+print(result)
+#> 
+#> -- statease Power Analysis Report  
+#>   Test         : Independent Samples T-Test
+#>   Mode         : Calculate required sample size
+#> -----------------------------------------------------------------
+#>   Effect size  : 0.500 (large)
+#>   Alpha        : 0.05
+#>   Desired power: 0.80 (80%)
+#>   Required n   : 64
+#>   Total N      : 128 (2 groups x 64)
+#> -----------------------------------------------------------------
+#>   Interpretation:
+#>   To detect a large effect (effect size = 0.50) with 80% power at alpha = 0.05, you need at least 64 participants per group (128 total for 2 groups).
+#> 
+#>   NOTE: Power analysis results are estimates based on assumptions about effect size, alpha, and power. Actual results may differ depending on the true effect size in the population.
+#>   NOTE: Effect sizes should ideally be based on previous research, pilot studies, or theoretically justified values, not chosen arbitrarily to reduce required sample size.
+#>   NOTE: A power of 0.80 is a conventional minimum. In high stakes research such as clinical trials, a higher power of 0.90 or 0.95 is often recommended.
+#>   NOTE: Power analysis assumes that the chosen statistical test and its assumptions are appropriate for the data.
+#> -----------------------------------------------------------------
+```
+
+## 19. The Shiny App
+
+For users who prefer a point-and-click interface, statease includes a
+built-in Shiny app:
+
+``` r
+
+statease::run_app()
+```
+
+This launches an interactive web application where you can upload your
+data, select variables, and run any statease function without writing
+code.
+
 ## Summary
 
 | Test | Function | analyze() support |
@@ -1032,4 +1262,9 @@ analyze(
 | Mann-Whitney U | [`mannwhitney_interpret()`](https://devwebwacky.github.io/statease/reference/mannwhitney_interpret.md) | ✔ |
 | Wilcoxon Signed Rank | [`wilcoxon_interpret()`](https://devwebwacky.github.io/statease/reference/wilcoxon_interpret.md) | ✔ |
 | Kruskal-Wallis | [`kruskal_interpret()`](https://devwebwacky.github.io/statease/reference/kruskal_interpret.md) | ✔ |
+| Fisher’s Exact | [`fisher_interpret()`](https://devwebwacky.github.io/statease/reference/fisher_interpret.md) | ✔ |
+| McNemar’s Test | [`mcnemar_interpret()`](https://devwebwacky.github.io/statease/reference/mcnemar_interpret.md) | ✔ |
+| Friedman Test | [`friedman_interpret()`](https://devwebwacky.github.io/statease/reference/friedman_interpret.md) | ✔ |
+| Check Assumptions | [`check_assumptions()`](https://devwebwacky.github.io/statease/reference/check_assumptions.md) | ✔ |
+| Power Analysis | [`power_interpret()`](https://devwebwacky.github.io/statease/reference/power_interpret.md) | ✔ |
 | P-value interpretation | [`interpret_p()`](https://devwebwacky.github.io/statease/reference/interpret_p.md) | \- |

@@ -1014,6 +1014,223 @@ use!</p>
 <hr>
 </div>
 <div class="section level2">
+<h2 id="fishers-exact-test">14. Fisher’s Exact Test<a class="anchor" aria-label="anchor" href="#fishers-exact-test"></a>
+</h2>
+<p>Test the association between two categorical variables when sample
+sizes are small:</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fisher_interpret.html">fisher_interpret</a></span><span class="op">(</span></span>
+<span>  <span class="va">tutorial_data</span><span class="op">$</span><span class="va">method</span>,</span>
+<span>  <span class="va">tutorial_data</span><span class="op">$</span><span class="va">passed_label</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; --- statease Fisher's Exact Test Report ---------------</span></span>
+<span><span class="co">#&gt;   N            : 90</span></span>
+<span><span class="co">#&gt;   Table size   : 3 x 2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Contingency Table (Observed):</span></span>
+<span><span class="co">#&gt;              y</span></span>
+<span><span class="co">#&gt; x             Fail Pass</span></span>
+<span><span class="co">#&gt;   Hybrid         6   24</span></span>
+<span><span class="co">#&gt;   Online         8   22</span></span>
+<span><span class="co">#&gt;   Traditional   10   20</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Expected Frequencies:</span></span>
+<span><span class="co">#&gt;              y</span></span>
+<span><span class="co">#&gt; x             Fail Pass</span></span>
+<span><span class="co">#&gt;   Hybrid         8   22</span></span>
+<span><span class="co">#&gt;   Online         8   22</span></span>
+<span><span class="co">#&gt;   Traditional    8   22</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   p-value      : 0.5541</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Interpretation:</span></span>
+<span><span class="co">#&gt;   The result is not statistically significant (p = 0.5541 &gt; alpha 0.05).</span></span>
+<span><span class="co">#&gt;   There is insufficient evidence of an association between the two variables.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   WARNING: The contingency table is larger than 2x2. Fisher's Exact Test may require simulation or approximation methods, which can increase computation time and reduce exactness. Interpret results with caution. If simulate.p.value = TRUE was used, explicitly state this in your report.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   NOTE: All expected frequencies exceed 5. A Chi-square test would also be appropriate and may be preferred for larger samples. Consider using chisq_interpret().</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="mcnemars-test">15. McNemar’s Test<a class="anchor" aria-label="anchor" href="#mcnemars-test"></a>
+</h2>
+<p>Test whether there is a significant difference in paired proportions
+between two related measurements:</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pre_pass</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Yes"</span>,<span class="st">"No"</span><span class="op">)</span>, <span class="fl">90</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>                    prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">post_pass</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Yes"</span>,<span class="st">"No"</span><span class="op">)</span>, <span class="fl">90</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>                    prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">0.3</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mcnemar_interpret.html">mcnemar_interpret</a></span><span class="op">(</span><span class="va">pre_pass</span>, <span class="va">post_pass</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; statease McNemar's Test Report --------------------------------</span></span>
+<span><span class="co">#&gt;   N            : 90</span></span>
+<span><span class="co">#&gt;   Table size   : 2 x 2</span></span>
+<span><span class="co">#&gt;   Discordant   : 49 pairs</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Contingency Table:</span></span>
+<span><span class="co">#&gt;      y</span></span>
+<span><span class="co">#&gt; x     No Yes</span></span>
+<span><span class="co">#&gt;   No  14  39</span></span>
+<span><span class="co">#&gt;   Yes 10  27</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   p-value      : 0.0001</span></span>
+<span><span class="co">#&gt;   Matched OR   : 3.900</span></span>
+<span><span class="co">#&gt;   95% CI      : [1.947, 7.812]</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Interpretation:</span></span>
+<span><span class="co">#&gt;   The result is statistically significant (p = 0.0001 &lt; alpha 0.05).</span></span>
+<span><span class="co">#&gt;   There is evidence of a significant difference in paired proportions between the two measurements.</span></span>
+<span><span class="co">#&gt;   Matched OR = 3.900: More subjects changed from the first category to the second category than vice versa.</span></span>
+<span><span class="co">#&gt;   95% CI [1.947, 7.812] excludes 1: Evidence of a significant difference in paired proportions between measurements.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   WARNING: McNemar's Test assumes that observations are paired and independent across pairs. Violation of this assumption may affect the validity of the results.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   NOTE: McNemar's Test requires paired or matched data. Ensure that each row in your data represents the same subject measured twice or a matched pair.</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="friedman-test">16. Friedman Test<a class="anchor" aria-label="anchor" href="#friedman-test"></a>
+</h2>
+<p>Non-parametric alternative to repeated measures ANOVA:</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">friedman_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  score   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span>,<span class="fl">89</span>,<span class="fl">56</span>,<span class="fl">43</span>,<span class="fl">78</span>,<span class="fl">90</span>,<span class="fl">11</span>,<span class="fl">34</span><span class="op">)</span>,</span>
+<span>  time    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T1"</span>,<span class="st">"T2"</span>,<span class="st">"T3"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,</span>
+<span>  subject <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, times <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/friedman_interpret.html">friedman_interpret</a></span><span class="op">(</span><span class="va">score</span> <span class="op">~</span> <span class="va">time</span> <span class="op">|</span> <span class="va">subject</span>, </span>
+<span>                             data <span class="op">=</span> <span class="va">friedman_data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in friedman_interpret(score ~ time | subject, data = friedman_data):</span></span>
+<span><span class="co">#&gt; The Friedman Test may have low statistical power with very small sample sizes.</span></span>
+<span><span class="co">#&gt; Interpret non-significant results with caution.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; -- statease Friedman Test Report </span></span>
+<span><span class="co">#&gt;   Outcome      : score</span></span>
+<span><span class="co">#&gt;   Time/Group   : time (3 levels)</span></span>
+<span><span class="co">#&gt;   Subjects     : subject (n = 4)</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Group Medians (descriptive only):</span></span>
+<span><span class="co">#&gt;     T1           : 34.00</span></span>
+<span><span class="co">#&gt;     T2           : 49.50</span></span>
+<span><span class="co">#&gt;     T3           : 56.00</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Chi-square   : 0.500</span></span>
+<span><span class="co">#&gt;   df           : 2</span></span>
+<span><span class="co">#&gt;   p-value      : 0.7788</span></span>
+<span><span class="co">#&gt;   Kendall's W  : 0.0625 (negligible effect)</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Interpretation:</span></span>
+<span><span class="co">#&gt;   The result is not statistically significant (p = 0.7788 &gt; alpha 0.05).</span></span>
+<span><span class="co">#&gt;   There is insufficient evidence of a significant difference in ranks across the related groups or repeated measurements.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   NOTE: Medians are reported for descriptive purposes only.</span></span>
+<span><span class="co">#&gt;   The Friedman Test assesses whether rank distributions</span></span>
+<span><span class="co">#&gt;   differ across groups and does not directly test for</span></span>
+<span><span class="co">#&gt;   differences in medians.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Post-hoc tests not run (overall result not significant).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   WARNING: The Friedman Test assumes that the blocks (subjects) are independent of each other. Violation of this assumption may affect the validity of the results.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   NOTE: Normality assumption appears reasonable. If the assumptions of repeated measures ANOVA are met, consider using repeated measures ANOVA for greater statistical power.</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="checking-assumptions">17. Checking Assumptions<a class="anchor" aria-label="anchor" href="#checking-assumptions"></a>
+</h2>
+<p>Before running a test, check its assumptions automatically:</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/check_assumptions.html">check_assumptions</a></span><span class="op">(</span></span>
+<span>  <span class="st">"ttest"</span>,</span>
+<span>  x <span class="op">=</span> <span class="va">males</span>,</span>
+<span>  y <span class="op">=</span> <span class="va">females</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; -- statease Assumption Check Report -------------------------------</span></span>
+<span><span class="co">#&gt;   Test         : ttest</span></span>
+<span><span class="co">#&gt; ---------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   [PASSED] Normality (x)</span></span>
+<span><span class="co">#&gt;     Shapiro-Wilk test: statistic = 0.950, p = 0.0502. Normality assumption appears satisfied.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   [PASSED] Sample size guidance (x)</span></span>
+<span><span class="co">#&gt;     n = 45. Sample size appears reasonable.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   [PASSED] Normality (y)</span></span>
+<span><span class="co">#&gt;     Shapiro-Wilk test: statistic = 0.963, p = 0.1561. Normality assumption appears satisfied.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   [PASSED] Sample size guidance (y)</span></span>
+<span><span class="co">#&gt;     n = 45. Sample size appears reasonable.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   [PASSED] Homogeneity of variance</span></span>
+<span><span class="co">#&gt;     Levene's Test: p = 0.8482. Variances appear approximately equal.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ---------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   NOTE: Assumption checks are based on statistical tests and</span></span>
+<span><span class="co">#&gt;   heuristics. They provide guidance but should not be</span></span>
+<span><span class="co">#&gt;   interpreted as definitive proof that assumptions are met</span></span>
+<span><span class="co">#&gt;   or violated.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   NOTE: Failure to reject an assumption test does not prove</span></span>
+<span><span class="co">#&gt;   that the assumption has been satisfied.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   NOTE: Visual inspection of residual plots is always</span></span>
+<span><span class="co">#&gt;   recommended alongside formal assumption tests.</span></span>
+<span><span class="co">#&gt; ---------------------------------------------------------------------</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="power-analysis">18. Power Analysis<a class="anchor" aria-label="anchor" href="#power-analysis"></a>
+</h2>
+<p>Determine the sample size needed to detect an effect:</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/power_interpret.html">power_interpret</a></span><span class="op">(</span></span>
+<span>  <span class="st">"ttest.two"</span>,</span>
+<span>  effect_size <span class="op">=</span> <span class="fl">0.5</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; -- statease Power Analysis Report  </span></span>
+<span><span class="co">#&gt;   Test         : Independent Samples T-Test</span></span>
+<span><span class="co">#&gt;   Mode         : Calculate required sample size</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Effect size  : 0.500 (large)</span></span>
+<span><span class="co">#&gt;   Alpha        : 0.05</span></span>
+<span><span class="co">#&gt;   Desired power: 0.80 (80%)</span></span>
+<span><span class="co">#&gt;   Required n   : 64</span></span>
+<span><span class="co">#&gt;   Total N      : 128 (2 groups x 64)</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Interpretation:</span></span>
+<span><span class="co">#&gt;   To detect a large effect (effect size = 0.50) with 80% power at alpha = 0.05, you need at least 64 participants per group (128 total for 2 groups).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   NOTE: Power analysis results are estimates based on assumptions about effect size, alpha, and power. Actual results may differ depending on the true effect size in the population.</span></span>
+<span><span class="co">#&gt;   NOTE: Effect sizes should ideally be based on previous research, pilot studies, or theoretically justified values, not chosen arbitrarily to reduce required sample size.</span></span>
+<span><span class="co">#&gt;   NOTE: A power of 0.80 is a conventional minimum. In high stakes research such as clinical trials, a higher power of 0.90 or 0.95 is often recommended.</span></span>
+<span><span class="co">#&gt;   NOTE: Power analysis assumes that the chosen statistical test and its assumptions are appropriate for the data.</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="the-shiny-app">19. The Shiny App<a class="anchor" aria-label="anchor" href="#the-shiny-app"></a>
+</h2>
+<p>For users who prefer a point-and-click interface, statease includes a
+built-in Shiny app:</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">statease</span><span class="fu">::</span><span class="fu"><a href="../reference/run_app.html">run_app</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>This launches an interactive web application where you can upload
+your data, select variables, and run any statease function without
+writing code.</p>
+</div>
+<div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
 <table class="table">
@@ -1099,6 +1316,31 @@ use!</p>
 <td>✔</td>
 </tr>
 <tr class="even">
+<td>Fisher’s Exact</td>
+<td><code><a href="../reference/fisher_interpret.html">fisher_interpret()</a></code></td>
+<td>✔</td>
+</tr>
+<tr class="odd">
+<td>McNemar’s Test</td>
+<td><code><a href="../reference/mcnemar_interpret.html">mcnemar_interpret()</a></code></td>
+<td>✔</td>
+</tr>
+<tr class="even">
+<td>Friedman Test</td>
+<td><code><a href="../reference/friedman_interpret.html">friedman_interpret()</a></code></td>
+<td>✔</td>
+</tr>
+<tr class="odd">
+<td>Check Assumptions</td>
+<td><code><a href="../reference/check_assumptions.html">check_assumptions()</a></code></td>
+<td>✔</td>
+</tr>
+<tr class="even">
+<td>Power Analysis</td>
+<td><code><a href="../reference/power_interpret.html">power_interpret()</a></code></td>
+<td>✔</td>
+</tr>
+<tr class="odd">
 <td>P-value interpretation</td>
 <td><code><a href="../reference/interpret_p.html">interpret_p()</a></code></td>
 <td>-</td>

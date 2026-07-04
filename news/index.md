@@ -2,6 +2,8 @@
 
 ## statease 1.3.0
 
+CRAN release: 2026-07-02
+
 ## statease 1.2.1
 
 CRAN release: 2026-06-07

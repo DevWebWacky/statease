@@ -52,6 +52,21 @@ ui <- dashboardPage(
       menuItem("Non-Parametric",
                tabName = "nonparam",
                icon = icon("arrows-up-down")),
+      menuItem("Friedman Test",
+               tabName = "friedman",
+               icon = icon("repeat")),
+      menuItem("Fisher's Exact Test",
+               tabName = "fisher",
+               icon = icon("table-cells")),
+      menuItem("McNemar's Test",
+               tabName = "mcnemar",
+               icon = icon("arrows-left-right")),
+      menuItem("Check Assumptions",
+               tabName = "checkassumptions",
+               icon = icon("clipboard-check")),
+      menuItem("Power Analysis",
+               tabName = "power",
+               icon = icon("gauge-high")),
       menuItem("P-Value Interpreter",
                tabName = "pvalue",
                icon = icon("magnifying-glass")),
@@ -585,6 +600,248 @@ ui <- dashboardPage(
         )
       ),
 
+      # FRIEDMAN
+      tabItem(
+        tabName = "friedman",
+        fluidRow(
+          box(
+            width = 4,
+            status = "primary",
+            solidHeader = TRUE,
+            title = "Input",
+            fileInput("friedman_file", "Upload CSV File",
+                      accept = ".csv"),
+            uiOutput("friedman_outcome_ui"),
+            uiOutput("friedman_time_ui"),
+            uiOutput("friedman_subject_ui"),
+            sliderInput("friedman_conf", "Confidence Level",
+                        min = 0.90, max = 0.99,
+                        value = 0.95, step = 0.01),
+            actionButton("friedman_run", "Run Analysis",
+                         class = "btn btn-primary btn-block",
+                         icon = icon("play"))
+          ),
+          box(
+            width = 8,
+            status = "primary",
+            solidHeader = TRUE,
+            title = "Results",
+            verbatimTextOutput("friedman_result"),
+            hr(),
+            downloadButton("friedman_download", "Download Report")
+          )
+        ),
+        fluidRow(
+          box(
+            width = 12,
+            status = "info",
+            solidHeader = TRUE,
+            title = "Data Preview",
+            DTOutput("friedman_preview")
+          )
+        )
+      ),
+
+      #FISHER'S EXACT TEST
+      tabItem(
+        tabName = "fisher",
+        fluidRow(
+          box(
+            width = 4,
+            status = "primary",
+            solidHeader = TRUE,
+            title = "Input",
+            fileInput("fisher_file", "Upload CSV File",
+                      accept = ".csv"),
+            uiOutput("fisher_x_ui"),
+            uiOutput("fisher_y_ui"),
+            checkboxInput("fisher_simulate",
+                          "Use simulation for larger tables",
+                          value = FALSE),
+            sliderInput("fisher_conf", "Confidence Level",
+                        min = 0.90, max = 0.99,
+                        value = 0.95, step = 0.01),
+            actionButton("fisher_run", "Run Analysis",
+                         class = "btn btn-primary btn-block",
+                         icon = icon("play"))
+          ),
+          box(
+            width = 8,
+            status = "primary",
+            solidHeader = TRUE,
+            title = "Results",
+            verbatimTextOutput("fisher_result"),
+            hr(),
+            downloadButton("fisher_download", "Download Report")
+          )
+        ),
+        fluidRow(
+          box(
+            width = 12,
+            status = "info",
+            solidHeader = TRUE,
+            title = "Data Preview",
+            DTOutput("fisher_preview")
+          )
+        )
+      ),
+
+      #MCNEMAR'S Test
+      tabItem(
+        tabName = "mcnemar",
+        fluidRow(
+          box(
+            width = 4,
+            status = "primary",
+            solidHeader = TRUE,
+            title = "Input",
+            fileInput("mcnemar_file", "Upload CSV File",
+                      accept = ".csv"),
+            uiOutput("mcnemar_x_ui"),
+            uiOutput("mcnemar_y_ui"),
+            sliderInput("mcnemar_conf", "Confidence Level",
+                        min = 0.90, max = 0.99,
+                        value = 0.95, step = 0.01),
+            actionButton("mcnemar_run", "Run Analysis",
+                         class = "btn btn-primary btn-block",
+                         icon = icon("play"))
+          ),
+          box(
+            width = 8,
+            status = "primary",
+            solidHeader = TRUE,
+            title = "Results",
+            verbatimTextOutput("mcnemar_result"),
+            hr(),
+            downloadButton("mcnemar_download", "Download Report")
+          )
+        ),
+        fluidRow(
+          box(
+            width = 12,
+            status = "info",
+            solidHeader = TRUE,
+            title = "Data Preview",
+            DTOutput("mcnemar_preview")
+          )
+        )
+      ),
+
+      #ASSUMPTIONS check
+      tabItem(
+        tabName = "checkassumptions",
+        fluidRow(
+          box(
+            width = 12,
+            status = "warning",
+            solidHeader = TRUE,
+            title = "Check Assumptions Before Running Your Test",
+            p("Verify that your data meets the statistical
+              assumptions required for your chosen test.")
+          )
+        ),
+        fluidRow(
+          box(
+            width = 4,
+            status = "primary",
+            solidHeader = TRUE,
+            title = "Input",
+            fileInput("check_file", "Upload CSV File",
+                      accept = ".csv"),
+            selectInput("check_test", "Select Test",
+                        choices = c(
+                          "T-Test"      = "ttest",
+                          "One-Way ANOVA" = "anova",
+                          "Two-Way ANOVA" = "anova2",
+                          "Correlation" = "correlation",
+                          "Regression"  = "regression"
+                        )),
+            uiOutput("check_dynamic_ui"),
+            actionButton("check_run", "Check Assumptions",
+                         class = "btn btn-primary btn-block",
+                         icon = icon("clipboard-check"))
+          ),
+          box(
+            width = 8,
+            status = "primary",
+            solidHeader = TRUE,
+            title = "Results",
+            verbatimTextOutput("check_result"),
+            hr(),
+            downloadButton("check_download", "Download Report")
+          )
+        ),
+        fluidRow(
+          box(
+            width = 12,
+            status = "info",
+            solidHeader = TRUE,
+            title = "Data Preview",
+            DTOutput("check_preview")
+          )
+        )
+      ),
+
+      #Power Analysis
+      tabItem(
+        tabName = "power",
+        fluidRow(
+          box(
+            width = 12,
+            status = "warning",
+            solidHeader = TRUE,
+            title = "Power Analysis - Calculate Sample Size or Power",
+            p("Determine the sample size needed to detect an
+              effect, or calculate the achieved power of your
+              existing study.")
+          )
+        ),
+        fluidRow(
+          box(
+            width = 4,
+            status = "primary",
+            solidHeader = TRUE,
+            title = "Input",
+            selectInput("power_test", "Select Test",
+                        choices = c(
+                          "One-Sample T-Test" = "ttest.one",
+                          "Independent T-Test" = "ttest.two",
+                          "Paired T-Test" = "ttest.paired",
+                          "ANOVA" = "anova",
+                          "Correlation" = "correlation",
+                          "Chi-Square" = "chisq",
+                          "Regression" = "regression"
+                        )),
+            numericInput("power_effect", "Effect Size",
+                         value = 0.5, min = 0, step = 0.05),
+            selectInput("power_mode", "Calculate",
+                        choices = c(
+                          "Required Sample Size" = "n",
+                          "Achieved Power" = "power"
+                        )),
+            uiOutput("power_n_ui"),
+            uiOutput("power_power_ui"),
+            uiOutput("power_groups_ui"),
+            uiOutput("power_predictors_ui"),
+            sliderInput("power_alpha", "Alpha Level",
+                        min = 0.01, max = 0.10,
+                        value = 0.05, step = 0.01),
+            actionButton("power_run", "Calculate",
+                         class = "btn btn-primary btn-block",
+                         icon = icon("play"))
+          ),
+          box(
+            width = 8,
+            status = "primary",
+            solidHeader = TRUE,
+            title = "Results",
+            verbatimTextOutput("power_result"),
+            hr(),
+            downloadButton("power_download", "Download Report")
+          )
+        )
+      ),
+
       #Pvalue Interpreter
       tabItem(
         tabName = "pvalue",
@@ -696,7 +953,7 @@ ui <- dashboardPage(
             p("Uwakmfon Usen Paul"),
             hr(),
             h4("Version"),
-            p("1.2.1"),
+            p("1.3.0"),
             hr(),
             h4("Links"),
             tags$a(href = "https://cran.r-project.org/package=statease",
@@ -734,7 +991,7 @@ server <- function(input, output, session) {
 
   #Citation
   output$citation_text <- renderText({
-    'Paul U. (2026). statease: Simplified Statistical
+    'Paul, Uwakmfon U. (2026). statease: Simplified Statistical
 Analysis with Plain-English Interpretation.
 R package version 1.3.0
 https://cran.r-project.org/package=statease'
@@ -1170,6 +1427,308 @@ https://cran.r-project.org/package=statease'
     filename = "statease_nonparam_report.txt",
     content  = function(file) {
       writeLines(np_result_text(), file)
+    }
+  )
+
+  # ── FRIEDMAN TEST ─────────────────────────────────────────
+  friedman_data <- reactive({ read_csv_file(input$friedman_file) })
+
+  output$friedman_outcome_ui <- renderUI({
+    req(friedman_data())
+    nums <- names(friedman_data())[sapply(friedman_data(), is.numeric)]
+    selectInput("friedman_outcome", "Select Outcome Variable",
+                choices = nums)
+  })
+
+  output$friedman_time_ui <- renderUI({
+    req(friedman_data())
+    selectInput("friedman_time", "Select Time/Condition Variable",
+                choices = names(friedman_data()))
+  })
+
+  output$friedman_subject_ui <- renderUI({
+    req(friedman_data())
+    selectInput("friedman_subject", "Select Subject ID Variable",
+                choices = names(friedman_data()))
+  })
+
+  output$friedman_preview <- renderDT({
+    req(friedman_data())
+    datatable(friedman_data(), options = list(pageLength = 5))
+  })
+
+  friedman_result_text <- eventReactive(input$friedman_run, {
+    req(friedman_data(), input$friedman_outcome,
+        input$friedman_time, input$friedman_subject)
+    formula <- as.formula(paste(
+      input$friedman_outcome, "~",
+      input$friedman_time, "|",
+      input$friedman_subject
+    ))
+    result <- friedman_interpret(formula,
+                                 data = friedman_data(),
+                                 conf.level = input$friedman_conf)
+    capture_output(print(result))
+  })
+
+  output$friedman_result <- renderText({ friedman_result_text() })
+
+  output$friedman_download <- downloadHandler(
+    filename = "statease_friedman_report.txt",
+    content  = function(file) {
+      writeLines(friedman_result_text(), file)
+    }
+  )
+
+  # ── FISHER'S EXACT TEST ───────────────────────────────────
+  fisher_data <- reactive({ read_csv_file(input$fisher_file) })
+
+  output$fisher_x_ui <- renderUI({
+    req(fisher_data())
+    selectInput("fisher_x", "Select Variable 1 (x)",
+                choices = names(fisher_data()))
+  })
+
+  output$fisher_y_ui <- renderUI({
+    req(fisher_data())
+    selectInput("fisher_y", "Select Variable 2 (y)",
+                choices = names(fisher_data()))
+  })
+
+  output$fisher_preview <- renderDT({
+    req(fisher_data())
+    datatable(fisher_data(), options = list(pageLength = 5))
+  })
+
+  fisher_result_text <- eventReactive(input$fisher_run, {
+    req(fisher_data(), input$fisher_x, input$fisher_y)
+    result <- fisher_interpret(
+      fisher_data()[[input$fisher_x]],
+      fisher_data()[[input$fisher_y]],
+      conf.level = input$fisher_conf,
+      simulate.p.value = input$fisher_simulate
+    )
+    capture_output(print(result))
+  })
+
+  output$fisher_result <- renderText({ fisher_result_text() })
+
+  output$fisher_download <- downloadHandler(
+    filename = "statease_fisher_report.txt",
+    content  = function(file) {
+      writeLines(fisher_result_text(), file)
+    }
+  )
+
+  # ── MCNEMAR'S TEST ────────────────────────────────────────
+  mcnemar_data <- reactive({ read_csv_file(input$mcnemar_file) })
+
+  output$mcnemar_x_ui <- renderUI({
+    req(mcnemar_data())
+    selectInput("mcnemar_x", "Select Variable 1 (before)",
+                choices = names(mcnemar_data()))
+  })
+
+  output$mcnemar_y_ui <- renderUI({
+    req(mcnemar_data())
+    selectInput("mcnemar_y", "Select Variable 2 (after)",
+                choices = names(mcnemar_data()))
+  })
+
+  output$mcnemar_preview <- renderDT({
+    req(mcnemar_data())
+    datatable(mcnemar_data(), options = list(pageLength = 5))
+  })
+
+  mcnemar_result_text <- eventReactive(input$mcnemar_run, {
+    req(mcnemar_data(), input$mcnemar_x, input$mcnemar_y)
+    result <- mcnemar_interpret(
+      mcnemar_data()[[input$mcnemar_x]],
+      mcnemar_data()[[input$mcnemar_y]],
+      conf.level = input$mcnemar_conf
+    )
+    capture_output(print(result))
+  })
+
+  output$mcnemar_result <- renderText({ mcnemar_result_text() })
+
+  output$mcnemar_download <- downloadHandler(
+    filename = "statease_mcnemar_report.txt",
+    content  = function(file) {
+      writeLines(mcnemar_result_text(), file)
+    }
+  )
+
+  # ── CHECK ASSUMPTIONS ─────────────────────────────────────
+  check_data <- reactive({ read_csv_file(input$check_file) })
+
+  output$check_preview <- renderDT({
+    req(check_data())
+    datatable(check_data(), options = list(pageLength = 5))
+  })
+
+  output$check_dynamic_ui <- renderUI({
+    req(check_data(), input$check_test)
+    nums <- names(check_data())[sapply(check_data(), is.numeric)]
+
+    if (input$check_test == "ttest") {
+      tagList(
+        selectInput("check_x", "Select Variable (x)", choices = nums),
+        selectInput("check_y", "Select Variable (y) - optional",
+                    choices = c("None", nums))
+      )
+    } else if (input$check_test == "correlation") {
+      tagList(
+        selectInput("check_x", "Select Variable (x)", choices = nums),
+        selectInput("check_y", "Select Variable (y)", choices = nums)
+      )
+    } else if (input$check_test == "anova") {
+      tagList(
+        selectInput("check_outcome", "Select Outcome",
+                    choices = nums),
+        selectInput("check_group", "Select Group Variable",
+                    choices = names(check_data()))
+      )
+    } else if (input$check_test == "anova2") {
+      tagList(
+        selectInput("check_outcome", "Select Outcome",
+                    choices = nums),
+        selectInput("check_group1", "Select Factor 1",
+                    choices = names(check_data())),
+        selectInput("check_group2", "Select Factor 2",
+                    choices = names(check_data()))
+      )
+    } else if (input$check_test == "regression") {
+      tagList(
+        selectInput("check_outcome", "Select Outcome",
+                    choices = nums),
+        selectInput("check_predictors", "Select Predictors",
+                    choices = nums, multiple = TRUE)
+      )
+    }
+  })
+
+  check_result_text <- eventReactive(input$check_run, {
+    req(check_data(), input$check_test)
+
+    result <- if (input$check_test == "ttest") {
+      req(input$check_x)
+      y_val <- if (!is.null(input$check_y) && input$check_y != "None") {
+        check_data()[[input$check_y]]
+      } else NULL
+      check_assumptions("ttest",
+                        x = check_data()[[input$check_x]],
+                        y = y_val)
+    } else if (input$check_test == "correlation") {
+      req(input$check_x, input$check_y)
+      check_assumptions("correlation",
+                        x = check_data()[[input$check_x]],
+                        y = check_data()[[input$check_y]])
+    } else if (input$check_test == "anova") {
+      req(input$check_outcome, input$check_group)
+      formula <- as.formula(paste(input$check_outcome, "~",
+                                  input$check_group))
+      check_assumptions("anova", formula = formula,
+                        data = check_data())
+    } else if (input$check_test == "anova2") {
+      req(input$check_outcome, input$check_group1, input$check_group2)
+      formula <- as.formula(paste(input$check_outcome, "~",
+                                  input$check_group1, "*",
+                                  input$check_group2))
+      check_assumptions("anova2", formula = formula,
+                        data = check_data())
+    } else if (input$check_test == "regression") {
+      req(input$check_outcome, input$check_predictors)
+      predictors <- paste(input$check_predictors, collapse = " + ")
+      formula    <- as.formula(paste(input$check_outcome, "~",
+                                     predictors))
+      check_assumptions("regression", formula = formula,
+                        data = check_data())
+    }
+    capture_output(print(result))
+  })
+
+  output$check_result <- renderText({ check_result_text() })
+
+  output$check_download <- downloadHandler(
+    filename = "statease_assumptions_report.txt",
+    content  = function(file) {
+      writeLines(check_result_text(), file)
+    }
+  )
+
+  # ── POWER ANALYSIS ────────────────────────────────────────
+  output$power_n_ui <- renderUI({
+    req(input$power_mode)
+    if (input$power_mode == "power") {
+      numericInput("power_n", "Sample Size (n)",
+                   value = 30, min = 2)
+    }
+  })
+
+  output$power_power_ui <- renderUI({
+    req(input$power_mode)
+    if (input$power_mode == "n") {
+      sliderInput("power_power", "Desired Power",
+                  min = 0.50, max = 0.99,
+                  value = 0.80, step = 0.01)
+    }
+  })
+
+  output$power_groups_ui <- renderUI({
+    req(input$power_test)
+    if (input$power_test == "anova") {
+      numericInput("power_groups", "Number of Groups",
+                   value = 3, min = 2)
+    }
+  })
+
+  output$power_predictors_ui <- renderUI({
+    req(input$power_test)
+    if (input$power_test == "regression") {
+      numericInput("power_predictors_n", "Number of Predictors",
+                   value = 1, min = 1)
+    }
+  })
+
+  power_result_text <- eventReactive(input$power_run, {
+    req(input$power_test, input$power_effect, input$power_mode)
+
+    n_val <- if (input$power_mode == "power") input$power_n else NULL
+    power_val <- if (input$power_mode == "n") {
+      input$power_power
+    } else {
+      0.80
+    }
+    groups_val <- if (!is.null(input$power_groups)) {
+      input$power_groups
+    } else {
+      2
+    }
+    predictors_val <- if (!is.null(input$power_predictors_n)) {
+      input$power_predictors_n
+    } else {
+      1
+    }
+
+    result <- power_interpret(
+      test         = input$power_test,
+      effect_size  = input$power_effect,
+      n            = n_val,
+      alpha        = input$power_alpha,
+      power        = power_val,
+      n_groups     = groups_val,
+      n_predictors = predictors_val
+    )
+    capture_output(print(result))
+  })
+
+  output$power_result <- renderText({ power_result_text() })
+
+  output$power_download <- downloadHandler(
+    filename = "statease_power_report.txt",
+    content  = function(file) {
+      writeLines(power_result_text(), file)
     }
   )
 

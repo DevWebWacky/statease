@@ -991,7 +991,7 @@ server <- function(input, output, session) {
 
   #Citation
   output$citation_text <- renderText({
-    'Paul, Uwakmfon U. (2026). statease: Simplified Statistical
+    'Paul U (2026). statease: Simplified Statistical
 Analysis with Plain-English Interpretation.
 R package version 1.3.0
 https://cran.r-project.org/package=statease'

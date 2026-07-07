@@ -63,8 +63,8 @@ power_interpret <- function(test, effect_size, n = NULL,
                          "f2" = c(0.02, 0.15, 0.35),
                          c(0.2, 0.5, 0.8)
     )
-    if (es < thresholds[1]) "small" else if
-    (es < thresholds[2]) "medium" else "large"
+    if (es <= thresholds[1]) "small" else if
+    (es <= thresholds[2]) "medium" else "large"
   }
 
   # Run power analysis

@@ -68,14 +68,14 @@ print(result)
 #>   Test         : Independent Samples T-Test
 #>   Mode         : Calculate required sample size
 #> -----------------------------------------------------------------
-#>   Effect size  : 0.500 (large)
+#>   Effect size  : 0.500 (medium)
 #>   Alpha        : 0.05
 #>   Desired power: 0.80 (80%)
 #>   Required n   : 64
 #>   Total N      : 128 (2 groups x 64)
 #> -----------------------------------------------------------------
 #>   Interpretation:
-#>   To detect a large effect (effect size = 0.50) with 80% power at alpha = 0.05, you need at least 64 participants per group (128 total for 2 groups).
+#>   To detect a medium effect (effect size = 0.50) with 80% power at alpha = 0.05, you need at least 64 participants per group (128 total for 2 groups).
 #> 
 #>   NOTE: Power analysis results are estimates based on assumptions about effect size, alpha, and power. Actual results may differ depending on the true effect size in the population.
 #>   NOTE: Effect sizes should ideally be based on previous research, pilot studies, or theoretically justified values, not chosen arbitrarily to reduce required sample size.
@@ -92,13 +92,13 @@ print(result2)
 #>   Test         : Independent Samples T-Test
 #>   Mode         : Calculate achieved power
 #> -----------------------------------------------------------------
-#>   Effect size  : 0.500 (large)
+#>   Effect size  : 0.500 (medium)
 #>   Alpha        : 0.05
 #>   Sample size  : 30
 #>   Achieved power: 0.4779 (47.8%)
 #> -----------------------------------------------------------------
 #>   Interpretation:
-#>   With n = 30 and a large effect size (0.50), the achieved power is 47.8%.
+#>   With n = 30 and a medium effect size (0.50), the achieved power is 47.8%.
 #> 
 #>   WARNING: Power is less than 0.80. The study may be underpowered, there is a meaningful risk of failing to detect a true effect (Type II error). Consider increasing the sample size.
 #>   WARNING: Post-hoc (observed) power calculations should be interpreted cautiously, as they are largely determined by the observed p-value and effect size.

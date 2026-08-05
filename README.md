@@ -9,8 +9,6 @@
 
 **statease** is an R package that runs a wide range of statistical
 analyses and tells you in plain English what the results mean.
-No more copy-pasting output into interpretation guides.
-One function call gives you the full picture.
 
 ## Installation
 

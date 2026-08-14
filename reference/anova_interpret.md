@@ -5,7 +5,7 @@ One-Way ANOVA with Post-Hoc Tukey and Plain-English Interpretation
 ## Usage
 
 ``` r
-anova_interpret(formula, data, conf.level = 0.95)
+anova_interpret(formula, data, conf.level = 0.95, context = NULL)
 ```
 
 ## Arguments
@@ -53,6 +53,17 @@ print(result)
 #>   df           : 2, 9
 #>   p-value      : 0.6260
 #>   Eta squared  : 0.0988 (moderate effect)
+#> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Normality (Group: A)    : PASSED   (Shapiro-Wilk p = 0.798)
+#>     Normality (Group: B)    : PASSED   (Shapiro-Wilk p = 0.522)
+#>     Normality (Group: C)    : PASSED   (Shapiro-Wilk p = 0.546)
+#>     Equal variances         : PASSED   (Bartlett's p = 0.715)
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The overall ANOVA result is not statistically significant (p = 0.6260 > alpha 0.05).

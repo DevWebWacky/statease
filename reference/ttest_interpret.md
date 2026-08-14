@@ -11,7 +11,8 @@ ttest_interpret(
   mu = 0,
   paired = FALSE,
   conf.level = 0.95,
-  var_name = "Variable"
+  var_name = "Variable",
+  context = NULL
 )
 ```
 
@@ -65,6 +66,16 @@ print(result)
 #>   p-value      : 0.7043
 #>   95% CI      : [-22.146, 30.946]
 #>   Cohen's d    : 0.251 (small effect)
+#> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Normality (x)         : PASSED   (Shapiro-Wilk p = 0.928)
+#>     Normality (y)         : PASSED   (Shapiro-Wilk p = 0.637)
+#>     Equal variances       : PASSED   (F-test p = 0.367)
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.704 > alpha 0.05).

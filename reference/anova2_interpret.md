@@ -8,7 +8,7 @@ the presence of a significant interaction.
 ## Usage
 
 ``` r
-anova2_interpret(formula, data, type = 2, conf.level = 0.95)
+anova2_interpret(formula, data, type = 2, conf.level = 0.95, context = NULL)
 ```
 
 ## Arguments
@@ -53,6 +53,7 @@ print(result)
 #>   Factor 1     : method
 #>   Factor 2     : gender
 #>   N            : 12
+#>   SS Type      : Type-II
 #> 
 #>   Means by method:
 #>     Online          : 45.00
@@ -71,6 +72,15 @@ print(result)
 #>   method               : F = 0.220  df = 1,8  not significant (p = 0.6517)  eta^2 = 0.0173 (small)
 #>   gender               : F = 2.955  df = 1,8  not significant (p = 0.1240)  eta^2 = 0.2330 (large)
 #>   Interaction          : F = 1.507  df = 1,8  not significant (p = 0.2544)  eta^2 = 0.1189 (moderate)
+#> 
+#>   Assumption Checks:
+#>     Normality (residuals)   : PASSED   (Shapiro-Wilk p = 0.936)
+#>     Equal variances (cells) : PASSED   (Bartlett's p = 0.584)
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
 #> 
 #>   Interpretation:
 #>   Main effect of method is not significant (p = 0.6517).

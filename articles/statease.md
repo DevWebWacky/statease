@@ -134,6 +134,16 @@ print(result)
 #>   95% CI      : [-4.964, 5.097]
 #>   Cohen's d    : 0.006 (negligible effect)
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Normality (x)         : PASSED   (Shapiro-Wilk p = 0.050)
+#>     Normality (y)         : PASSED   (Shapiro-Wilk p = 0.156)
+#>     Equal variances       : PASSED   (F-test p = 0.937)
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
+#> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.979 > alpha 0.05).
 #>   Group 1 had a higher mean (72.13 vs 72.07).
@@ -166,13 +176,19 @@ print(result)
 #>   95% CI      : [69.599, 74.601]
 #>   Cohen's d    : 0.176 (negligible effect)
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Normality (x)         : WARNING  (Shapiro-Wilk p = 0.005, may not be normal)
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
+#> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.099 > alpha 0.05).
 #>   Sample mean was 72.10 vs hypothesised 70.00.
 #>   Effect size is negligible (d = 0.176).
 #>   95% CI: true difference lies between 69.599 and 74.601.
-#> 
-#>   WARNING: Shapiro-Wilk suggests x may not be normally distributed.
 #> -----------------------------------------------------------------
 ```
 
@@ -201,13 +217,20 @@ print(result)
 #>   95% CI      : [13.262, 19.605]
 #>   Cohen's d    : 1.085 (large effect)
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Normality (x)         : WARNING  (Shapiro-Wilk p = 0.005, may not be normal)
+#>     Normality (y)         : PASSED   (Shapiro-Wilk p = 0.282)
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
+#> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is statistically significant (p = 0.000 < alpha 0.05).
 #>   Group 1 had a higher mean (72.10 vs 55.67).
 #>   Effect size is large (d = 1.085).
 #>   95% CI: true difference lies between 13.262 and 19.605.
-#> 
-#>   WARNING: Shapiro-Wilk suggests x may not be normally distributed.
 #> -----------------------------------------------------------------
 ```
 
@@ -238,6 +261,17 @@ print(result)
 #>   df           : 2, 87
 #>   p-value      : 0.0000
 #>   Eta squared  : 0.2470 (large effect)
+#> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Normality (Group: Hybrid): PASSED   (Shapiro-Wilk p = 0.226)
+#>     Normality (Group: Online): PASSED   (Shapiro-Wilk p = 0.074)
+#>     Normality (Group: Traditional): PASSED   (Shapiro-Wilk p = 0.340)
+#>     Equal variances         : WARNING  (Bartlett's p = 0.042 (unequal variances))
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The overall ANOVA result is statistically significant (p = 0.0000 < alpha 0.05).
@@ -276,6 +310,7 @@ print(result)
 #>   Factor 1     : method
 #>   Factor 2     : gender
 #>   N            : 90
+#>   SS Type      : Type-II
 #> 
 #>   Means by method:
 #>     Hybrid          : 79.90
@@ -296,6 +331,15 @@ print(result)
 #>   method               : F = 14.123  df = 2,84  significant (p = 0.0000)  eta^2 = 0.2470 (large)
 #>   gender               : F = 0.001  df = 1,84  not significant (p = 0.9761)  eta^2 = 0.0000 (negligible)
 #>   Interaction          : F = 1.061  df = 2,84  not significant (p = 0.3506)  eta^2 = 0.0186 (small)
+#> 
+#>   Assumption Checks:
+#>     Normality (residuals)   : PASSED   (Shapiro-Wilk p = 0.181)
+#>     Equal variances (cells) : PASSED   (Bartlett's p = 0.104)
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
 #> 
 #>   Interpretation:
 #>   Main effect of method is significant (p = 0.0000).
@@ -832,6 +876,16 @@ analyze(
 #>   95% CI      : [-4.964, 5.097]
 #>   Cohen's d    : 0.006 (negligible effect)
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Normality (x)         : PASSED   (Shapiro-Wilk p = 0.050)
+#>     Normality (y)         : PASSED   (Shapiro-Wilk p = 0.156)
+#>     Equal variances       : PASSED   (F-test p = 0.937)
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
+#> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.979 > alpha 0.05).
 #>   Group 1 had a higher mean (72.13 vs 72.07).
@@ -859,6 +913,17 @@ analyze(formula = exam_score ~ method, data = tutorial_data)
 #>   df           : 2, 87
 #>   p-value      : 0.0000
 #>   Eta squared  : 0.2470 (large effect)
+#> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Normality (Group: Hybrid): PASSED   (Shapiro-Wilk p = 0.226)
+#>     Normality (Group: Online): PASSED   (Shapiro-Wilk p = 0.074)
+#>     Normality (Group: Traditional): PASSED   (Shapiro-Wilk p = 0.340)
+#>     Equal variances         : WARNING  (Bartlett's p = 0.042 (unequal variances))
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The overall ANOVA result is statistically significant (p = 0.0000 < alpha 0.05).

@@ -18,7 +18,7 @@
 #' result <- fisher_interpret(x, y)
 #' print(result)
 fisher_interpret <- function(x, y, conf.level = 0.95,
-                             simulate.p.value = FALSE) {
+                             simulate.p.value = FALSE, context = NULL) {
 
   # Guard clauses
   if (!is.vector(x) && !is.factor(x)) {
@@ -48,6 +48,22 @@ fisher_interpret <- function(x, y, conf.level = 0.95,
 
   # Expected frequencies
   expected <- suppressWarnings(chisq.test(cont_table)$expected)
+
+  low_exp <- any(expected < 5)
+  assumption_checks <- list(
+    "Expected cell frequencies" = list(
+      status = if (low_exp) "NOTE" else "NOTE",
+      detail = if (low_exp) {
+        "one or more cells < 5 (Fisher's test appropriate for this)"
+      } else {
+        "all cells >= 5 (Chi-square would also be valid)"
+      }
+    ),
+    "Sample independence" = list(
+      status = "NOTE",
+      detail = "assumed from study design, not testable from data"
+    )
+  )
 
   # Run Fisher's Exact Test
   result <- fisher.test(cont_table,
@@ -164,6 +180,8 @@ fisher_interpret <- function(x, y, conf.level = 0.95,
     or_label          = or_label,
     ci_label          = ci_label,
     warnings_list     = warnings_list,
+    assumption_checks = assumption_checks,
+    context           = context,
     notes_list        = notes_list,
     simulate.p.value  = simulate.p.value,
     conf.level        = conf.level,
@@ -198,6 +216,16 @@ print.statease_fisher <- function(x, ...) {
                 x$ci[1], x$ci[2]))
   }
   cat("-----------------------------------------------------------------\n")
+  cat("  Assumption Checks:\n")
+  for (name in names(x$assumption_checks)) {
+    ac <- x$assumption_checks[[name]]
+    cat(sprintf("    %-26s: %-8s (%s)\n", name, ac$status, ac$detail))
+  }
+  cat("\n  NOTE: These checks are heuristics based on the data structure.\n")
+  cat("  Passing does not prove an assumption is met; failing does not\n")
+  cat("  automatically invalidate the result. Interpret alongside your\n")
+  cat("  knowledge of the data.\n")
+  cat("-----------------------------------------------------------------\n")
   cat("  Interpretation:\n")
   cat(sprintf("  The result is %s.\n", x$sig_label))
   cat(sprintf("  %s\n", x$assoc_label))
@@ -218,6 +246,11 @@ print.statease_fisher <- function(x, ...) {
     for (n in x$notes_list) {
       cat(sprintf("  %s\n", n))
     }
+  }
+  if (!is.null(x$context)) {
+    cat(sprintf("\n  NOTE: You described this analysis as: \"%s\".\n", x$context))
+    cat("  The interpretation should be considered in the context you\n")
+    cat("  provided.\n")
   }
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)

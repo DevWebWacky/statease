@@ -4,7 +4,13 @@
 \alias{fisher_interpret}
 \title{Fisher's Exact Test with Plain-English Interpretation}
 \usage{
-fisher_interpret(x, y, conf.level = 0.95, simulate.p.value = FALSE)
+fisher_interpret(
+  x,
+  y,
+  conf.level = 0.95,
+  simulate.p.value = FALSE,
+  context = NULL
+)
 }
 \arguments{
 \item{x}{A factor or character vector (first categorical variable)}

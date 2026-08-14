@@ -4,7 +4,7 @@
 \alias{mcnemar_interpret}
 \title{McNemar's Test with Plain-English Interpretation}
 \usage{
-mcnemar_interpret(x, y, conf.level = 0.95)
+mcnemar_interpret(x, y, conf.level = 0.95, context = NULL)
 }
 \arguments{
 \item{x}{A factor or character vector (first measurement)}

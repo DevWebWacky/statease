@@ -14,7 +14,7 @@
 #' y <- c("No","No","Yes","Yes","No","Yes","Yes","No","Yes","No")
 #' result <- mcnemar_interpret(x, y)
 #' print(result)
-mcnemar_interpret <- function(x, y, conf.level = 0.95) {
+mcnemar_interpret <- function(x, y, conf.level = 0.95, context = NULL) {
 
   #Guard clauses
   if (!is.vector(x) && !is.factor(x)) {
@@ -58,6 +58,23 @@ mcnemar_interpret <- function(x, y, conf.level = 0.95) {
   } else {
     discordant <- NA
   }
+
+  low_discordant <- !is.na(discordant) && discordant < 10
+  assumption_checks <- list(
+    "Discordant pairs (b+c)" = list(
+      status = if (low_discordant) "WARNING" else "PASSED",
+      detail = if (!is.na(discordant)) {
+        sprintf("n = %d%s", discordant,
+                if (low_discordant) ", small for asymptotic test" else ", adequate")
+      } else {
+        "could not be computed"
+      }
+    ),
+    "Sample independence" = list(
+      status = "NOTE",
+      detail = "assumed from study design, not testable from data"
+    )
+  )
 
   #Run McNemar's Test
   result <- mcnemar.test(cont_table)
@@ -185,6 +202,8 @@ mcnemar_interpret <- function(x, y, conf.level = 0.95) {
     ci_label      = ci_label,
     warnings_list = warnings_list,
     notes_list    = notes_list,
+    assumption_checks = assumption_checks,
+    context       = context,
     conf.level    = conf.level,
     alpha         = alpha
   )
@@ -217,6 +236,16 @@ print.statease_mcnemar <- function(x, ...) {
                 x$or_ci[1], x$or_ci[2]))
   }
   cat("-----------------------------------------------------------------\n")
+  cat("  Assumption Checks:\n")
+  for (name in names(x$assumption_checks)) {
+    ac <- x$assumption_checks[[name]]
+    cat(sprintf("    %-26s: %-8s (%s)\n", name, ac$status, ac$detail))
+  }
+  cat("\n  NOTE: These checks are heuristics based on the data structure.\n")
+  cat("  Passing does not prove an assumption is met; failing does not\n")
+  cat("  automatically invalidate the result. Interpret alongside your\n")
+  cat("  knowledge of the data.\n")
+  cat("-----------------------------------------------------------------\n")
   cat("  Interpretation:\n")
   cat(sprintf("  The result is %s.\n", x$sig_label))
   cat(sprintf("  %s\n", x$result_label))
@@ -237,6 +266,11 @@ print.statease_mcnemar <- function(x, ...) {
     for (n in x$notes_list) {
       cat(sprintf("  %s\n", n))
     }
+  }
+  if (!is.null(x$context)) {
+    cat(sprintf("\n  NOTE: You described this analysis as: \"%s\".\n", x$context))
+    cat("  The interpretation should be considered in the context you\n")
+    cat("  provided.\n")
   }
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)

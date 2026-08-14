@@ -15,7 +15,8 @@
 #' y <- c("Male","Female","Male","Female","Male","Female","Male","Female","Male","Female")
 #' result <- chisq_interpret(x, y)
 #' print(result)
-chisq_interpret <- function(x, y, correct = TRUE, conf.level = 0.95) {
+chisq_interpret <- function(x, y, correct = TRUE, conf.level = 0.95,
+                            context = NULL) {
 
   # --- Guard clauses ---
   if (!is.vector(x) && !is.factor(x)) stop("x must be a vector or factor.")
@@ -33,17 +34,27 @@ chisq_interpret <- function(x, y, correct = TRUE, conf.level = 0.95) {
   cont_table <- table(x, y)
 
   # --- Check expected frequencies ---
-  expected   <- chisq.test(cont_table, correct = correct)$expected
+  result   <- suppressWarnings(chisq.test(cont_table, correct = correct))
+  expected <- result$expected
+  chi_val  <- result$statistic
+  df       <- result$parameter
+  p_val    <- result$p.value
+
   low_exp    <- any(expected < 5)
   low_exp_note <- if (low_exp) {
     "WARNING: Some expected frequencies are less than 5. Interpret with caution."
   } else NULL
 
-  # --- Run chi-square test ---
-  result  <- chisq.test(cont_table, correct = correct)
-  chi_val <- result$statistic
-  df      <- result$parameter
-  p_val   <- result$p.value
+  assumption_checks <- list(
+    "Expected cell frequencies" = list(
+      status = if (low_exp) "WARNING" else "PASSED",
+      detail = if (low_exp) "one or more cells < 5" else "all cells >= 5"
+    ),
+    "Sample independence" = list(
+      status = "NOTE",
+      detail = "assumed from study design, not testable from data"
+    )
+  )
 
   # --- Cramers V (effect size) ---
   n         <- sum(cont_table)
@@ -85,6 +96,8 @@ chisq_interpret <- function(x, y, correct = TRUE, conf.level = 0.95) {
     sig_label    = sig_label,
     assoc_label  = assoc_label,
     low_exp_note = low_exp_note,
+    assumption_checks = assumption_checks,
+    context      = context,
     alpha        = alpha,
     conf.level   = conf.level,
     n            = n
@@ -112,12 +125,24 @@ print.statease_chisq <- function(x, ...) {
   cat(sprintf("  p-value      : %.4f\n", x$p_val))
   cat(sprintf("  Cramer's V   : %.3f (%s effect)\n", x$cramers_v, x$v_label))
   cat("-----------------------------------------------------------------\n")
+  cat("  Assumption Checks:\n")
+  for (name in names(x$assumption_checks)) {
+    ac <- x$assumption_checks[[name]]
+    cat(sprintf("    %-26s: %-8s (%s)\n", name, ac$status, ac$detail))
+  }
+  cat("\n  NOTE: These checks are heuristics based on the data structure.\n")
+  cat("  Passing does not prove an assumption is met; failing does not\n")
+  cat("  automatically invalidate the result. Interpret alongside your\n")
+  cat("  knowledge of the data.\n")
+  cat("-----------------------------------------------------------------\n")
   cat("  Interpretation:\n")
   cat(sprintf("  The result is %s.\n", x$sig_label))
   cat(sprintf("  %s\n", x$assoc_label))
   cat(sprintf("  Effect size is %s (V = %.3f).\n", x$v_label, x$cramers_v))
-  if (!is.null(x$low_exp_note)) {
-    cat(sprintf("\n  %s\n", x$low_exp_note))
+  if (!is.null(x$context)) {
+    cat(sprintf("\n  NOTE: You described this analysis as: \"%s\".\n", x$context))
+    cat("  The interpretation should be considered in the context you\n")
+    cat("  provided.\n")
   }
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)

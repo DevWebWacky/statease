@@ -5,7 +5,7 @@ Chi-Square Test with Plain-English Interpretation
 ## Usage
 
 ``` r
-chisq_interpret(x, y, correct = TRUE, conf.level = 0.95)
+chisq_interpret(x, y, correct = TRUE, conf.level = 0.95, context = NULL)
 ```
 
 ## Arguments
@@ -38,8 +38,6 @@ display the formatted report.
 x <- c("Yes","No","Yes","Yes","No","Yes","No","No","Yes","Yes")
 y <- c("Male","Female","Male","Female","Male","Female","Male","Female","Male","Female")
 result <- chisq_interpret(x, y)
-#> Warning: Chi-squared approximation may be incorrect
-#> Warning: Chi-squared approximation may be incorrect
 print(result)
 #> 
 #> -- statease Chi-Square Test Report ------------------------------
@@ -63,12 +61,19 @@ print(result)
 #>   p-value      : 1.0000
 #>   Cramer's V   : 0.000 (negligible effect)
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Expected cell frequencies : WARNING  (one or more cells < 5)
+#>     Sample independence       : NOTE     (assumed from study design, not testable from data)
+#> 
+#>   NOTE: These checks are heuristics based on the data structure.
+#>   Passing does not prove an assumption is met; failing does not
+#>   automatically invalidate the result. Interpret alongside your
+#>   knowledge of the data.
+#> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 1.0000 > alpha 0.05).
 #>   There is no significant association between the two variables.
 #>   Effect size is negligible (V = 0.000).
-#> 
-#>   WARNING: Some expected frequencies are less than 5. Interpret with caution.
 #> -----------------------------------------------------------------
 #> 
 ```

@@ -39,7 +39,13 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fisher_interpret</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, conf.level <span class="op">=</span> <span class="fl">0.95</span>, simulate.p.value <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fisher_interpret</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">y</span>,</span>
+<span>  conf.level <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  simulate.p.value <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  context <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -98,6 +104,15 @@ formatted report.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   p-value      : 1.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Odds Ratio   : 1.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   95% CI      : [0.042, 23.671]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Assumption Checks:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Expected cell frequencies : NOTE     (one or more cells &lt; 5 (Fisher's test appropriate for this))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Sample independence       : NOTE     (assumed from study design, not testable from data)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   NOTE: These checks are heuristics based on the data structure.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Passing does not prove an assumption is met; failing does not</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   automatically invalidate the result. Interpret alongside your</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   knowledge of the data.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Interpretation:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   The result is not statistically significant (p = 1.0000 &gt; alpha 0.05).</span>

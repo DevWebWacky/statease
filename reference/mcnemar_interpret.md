@@ -5,7 +5,7 @@ McNemar's Test with Plain-English Interpretation
 ## Usage
 
 ``` r
-mcnemar_interpret(x, y, conf.level = 0.95)
+mcnemar_interpret(x, y, conf.level = 0.95, context = NULL)
 ```
 
 ## Arguments
@@ -51,6 +51,15 @@ print(result)
 #>   p-value      : 1.0000
 #>   Matched OR   : 0.500
 #>   95% CI      : [0.045, 5.514]
+#> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Discordant pairs (b+c)    : WARNING  (n = 3, small for asymptotic test)
+#>     Sample independence       : NOTE     (assumed from study design, not testable from data)
+#> 
+#>   NOTE: These checks are heuristics based on the data structure.
+#>   Passing does not prove an assumption is met; failing does not
+#>   automatically invalidate the result. Interpret alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 1.0000 > alpha 0.05).

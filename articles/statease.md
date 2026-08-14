@@ -452,6 +452,15 @@ print(result)
 #>   p-value      : 0.5057
 #>   Cramer's V   : 0.123 (small effect)
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Expected cell frequencies : PASSED   (all cells >= 5)
+#>     Sample independence       : NOTE     (assumed from study design, not testable from data)
+#> 
+#>   NOTE: These checks are heuristics based on the data structure.
+#>   Passing does not prove an assumption is met; failing does not
+#>   automatically invalidate the result. Interpret alongside your
+#>   knowledge of the data.
+#> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.5057 > alpha 0.05).
 #>   There is no significant association between the two variables.
@@ -1112,6 +1121,15 @@ print(result)
 #> -----------------------------------------------------------------
 #>   p-value      : 0.5541
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Expected cell frequencies : NOTE     (all cells >= 5 (Chi-square would also be valid))
+#>     Sample independence       : NOTE     (assumed from study design, not testable from data)
+#> 
+#>   NOTE: These checks are heuristics based on the data structure.
+#>   Passing does not prove an assumption is met; failing does not
+#>   automatically invalidate the result. Interpret alongside your
+#>   knowledge of the data.
+#> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.5541 > alpha 0.05).
 #>   There is insufficient evidence of an association between the two variables.
@@ -1152,6 +1170,15 @@ print(result)
 #>   p-value      : 0.0001
 #>   Matched OR   : 3.900
 #>   95% CI      : [1.947, 7.812]
+#> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Discordant pairs (b+c)    : PASSED   (n = 49, adequate)
+#>     Sample independence       : NOTE     (assumed from study design, not testable from data)
+#> 
+#>   NOTE: These checks are heuristics based on the data structure.
+#>   Passing does not prove an assumption is met; failing does not
+#>   automatically invalidate the result. Interpret alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is statistically significant (p = 0.0001 < alpha 0.05).

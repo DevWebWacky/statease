@@ -5,7 +5,13 @@ Fisher's Exact Test with Plain-English Interpretation
 ## Usage
 
 ``` r
-fisher_interpret(x, y, conf.level = 0.95, simulate.p.value = FALSE)
+fisher_interpret(
+  x,
+  y,
+  conf.level = 0.95,
+  simulate.p.value = FALSE,
+  context = NULL
+)
 ```
 
 ## Arguments
@@ -62,6 +68,15 @@ print(result)
 #>   p-value      : 1.0000
 #>   Odds Ratio   : 1.000
 #>   95% CI      : [0.042, 23.671]
+#> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Expected cell frequencies : NOTE     (one or more cells < 5 (Fisher's test appropriate for this))
+#>     Sample independence       : NOTE     (assumed from study design, not testable from data)
+#> 
+#>   NOTE: These checks are heuristics based on the data structure.
+#>   Passing does not prove an assumption is met; failing does not
+#>   automatically invalidate the result. Interpret alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 1.0000 > alpha 0.05).

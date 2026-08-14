@@ -4,7 +4,7 @@
 \alias{anova_interpret}
 \title{One-Way ANOVA with Post-Hoc Tukey and Plain-English Interpretation}
 \usage{
-anova_interpret(formula, data, conf.level = 0.95)
+anova_interpret(formula, data, conf.level = 0.95, context = NULL)
 }
 \arguments{
 \item{formula}{A formula of the form outcome ~ group}

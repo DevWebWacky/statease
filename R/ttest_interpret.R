@@ -16,7 +16,8 @@
 #' result <- ttest_interpret(c(23,45,12,67,34), c(19,38,22,51,29))
 #' print(result)
 ttest_interpret <- function(x, y = NULL, mu = 0, paired = FALSE,
-                            conf.level = 0.95, var_name = "Variable") {
+                            conf.level = 0.95, var_name = "Variable",
+                            context = NULL) {
 
   if (!is.numeric(x)) stop("x must be a numeric vector.")
   if (!is.null(y) && !is.numeric(y)) stop("y must be a numeric vector.")
@@ -29,11 +30,16 @@ ttest_interpret <- function(x, y = NULL, mu = 0, paired = FALSE,
   }
 
   normality_note <- NULL
+  # --- Assumption checks (always recorded, pass or fail) ---
+  assumption_checks <- list()
+
   if (length(x_clean) >= 3 && length(x_clean) <= 5000) {
     sw_x <- shapiro.test(x_clean)
-    if (sw_x$p.value < 0.05) {
-      normality_note <- "WARNING: Shapiro-Wilk suggests x may not be normally distributed."
-    }
+    assumption_checks[["Normality (x)"]] <- list(
+      status = if (sw_x$p.value >= 0.05) "PASSED" else "WARNING",
+      detail = sprintf("Shapiro-Wilk p = %.3f%s", sw_x$p.value,
+                       if (sw_x$p.value < 0.05) ", may not be normal" else "")
+    )
   }
 
   if (!is.null(y)) {
@@ -44,20 +50,26 @@ ttest_interpret <- function(x, y = NULL, mu = 0, paired = FALSE,
     }
     if (length(y_clean) >= 3 && length(y_clean) <= 5000) {
       sw_y <- shapiro.test(y_clean)
-      if (sw_y$p.value < 0.05) {
-        normality_note <- paste(normality_note,
-                                "WARNING: Shapiro-Wilk suggests y may not be normally distributed.")
-      }
+      assumption_checks[["Normality (y)"]] <- list(
+        status = if (sw_y$p.value >= 0.05) "PASSED" else "WARNING",
+        detail = sprintf("Shapiro-Wilk p = %.3f%s", sw_y$p.value,
+                         if (sw_y$p.value < 0.05) ", may not be normal" else "")
+      )
     }
   }
 
   variance_note <- NULL
+  # --- Equal variance check (always recorded) ---
   if (!is.null(y) && !paired) {
-    y_clean   <- na.omit(y)
-    var_test  <- var.test(x_clean, y_clean)
-    if (var_test$p.value < 0.05) {
-      variance_note <- "WARNING: Variances appear unequal. Welch correction applied."
-    }
+    y_clean  <- na.omit(y)
+    var_test <- var.test(x_clean, y_clean)
+    assumption_checks[["Equal variances"]] <- list(
+      status = if (var_test$p.value >= 0.05) "PASSED" else "WARNING",
+      detail = sprintf("F-test p = %.3f%s", var_test$p.value,
+                       if (var_test$p.value < 0.05) {
+                         " (unequal, Welch correction applied)"
+                       } else "")
+    )
   }
 
   if (is.null(y)) {
@@ -133,7 +145,9 @@ ttest_interpret <- function(x, y = NULL, mu = 0, paired = FALSE,
     sig_label      = sig_label,
     direction      = direction,
     normality_note = normality_note,
-    variance_note  = variance_note
+    variance_note  = variance_note,
+    assumption_checks = assumption_checks,
+    context        = context
   )
 
   class(output) <- "statease_ttest"
@@ -155,6 +169,18 @@ print.statease_ttest <- function(x, ...) {
               as.integer(x$conf.level * 100), x$ci[1], x$ci[2]))
   cat(sprintf("  Cohen's d    : %.3f (%s effect)\n", x$cohens_d, x$effect_label))
   cat("-----------------------------------------------------------------\n")
+  if (length(x$assumption_checks) > 0) {
+    cat("  Assumption Checks:\n")
+    for (name in names(x$assumption_checks)) {
+      ac <- x$assumption_checks[[name]]
+      cat(sprintf("    %-22s: %-8s (%s)\n", name, ac$status, ac$detail))
+    }
+    cat("\n  NOTE: These checks are heuristics based on statistical tests\n")
+    cat("  and sample size. Passing does not prove an assumption is met;\n")
+    cat("  failing does not automatically invalidate the result. Interpret\n")
+    cat("  alongside your knowledge of the data.\n")
+    cat("-----------------------------------------------------------------\n")
+  }
   cat("  Interpretation:\n")
   cat(sprintf("  The result is %s.\n", x$sig_label))
   cat(sprintf("  %s\n", x$direction))
@@ -163,6 +189,11 @@ print.statease_ttest <- function(x, ...) {
               as.integer(x$conf.level * 100), x$ci[1], x$ci[2]))
   if (!is.null(x$normality_note)) cat(sprintf("\n  %s\n", x$normality_note))
   if (!is.null(x$variance_note)) cat(sprintf("  %s\n", x$variance_note))
+  if (!is.null(x$context)) {
+    cat(sprintf("\n  NOTE: You described this analysis as: \"%s\".\n", x$context))
+    cat("  The interpretation should be considered in the context you\n")
+    cat("  provided.\n")
+  }
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)
 }

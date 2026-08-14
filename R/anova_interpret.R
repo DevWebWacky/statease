@@ -16,7 +16,7 @@
 #' )
 #' result <- anova_interpret(score ~ group, data = df)
 #' print(result)
-anova_interpret <- function(formula, data, conf.level = 0.95) {
+anova_interpret <- function(formula, data, conf.level = 0.95, context = NULL) {
 
   if (!inherits(formula, "formula")) {
     stop("Please provide a valid formula e.g. score ~ group")
@@ -60,10 +60,17 @@ anova_interpret <- function(formula, data, conf.level = 0.95) {
   }
 
   normality_notes <- c()
+  assumption_checks <- list()
+
   for (g in groups) {
     grp_data <- na.omit(data[[outcome]][data[[group_var]] == g])
     if (length(grp_data) >= 3 && length(grp_data) <= 5000) {
       sw <- shapiro.test(grp_data)
+      assumption_checks[[sprintf("Normality (Group: %s)", g)]] <- list(
+        status = if (sw$p.value >= 0.05) "PASSED" else "WARNING",
+        detail = sprintf("Shapiro-Wilk p = %.3f%s", sw$p.value,
+                         if (sw$p.value < 0.05) ", may not be normal" else "")
+      )
       if (sw$p.value < 0.05) {
         normality_notes <- c(normality_notes,
                              sprintf("WARNING: Group '%s' may not be normally distributed (p = %.4f).",
@@ -77,10 +84,17 @@ anova_interpret <- function(formula, data, conf.level = 0.95) {
     bartlett.test(formula, data = data),
     error = function(e) NULL
   )
-  if (!is.null(bart) && bart$p.value < 0.05) {
-    variance_note <- sprintf(
-      "WARNING: Bartlett's test suggests unequal variances (p = %.4f).",
-      bart$p.value)
+  if (!is.null(bart)) {
+    assumption_checks[["Equal variances"]] <- list(
+      status = if (bart$p.value >= 0.05) "PASSED" else "WARNING",
+      detail = sprintf("Bartlett's p = %.3f%s", bart$p.value,
+                       if (bart$p.value < 0.05) " (unequal variances)" else "")
+    )
+    if (bart$p.value < 0.05) {
+      variance_note <- sprintf(
+        "WARNING: Bartlett's test suggests unequal variances (p = %.4f).",
+        bart$p.value)
+    }
   }
 
   aov_model   <- aov(formula, data = data)
@@ -129,6 +143,8 @@ anova_interpret <- function(formula, data, conf.level = 0.95) {
     conf.level      = conf.level,
     tukey_df        = tukey_df,
     normality_notes = normality_notes,
+    assumption_checks = assumption_checks,
+    context           = context,
     variance_note   = variance_note
   )
 
@@ -154,6 +170,18 @@ print.statease_anova <- function(x, ...) {
   cat(sprintf("  p-value      : %.4f\n", x$p_val))
   cat(sprintf("  Eta squared  : %.4f (%s effect)\n", x$eta_sq, x$eta_label))
   cat("-----------------------------------------------------------------\n")
+  if (length(x$assumption_checks) > 0) {
+    cat("  Assumption Checks:\n")
+    for (name in names(x$assumption_checks)) {
+      ac <- x$assumption_checks[[name]]
+      cat(sprintf("    %-24s: %-8s (%s)\n", name, ac$status, ac$detail))
+    }
+    cat("\n  NOTE: These checks are heuristics based on statistical tests\n")
+    cat("  and sample size. Passing does not prove an assumption is met;\n")
+    cat("  failing does not automatically invalidate the result. Interpret\n")
+    cat("  alongside your knowledge of the data.\n")
+    cat("-----------------------------------------------------------------\n")
+  }
   cat("  Interpretation:\n")
   cat(sprintf("  The overall ANOVA result is %s.\n", x$sig_label))
   cat(sprintf("  Group differences explain %.1f%% of variance\n", x$eta_sq * 100))
@@ -181,6 +209,11 @@ print.statease_anova <- function(x, ...) {
     cat("  Note: Tukey HSD controls for family-wise error rate.\n")
   } else {
     cat("\n  Post-hoc tests not run (overall result not significant).\n")
+  }
+  if (!is.null(x$context)) {
+    cat(sprintf("\n  NOTE: You described this analysis as: \"%s\".\n", x$context))
+    cat("  The interpretation should be considered in the context you\n")
+    cat("  provided.\n")
   }
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)

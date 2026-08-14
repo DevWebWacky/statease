@@ -4,7 +4,7 @@
 \alias{anova2_interpret}
 \title{Two-Way ANOVA with Plain-English Interpretation}
 \usage{
-anova2_interpret(formula, data, type = 2, conf.level = 0.95)
+anova2_interpret(formula, data, type = 2, conf.level = 0.95, context = NULL)
 }
 \arguments{
 \item{formula}{A formula of the form outcome ~ group1 * group2}

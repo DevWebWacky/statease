@@ -24,7 +24,8 @@
 #' )
 #' result <- anova2_interpret(score ~ method * gender, data = df)
 #' print(result)
-anova2_interpret <- function(formula, data, type = 2, conf.level = 0.95) {
+anova2_interpret <- function(formula, data, type = 2, conf.level = 0.95,
+                             context = NULL) {
 
   # --- Guard clauses ---
   if (!inherits(formula, "formula")) {
@@ -168,17 +169,22 @@ anova2_interpret <- function(formula, data, type = 2, conf.level = 0.95) {
   }
 
   # --- Normality check ---
-  normality_note <- NULL
+  normality_note   <- NULL
+  assumption_checks <- list()
   res <- residuals(model)
   if (length(res) >= 3 && length(res) <= 5000) {
     sw <- shapiro.test(res)
+    assumption_checks[["Normality (residuals)"]] <- list(
+      status = if (sw$p.value >= 0.05) "PASSED" else "WARNING",
+      detail = sprintf("Shapiro-Wilk p = %.3f%s", sw$p.value,
+                       if (sw$p.value < 0.05) ", may not be normal" else "")
+    )
     if (sw$p.value < 0.05) {
       normality_note <- sprintf(
         "WARNING: Residuals may not be normally distributed (Shapiro-Wilk p = %.4f).",
         sw$p.value)
     }
   }
-
   # --- Homogeneity of variance ---
   variance_note <- NULL
   bart <- tryCatch(
@@ -186,10 +192,17 @@ anova2_interpret <- function(formula, data, type = 2, conf.level = 0.95) {
                     interaction(data[[group1]], data[[group2]])),
     error = function(e) NULL
   )
-  if (!is.null(bart) && bart$p.value < 0.05) {
-    variance_note <- sprintf(
-      "WARNING: Bartlett's test suggests unequal variances (p = %.4f).",
-      bart$p.value)
+  if (!is.null(bart)) {
+    assumption_checks[["Equal variances (cells)"]] <- list(
+      status = if (bart$p.value >= 0.05) "PASSED" else "WARNING",
+      detail = sprintf("Bartlett's p = %.3f%s", bart$p.value,
+                       if (bart$p.value < 0.05) " (unequal variances)" else "")
+    )
+    if (bart$p.value < 0.05) {
+      variance_note <- sprintf(
+        "WARNING: Bartlett's test suggests unequal variances (p = %.4f).",
+        bart$p.value)
+    }
   }
 
   # --- Post-hoc Tukey ---
@@ -227,6 +240,8 @@ anova2_interpret <- function(formula, data, type = 2, conf.level = 0.95) {
     p_g2                 = p_g2,
     p_int                = p_int,
     df_g1                = df_g1,
+    assumption_checks    = assumption_checks,
+    context              = context,
     df_g2                = df_g2,
     df_int               = df_int,
     df_res               = df_res,
@@ -256,7 +271,7 @@ print.statease_anova2 <- function(x, ...) {
   cat(sprintf("  Factor 1     : %s\n", x$group1))
   cat(sprintf("  Factor 2     : %s\n", x$group2))
   cat(sprintf("  N            : %d\n", x$n))
-  cat(sprintf("  SS Type      : Type-%s\n", x$ss_type))
+  cat(sprintf("  SS Type      : Type-%s\n", x$type))
   cat("\n")
   cat(sprintf("  Means by %s:\n", x$group1))
   for (g in names(x$means_g1)) {
@@ -281,6 +296,19 @@ print.statease_anova2 <- function(x, ...) {
                 "Interaction", x$f_int, x$df_int, x$df_res,
                 x$sig(x$p_int), x$eta_int, x$eta_label(x$eta_int)))
   }
+
+  if (length(x$assumption_checks) > 0) {
+    cat("\n  Assumption Checks:\n")
+    for (name in names(x$assumption_checks)) {
+      ac <- x$assumption_checks[[name]]
+      cat(sprintf("    %-24s: %-8s (%s)\n", name, ac$status, ac$detail))
+    }
+    cat("\n  NOTE: These checks are heuristics based on statistical tests\n")
+    cat("  and sample size. Passing does not prove an assumption is met;\n")
+    cat("  failing does not automatically invalidate the result. Interpret\n")
+    cat("  alongside your knowledge of the data.\n")
+  }
+
   cat("\n")
   cat("  Interpretation:\n")
   cat(sprintf("  Main effect of %s is %s.\n", x$group1, x$sig(x$p_g1)))
@@ -330,8 +358,11 @@ print.statease_anova2 <- function(x, ...) {
     }
   }
 
-  if (!is.null(x$normality_note)) cat(sprintf("\n  %s\n", x$normality_note))
-  if (!is.null(x$variance_note)) cat(sprintf("  %s\n", x$variance_note))
+  if (!is.null(x$context)) {
+    cat(sprintf("\n  NOTE: You described this analysis as: \"%s\".\n", x$context))
+    cat("  The interpretation should be considered in the context you\n")
+    cat("  provided.\n")
+  }
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)
 }

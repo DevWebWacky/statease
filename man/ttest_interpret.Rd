@@ -10,7 +10,8 @@ ttest_interpret(
   mu = 0,
   paired = FALSE,
   conf.level = 0.95,
-  var_name = "Variable"
+  var_name = "Variable",
+  context = NULL
 )
 }
 \arguments{

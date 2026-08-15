@@ -39,7 +39,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">kruskal_interpret</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, conf.level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">kruskal_interpret</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, conf.level <span class="op">=</span> <span class="fl">0.95</span>, context <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -90,8 +90,16 @@ the formatted report.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   p-value      : 0.6831</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Eta squared  : 0.0000 (negligible effect)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Assumption Checks:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Minimum group size      : NOTE     (smallest group n = 4; consider this when assessing the chi-square approximation)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Independence            : NOTE     (assumed from study design, not testable from data)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   NOTE: These are contextual notes rather than pass/fail checks.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   They describe aspects of the data and test method relevant to</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   interpretation, but are not automatically verifiable by the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   package.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Interpretation:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   The result is not statistically significant (p = 0.6831 &gt; alpha 0.05).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   The result is not statistically significant (p = 0.6831 &gt; alpha 0.05).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Effect size is negligible (eta^2 = 0.0000).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Note: Kruskal-Wallis test compares multiple groups using ranked values</span>

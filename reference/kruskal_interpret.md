@@ -5,7 +5,7 @@ Kruskal-Wallis Test with Plain-English Interpretation
 ## Usage
 
 ``` r
-kruskal_interpret(formula, data, conf.level = 0.95)
+kruskal_interpret(formula, data, conf.level = 0.95, context = NULL)
 ```
 
 ## Arguments
@@ -54,8 +54,16 @@ print(result)
 #>   p-value      : 0.6831
 #>   Eta squared  : 0.0000 (negligible effect)
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Minimum group size      : NOTE     (smallest group n = 4; consider this when assessing the chi-square approximation)
+#>     Independence            : NOTE     (assumed from study design, not testable from data)
+#> 
+#>   NOTE: These are contextual notes rather than pass/fail checks.
+#>   They describe aspects of the data and test method relevant to
+#>   interpretation, but are not automatically verifiable by the
+#>   package.
+#> -----------------------------------------------------------------
 #>   Interpretation:
-#>   The result is not statistically significant (p = 0.6831 > alpha 0.05).
 #>   The result is not statistically significant (p = 0.6831 > alpha 0.05).
 #>   Effect size is negligible (eta^2 = 0.0000).
 #>   Note: Kruskal-Wallis test compares multiple groups using ranked values

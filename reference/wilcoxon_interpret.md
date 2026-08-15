@@ -5,7 +5,13 @@ Wilcoxon Signed Rank Test with Plain-English Interpretation
 ## Usage
 
 ``` r
-wilcoxon_interpret(x, y, conf.level = 0.95, var_name = "Variable")
+wilcoxon_interpret(
+  x,
+  y,
+  conf.level = 0.95,
+  var_name = "Variable",
+  context = NULL
+)
 ```
 
 ## Arguments
@@ -52,13 +58,24 @@ print(result)
 #>   95% CI      : [-2.500, 15.000]
 #>   Effect size  : 0.605 (large)
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Sample size (pairs)     : NOTE     (n = 7)
+#>     Test method used        : NOTE     (Wilcoxon signed rank exact test)
+#>     Independence of pairs   : NOTE     (assumed from study design, not testable from data)
+#> 
+#>   NOTE: These are contextual notes rather than pass/fail checks.
+#>   They describe aspects of the data and test method relevant to
+#>   interpretation, but are not automatically verifiable by the
+#>   package.
+#> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.1094 > alpha 0.05).
 #>   Post-measurement values appear stochastically greater than pre-measurement values. (Reported medians: Post = 45.00, Pre = 38.00)
 #>   Effect size is large (r = 0.605).
 #>   Note: Wilcoxon test compares groups using ranked values.
-#>   A significant result sugegsts one group tends to have larger or smaller observation than the other.
-#>   This can be interpreted as evidence of stochastic superiority, but only under typical distribution assumptions.  It does not specifically test differences in medians.
+#>   A significant result suggests one group tends to have larger or smaller observation than the other.
+#>   This can be interpreted as evidence of stochastic superiority, but only under typical distribution assumptions.
+#>   It does not specifically test differences in medians.
 #> -----------------------------------------------------------------
 #> 
 ```

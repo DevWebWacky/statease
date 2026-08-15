@@ -5,7 +5,7 @@ Friedman Test with Plain-English Interpretation
 ## Usage
 
 ``` r
-friedman_interpret(formula, data, conf.level = 0.95)
+friedman_interpret(formula, data, conf.level = 0.95, context = NULL)
 ```
 
 ## Arguments
@@ -40,7 +40,7 @@ result <- friedman_interpret(score ~ time | subject, data = df)
 #> Warning: The Friedman Test may have low statistical power with very small sample sizes. Interpret non-significant results with caution.
 print(result)
 #> 
-#> -- statease Friedman Test Report 
+#> -- statease Friedman Test Report -------------------------------
 #>   Outcome      : score
 #>   Time/Group   : time (3 levels)
 #>   Subjects     : subject (n = 4)
@@ -55,6 +55,15 @@ print(result)
 #>   p-value      : 0.7788
 #>   Kendall's W  : 0.0625 (negligible effect)
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Sample size (subjects)  : NOTE     (n = 4)
+#>     Independence of blocks  : NOTE     (assumed from study design, not testable from data)
+#> 
+#>   NOTE: These are contextual notes rather than pass/fail checks.
+#>   They describe aspects of the data and test method relevant to
+#>   interpretation, but are not automatically verifiable by the
+#>   package.
+#> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.7788 > alpha 0.05).
 #>   There is insufficient evidence of a significant difference in ranks across the related groups or repeated measurements.
@@ -65,8 +74,6 @@ print(result)
 #>   differences in medians.
 #> 
 #>   Post-hoc tests not run (overall result not significant).
-#> 
-#>   WARNING: The Friedman Test assumes that the blocks (subjects) are independent of each other. Violation of this assumption may affect the validity of the results.
 #> 
 #>   NOTE: Normality assumption appears reasonable. If the assumptions of repeated measures ANOVA are met, consider using repeated measures ANOVA for greater statistical power.
 #> -----------------------------------------------------------------

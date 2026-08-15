@@ -759,6 +759,17 @@ print(result)
 #>   95% CI      : [-5.000, 5.000]
 #>   Effect size  : 0.012 (negligible)
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Sample size (Group 1)   : NOTE     (n = 45)
+#>     Sample size (Group 2)   : NOTE     (n = 45)
+#>     Test method used        : NOTE     (Wilcoxon rank sum exact test)
+#>     Independence            : NOTE     (assumed from study design, not testable from data)
+#> 
+#>   NOTE: These are contextual notes rather than pass/fail checks.
+#>   They describe aspects of the data and test method relevant to
+#>   interpretation, but are not automatically verifiable by the
+#>   package.
+#> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.9120 > alpha 0.05).
 #>   Values in Group 2 appear stochastically greater than values in Group 1. (Reported medians: Group 1 = 74.00, Group 2 = 75.00)
@@ -792,13 +803,24 @@ print(result)
 #>   95% CI      : [14.000, 20.000]
 #>   Effect size  : 0.737 (large)
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Sample size (pairs)     : NOTE     (n = 90)
+#>     Test method used        : NOTE     (Wilcoxon signed rank test with continuity correction)
+#>     Independence of pairs   : NOTE     (assumed from study design, not testable from data)
+#> 
+#>   NOTE: These are contextual notes rather than pass/fail checks.
+#>   They describe aspects of the data and test method relevant to
+#>   interpretation, but are not automatically verifiable by the
+#>   package.
+#> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is statistically significant (p = 0.0000 < alpha 0.05).
 #>   Post-measurement values appear stochastically greater than pre-measurement values. (Reported medians: Post = 74.00, Pre = 55.00)
 #>   Effect size is large (r = 0.737).
 #>   Note: Wilcoxon test compares groups using ranked values.
-#>   A significant result sugegsts one group tends to have larger or smaller observation than the other.
-#>   This can be interpreted as evidence of stochastic superiority, but only under typical distribution assumptions.  It does not specifically test differences in medians.
+#>   A significant result suggests one group tends to have larger or smaller observation than the other.
+#>   This can be interpreted as evidence of stochastic superiority, but only under typical distribution assumptions.
+#>   It does not specifically test differences in medians.
 #> -----------------------------------------------------------------
 ```
 
@@ -829,8 +851,16 @@ print(result)
 #>   p-value      : 0.0000
 #>   Eta squared  : 0.2420 (large effect)
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Minimum group size      : NOTE     (smallest group n = 30; consider this when assessing the chi-square approximation)
+#>     Independence            : NOTE     (assumed from study design, not testable from data)
+#> 
+#>   NOTE: These are contextual notes rather than pass/fail checks.
+#>   They describe aspects of the data and test method relevant to
+#>   interpretation, but are not automatically verifiable by the
+#>   package.
+#> -----------------------------------------------------------------
 #>   Interpretation:
-#>   The result is statistically significant (p = 0.0000 < alpha 0.05).
 #>   The result is statistically significant (p = 0.0000 < alpha 0.05).
 #>   Effect size is large (eta^2 = 0.2420).
 #>   Note: Kruskal-Wallis test compares multiple groups using ranked values
@@ -1024,8 +1054,16 @@ analyze(
 #>   p-value      : 0.0000
 #>   Eta squared  : 0.2420 (large effect)
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Minimum group size      : NOTE     (smallest group n = 30; consider this when assessing the chi-square approximation)
+#>     Independence            : NOTE     (assumed from study design, not testable from data)
+#> 
+#>   NOTE: These are contextual notes rather than pass/fail checks.
+#>   They describe aspects of the data and test method relevant to
+#>   interpretation, but are not automatically verifiable by the
+#>   package.
+#> -----------------------------------------------------------------
 #>   Interpretation:
-#>   The result is statistically significant (p = 0.0000 < alpha 0.05).
 #>   The result is statistically significant (p = 0.0000 < alpha 0.05).
 #>   Effect size is large (eta^2 = 0.2420).
 #>   Note: Kruskal-Wallis test compares multiple groups using ranked values
@@ -1266,7 +1304,7 @@ result <- friedman_interpret(score ~ time | subject,
 #> Interpret non-significant results with caution.
 print(result)
 #> 
-#> -- statease Friedman Test Report 
+#> -- statease Friedman Test Report -------------------------------
 #>   Outcome      : score
 #>   Time/Group   : time (3 levels)
 #>   Subjects     : subject (n = 4)
@@ -1281,6 +1319,15 @@ print(result)
 #>   p-value      : 0.7788
 #>   Kendall's W  : 0.0625 (negligible effect)
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Sample size (subjects)  : NOTE     (n = 4)
+#>     Independence of blocks  : NOTE     (assumed from study design, not testable from data)
+#> 
+#>   NOTE: These are contextual notes rather than pass/fail checks.
+#>   They describe aspects of the data and test method relevant to
+#>   interpretation, but are not automatically verifiable by the
+#>   package.
+#> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.7788 > alpha 0.05).
 #>   There is insufficient evidence of a significant difference in ranks across the related groups or repeated measurements.
@@ -1291,8 +1338,6 @@ print(result)
 #>   differences in medians.
 #> 
 #>   Post-hoc tests not run (overall result not significant).
-#> 
-#>   WARNING: The Friedman Test assumes that the blocks (subjects) are independent of each other. Violation of this assumption may affect the validity of the results.
 #> 
 #>   NOTE: Normality assumption appears reasonable. If the assumptions of repeated measures ANOVA are met, consider using repeated measures ANOVA for greater statistical power.
 #> -----------------------------------------------------------------

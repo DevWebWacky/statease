@@ -39,7 +39,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">friedman_interpret</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, conf.level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">friedman_interpret</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, conf.level <span class="op">=</span> <span class="fl">0.95</span>, context <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -76,7 +76,7 @@ formatted report.</p>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The Friedman Test may have low statistical power with very small sample sizes. Interpret non-significant results with caution.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -- statease Friedman Test Report </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -- statease Friedman Test Report -------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Outcome      : score</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Time/Group   : time (3 levels)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Subjects     : subject (n = 4)</span>
@@ -91,6 +91,15 @@ formatted report.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   p-value      : 0.7788</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Kendall's W  : 0.0625 (negligible effect)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Assumption Checks:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Sample size (subjects)  : NOTE     (n = 4)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Independence of blocks  : NOTE     (assumed from study design, not testable from data)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   NOTE: These are contextual notes rather than pass/fail checks.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   They describe aspects of the data and test method relevant to</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   interpretation, but are not automatically verifiable by the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   package.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Interpretation:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   The result is not statistically significant (p = 0.7788 &gt; alpha 0.05).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   There is insufficient evidence of a significant difference in ranks across the related groups or repeated measurements.</span>
@@ -101,8 +110,6 @@ formatted report.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   differences in medians.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Post-hoc tests not run (overall result not significant).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   WARNING: The Friedman Test assumes that the blocks (subjects) are independent of each other. Violation of this assumption may affect the validity of the results.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   NOTE: Normality assumption appears reasonable. If the assumptions of repeated measures ANOVA are met, consider using repeated measures ANOVA for greater statistical power.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>

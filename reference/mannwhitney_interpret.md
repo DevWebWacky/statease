@@ -5,7 +5,13 @@ Mann-Whitney U Test with Plain-English Interpretation
 ## Usage
 
 ``` r
-mannwhitney_interpret(x, y, conf.level = 0.95, var_name = "Variable")
+mannwhitney_interpret(
+  x,
+  y,
+  conf.level = 0.95,
+  var_name = "Variable",
+  context = NULL
+)
 ```
 
 ## Arguments
@@ -50,6 +56,17 @@ print(result)
 #>   p-value      : 0.6200
 #>   95% CI      : [-21.000, 38.000]
 #>   Effect size  : 0.133 (small)
+#> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Sample size (Group 1)   : NOTE     (n = 7)
+#>     Sample size (Group 2)   : NOTE     (n = 7)
+#>     Test method used        : NOTE     (Wilcoxon rank sum exact test)
+#>     Independence            : NOTE     (assumed from study design, not testable from data)
+#> 
+#>   NOTE: These are contextual notes rather than pass/fail checks.
+#>   They describe aspects of the data and test method relevant to
+#>   interpretation, but are not automatically verifiable by the
+#>   package.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.6200 > alpha 0.05).

@@ -204,10 +204,12 @@ print.statease_reg <- function(x, ...) {
     ac <- x$assumption_checks[[name]]
     cat(sprintf("    %-24s: %-8s (%s)\n", name, ac$status, ac$detail))
   }
-  cat("\n  NOTE: These checks are heuristics based on statistical tests\n")
-  cat("  and sample size. Passing does not prove an assumption is met;\n")
-  cat("  failing does not automatically invalidate the result. Interpret\n")
-  cat("  alongside your knowledge of the data.\n")
+  cat("\n  NOTE: Assumption checks are diagnostic tools and may be\n")
+  cat("  influenced by sample size and other characteristics of the\n")
+  cat("  data. Passing a check does not prove that an assumption is\n")
+  cat("  satisfied, and a warning does not automatically invalidate\n")
+  cat("  the analysis. Interpret these results alongside your\n")
+  cat("  knowledge of the data.\n")
   cat("-----------------------------------------------------------------\n")
   cat("  Interpretation:\n")
   cat(sprintf("  The predictor %s is %s.\n", x$predictor, x$sig_label))

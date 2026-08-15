@@ -241,9 +241,11 @@ print.statease_mcnemar <- function(x, ...) {
     ac <- x$assumption_checks[[name]]
     cat(sprintf("    %-26s: %-8s (%s)\n", name, ac$status, ac$detail))
   }
-  cat("\n  NOTE: These checks are heuristics based on the data structure.\n")
-  cat("  Passing does not prove an assumption is met; failing does not\n")
-  cat("  automatically invalidate the result. Interpret alongside your\n")
+  cat("\n  NOTE: Assumption checks are diagnostic tools and may be\n")
+  cat("  influenced by sample size and other characteristics of the\n")
+  cat("  data. Passing a check does not prove that an assumption is\n")
+  cat("  satisfied, and a warning does not automatically invalidate\n")
+  cat("  the analysis. Interpret these results alongside your\n")
   cat("  knowledge of the data.\n")
   cat("-----------------------------------------------------------------\n")
   cat("  Interpretation:\n")

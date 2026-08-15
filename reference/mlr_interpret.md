@@ -60,10 +60,12 @@ print(result)
 #>     Residual independence   : PASSED   (Durbin-Watson DW = 2.21, p = 0.710)
 #>     Multicollinearity (VIF) : WARNING  (max VIF = 10.0, threshold = 5)
 #> 
-#>   NOTE: These checks are heuristics based on statistical tests
-#>   and sample size. Passing does not prove an assumption is met;
-#>   failing does not automatically invalidate the result. Interpret
-#>   alongside your knowledge of the data.
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #> 

@@ -73,10 +73,12 @@ print(result)
 #>     Normality (y)           : PASSED   (Shapiro-Wilk p = 0.426, Pearson only)
 #>     Linearity               : NOTE     (visual inspection is recommended, not testable numerically)
 #> 
-#>   NOTE: These checks are heuristics based on statistical tests
-#>   and sample size. Passing does not prove an assumption is met;
-#>   failing does not automatically invalidate the result. Interpret
-#>   alongside your knowledge of the data.
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The correlation is statistically significant (p = 0.0000 < alpha 0.05).

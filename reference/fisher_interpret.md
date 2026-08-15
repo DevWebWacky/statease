@@ -73,9 +73,11 @@ print(result)
 #>     Expected cell frequencies : NOTE     (one or more cells < 5 (Fisher's test appropriate for this))
 #>     Sample independence       : NOTE     (assumed from study design, not testable from data)
 #> 
-#>   NOTE: These checks are heuristics based on the data structure.
-#>   Passing does not prove an assumption is met; failing does not
-#>   automatically invalidate the result. Interpret alongside your
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
 #>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:

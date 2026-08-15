@@ -63,10 +63,12 @@ print(result)
 #>     Homoscedasticity        : PASSED   (non-constant variance test p = 0.363)
 #>     Residual independence   : PASSED   (Durbin-Watson DW = 1.84, p = 0.682)
 #> 
-#>   NOTE: These checks are heuristics based on statistical tests
-#>   and sample size. Passing does not prove an assumption is met;
-#>   failing does not automatically invalidate the result. Interpret
-#>   alongside your knowledge of the data.
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The predictor study_hours is statistically significant (p = 0.0000 < alpha 0.05).

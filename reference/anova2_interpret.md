@@ -77,10 +77,12 @@ print(result)
 #>     Normality (residuals)   : PASSED   (Shapiro-Wilk p = 0.936)
 #>     Equal variances (cells) : PASSED   (Bartlett's p = 0.584)
 #> 
-#>   NOTE: These checks are heuristics based on statistical tests
-#>   and sample size. Passing does not prove an assumption is met;
-#>   failing does not automatically invalidate the result. Interpret
-#>   alongside your knowledge of the data.
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> 
 #>   Interpretation:
 #>   Main effect of method is not significant (p = 0.6517).

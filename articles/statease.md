@@ -139,10 +139,12 @@ print(result)
 #>     Normality (y)         : PASSED   (Shapiro-Wilk p = 0.156)
 #>     Equal variances       : PASSED   (F-test p = 0.937)
 #> 
-#>   NOTE: These checks are heuristics based on statistical tests
-#>   and sample size. Passing does not prove an assumption is met;
-#>   failing does not automatically invalidate the result. Interpret
-#>   alongside your knowledge of the data.
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.979 > alpha 0.05).
@@ -179,10 +181,12 @@ print(result)
 #>   Assumption Checks:
 #>     Normality (x)         : WARNING  (Shapiro-Wilk p = 0.005, may not be normal)
 #> 
-#>   NOTE: These checks are heuristics based on statistical tests
-#>   and sample size. Passing does not prove an assumption is met;
-#>   failing does not automatically invalidate the result. Interpret
-#>   alongside your knowledge of the data.
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.099 > alpha 0.05).
@@ -221,10 +225,12 @@ print(result)
 #>     Normality (x)         : WARNING  (Shapiro-Wilk p = 0.005, may not be normal)
 #>     Normality (y)         : PASSED   (Shapiro-Wilk p = 0.282)
 #> 
-#>   NOTE: These checks are heuristics based on statistical tests
-#>   and sample size. Passing does not prove an assumption is met;
-#>   failing does not automatically invalidate the result. Interpret
-#>   alongside your knowledge of the data.
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is statistically significant (p = 0.000 < alpha 0.05).
@@ -268,10 +274,12 @@ print(result)
 #>     Normality (Group: Traditional): PASSED   (Shapiro-Wilk p = 0.340)
 #>     Equal variances         : WARNING  (Bartlett's p = 0.042 (unequal variances))
 #> 
-#>   NOTE: These checks are heuristics based on statistical tests
-#>   and sample size. Passing does not prove an assumption is met;
-#>   failing does not automatically invalidate the result. Interpret
-#>   alongside your knowledge of the data.
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The overall ANOVA result is statistically significant (p = 0.0000 < alpha 0.05).
@@ -336,10 +344,12 @@ print(result)
 #>     Normality (residuals)   : PASSED   (Shapiro-Wilk p = 0.181)
 #>     Equal variances (cells) : PASSED   (Bartlett's p = 0.104)
 #> 
-#>   NOTE: These checks are heuristics based on statistical tests
-#>   and sample size. Passing does not prove an assumption is met;
-#>   failing does not automatically invalidate the result. Interpret
-#>   alongside your knowledge of the data.
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> 
 #>   Interpretation:
 #>   Main effect of method is significant (p = 0.0000).
@@ -456,9 +466,11 @@ print(result)
 #>     Expected cell frequencies : PASSED   (all cells >= 5)
 #>     Sample independence       : NOTE     (assumed from study design, not testable from data)
 #> 
-#>   NOTE: These checks are heuristics based on the data structure.
-#>   Passing does not prove an assumption is met; failing does not
-#>   automatically invalidate the result. Interpret alongside your
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
 #>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
@@ -500,10 +512,12 @@ print(result)
 #>     Normality (y)           : WARNING  (Shapiro-Wilk p = 0.005, Pearson only, may not be normal)
 #>     Linearity               : NOTE     (visual inspection is recommended, not testable numerically)
 #> 
-#>   NOTE: These checks are heuristics based on statistical tests
-#>   and sample size. Passing does not prove an assumption is met;
-#>   failing does not automatically invalidate the result. Interpret
-#>   alongside your knowledge of the data.
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The correlation is not statistically significant (p = 0.9720 > alpha 0.05).
@@ -542,10 +556,12 @@ print(result)
 #>   Assumption Checks:
 #>     Linearity               : NOTE     (visual inspection is recommended, not testable numerically)
 #> 
-#>   NOTE: These checks are heuristics based on statistical tests
-#>   and sample size. Passing does not prove an assumption is met;
-#>   failing does not automatically invalidate the result. Interpret
-#>   alongside your knowledge of the data.
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The correlation is not statistically significant (p = 0.4826 > alpha 0.05).
@@ -593,10 +609,12 @@ print(result)
 #>     Homoscedasticity        : PASSED   (non-constant variance test p = 0.413)
 #>     Residual independence   : WARNING  (Durbin-Watson DW = 1.47, p = 0.010, possible autocorrelation)
 #> 
-#>   NOTE: These checks are heuristics based on statistical tests
-#>   and sample size. Passing does not prove an assumption is met;
-#>   failing does not automatically invalidate the result. Interpret
-#>   alongside your knowledge of the data.
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The predictor pre_test is not statistically significant (p = 0.9720 > alpha 0.05).
@@ -640,10 +658,12 @@ print(result)
 #>     Residual independence   : WARNING  (Durbin-Watson DW = 1.48, p = 0.010, possible autocorrelation)
 #>     Multicollinearity (VIF) : PASSED   (max VIF = 1.0, threshold = 5)
 #> 
-#>   NOTE: These checks are heuristics based on statistical tests
-#>   and sample size. Passing does not prove an assumption is met;
-#>   failing does not automatically invalidate the result. Interpret
-#>   alongside your knowledge of the data.
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #> 
@@ -967,10 +987,12 @@ analyze(
 #>     Normality (y)         : PASSED   (Shapiro-Wilk p = 0.156)
 #>     Equal variances       : PASSED   (F-test p = 0.937)
 #> 
-#>   NOTE: These checks are heuristics based on statistical tests
-#>   and sample size. Passing does not prove an assumption is met;
-#>   failing does not automatically invalidate the result. Interpret
-#>   alongside your knowledge of the data.
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The result is not statistically significant (p = 0.979 > alpha 0.05).
@@ -1006,10 +1028,12 @@ analyze(formula = exam_score ~ method, data = tutorial_data)
 #>     Normality (Group: Traditional): PASSED   (Shapiro-Wilk p = 0.340)
 #>     Equal variances         : WARNING  (Bartlett's p = 0.042 (unequal variances))
 #> 
-#>   NOTE: These checks are heuristics based on statistical tests
-#>   and sample size. Passing does not prove an assumption is met;
-#>   failing does not automatically invalidate the result. Interpret
-#>   alongside your knowledge of the data.
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The overall ANOVA result is statistically significant (p = 0.0000 < alpha 0.05).
@@ -1113,10 +1137,12 @@ analyze(formula = exam_score ~ pre_test, data = tutorial_data)
 #>     Homoscedasticity        : PASSED   (non-constant variance test p = 0.413)
 #>     Residual independence   : WARNING  (Durbin-Watson DW = 1.47, p = 0.010, possible autocorrelation)
 #> 
-#>   NOTE: These checks are heuristics based on statistical tests
-#>   and sample size. Passing does not prove an assumption is met;
-#>   failing does not automatically invalidate the result. Interpret
-#>   alongside your knowledge of the data.
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The predictor pre_test is not statistically significant (p = 0.9720 > alpha 0.05).
@@ -1218,9 +1244,11 @@ print(result)
 #>     Expected cell frequencies : NOTE     (all cells >= 5 (Chi-square would also be valid))
 #>     Sample independence       : NOTE     (assumed from study design, not testable from data)
 #> 
-#>   NOTE: These checks are heuristics based on the data structure.
-#>   Passing does not prove an assumption is met; failing does not
-#>   automatically invalidate the result. Interpret alongside your
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
 #>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
@@ -1268,9 +1296,11 @@ print(result)
 #>     Discordant pairs (b+c)    : PASSED   (n = 56, adequate)
 #>     Sample independence       : NOTE     (assumed from study design, not testable from data)
 #> 
-#>   NOTE: These checks are heuristics based on the data structure.
-#>   Passing does not prove an assumption is met; failing does not
-#>   automatically invalidate the result. Interpret alongside your
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
 #>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:

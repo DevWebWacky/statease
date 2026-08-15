@@ -60,20 +60,24 @@
 </div>
 <p><img src="https://cranlogs.r-pkg.org/badges/grand-total/statease" alt="CRAN Total"><img src="https://www.r-pkg.org/badges/version/statease" alt="CRAN Version"></p>
 <blockquote>
-<p>Simplified statistical analysis with plain-English interpretation for R</p>
+<p>Statistical analysis with plain-English interpretation for R</p>
 </blockquote>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p><strong>statease</strong> is an R package that runs a wide range of statistical analyses and tells you in plain English what the results mean.</p>
+<p><strong>statease</strong> runs common statistical tests and returns each result together with a plain-English interpretation, the effect size, the significance decision, and, as of v1.4.0, a set of assumption checks relevant to that specific test, shown by default rather than as an optional extra step.</p>
+<p>statease does not replace statistical judgment. It cannot know your study design, whether your sample was randomly selected, or whether an assumption violation matters for your particular use case, no automated tool can. What it does is surface the diagnostic information a careful analyst would normally have to compute separately (normality, variance homogeneity, multicollinearity, and several others depending on the test), clearly labelled as <strong>PASSED</strong>, <strong>WARNING</strong>, or <strong>NOTE</strong>, so that information is in front of you at the moment you read the result rather than something you have to remember to go check yourself.</p>
+<p>You can also describe your study design in a sentence, and statease will echo it back alongside the interpretation as a reminder to read the result in that context:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/ttest_interpret.html">ttest_interpret</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, context <span class="op">=</span> <span class="st">"observational sample, not randomized"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"statease"</span><span class="op">)</span></span></code></pre></div>
 <p>For the development version from GitHub:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"DevWebWacky/statease"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -106,15 +110,15 @@
 </tr>
 <tr>
 <td><code><a href="reference/ttest_interpret.html">ttest_interpret()</a></code></td>
-<td>T-tests with Cohen’s d and CI interpretation</td>
+<td>T-tests, with normality and variance checks by default</td>
 </tr>
 <tr>
 <td><code><a href="reference/anova_interpret.html">anova_interpret()</a></code></td>
-<td>One-way ANOVA with Tukey post-hoc and eta squared</td>
+<td>One-way ANOVA with Tukey post-hoc, eta squared, and assumption checks</td>
 </tr>
 <tr>
 <td><code><a href="reference/anova2_interpret.html">anova2_interpret()</a></code></td>
-<td>Two-way ANOVA with Type II/III SS</td>
+<td>Two-way ANOVA with Type II/III SS and assumption checks</td>
 </tr>
 <tr>
 <td><code><a href="reference/manova_interpret.html">manova_interpret()</a></code></td>
@@ -122,7 +126,7 @@
 </tr>
 <tr>
 <td><code><a href="reference/chisq_interpret.html">chisq_interpret()</a></code></td>
-<td>Chi-square test with Cramer’s V effect size</td>
+<td>Chi-square test with Cramer’s V and expected-frequency checks</td>
 </tr>
 <tr>
 <td><code><a href="reference/fisher_interpret.html">fisher_interpret()</a></code></td>
@@ -134,19 +138,19 @@
 </tr>
 <tr>
 <td><code><a href="reference/cor_interpret.html">cor_interpret()</a></code></td>
-<td>Correlation analysis (Pearson, Spearman, Kendall)</td>
+<td>Correlation (Pearson, Spearman, Kendall) with linearity notes</td>
 </tr>
 <tr>
 <td><code><a href="reference/reg_interpret.html">reg_interpret()</a></code></td>
-<td>Simple linear regression with diagnostics</td>
+<td>Simple linear regression with normality, homoscedasticity, and independence checks</td>
 </tr>
 <tr>
 <td><code><a href="reference/mlr_interpret.html">mlr_interpret()</a></code></td>
-<td>Multiple linear regression with diagnostics</td>
+<td>Multiple linear regression, adding multicollinearity (VIF) checks</td>
 </tr>
 <tr>
 <td><code><a href="reference/logistic_interpret.html">logistic_interpret()</a></code></td>
-<td>Logistic regression with odds ratios</td>
+<td>Logistic regression with odds ratios and a separation diagnostic</td>
 </tr>
 <tr>
 <td><code><a href="reference/mannwhitney_interpret.html">mannwhitney_interpret()</a></code></td>
@@ -166,7 +170,7 @@
 </tr>
 <tr>
 <td><code><a href="reference/check_assumptions.html">check_assumptions()</a></code></td>
-<td>Automated assumption checking before analysis</td>
+<td>Run the same assumption checks on their own, before choosing a test</td>
 </tr>
 <tr>
 <td><code><a href="reference/power_interpret.html">power_interpret()</a></code></td>
@@ -185,17 +189,18 @@
 <div class="section level3">
 <h3 id="one-command-does-it-all">One command does it all<a class="anchor" aria-label="anchor" href="#one-command-does-it-all"></a>
 </h3>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/DevWebWacky/statease" class="external-link">statease</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Descriptive statistics</span></span>
 <span><span class="fu"><a href="reference/analyze.html">analyze</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>, <span class="fl">45</span>, <span class="fl">12</span>, <span class="fl">67</span>, <span class="fl">34</span><span class="op">)</span>, var_name <span class="op">=</span> <span class="st">"Exam Scores"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Independent samples t-test (auto-detected)</span></span>
+<span><span class="co"># Independent samples t-test (auto-detected), with a study design note</span></span>
 <span><span class="fu"><a href="reference/analyze.html">analyze</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">19</span>,<span class="fl">38</span>,<span class="fl">22</span>,<span class="fl">51</span>,<span class="fl">29</span><span class="op">)</span>,</span>
-<span>        var_name <span class="op">=</span> <span class="st">"Scores"</span><span class="op">)</span></span>
+<span>        var_name <span class="op">=</span> <span class="st">"Scores"</span>,</span>
+<span>        context <span class="op">=</span> <span class="st">"convenience sample, not randomly assigned"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Check assumptions first</span></span>
+<span><span class="co"># Check assumptions before deciding on a test</span></span>
 <span><span class="fu"><a href="reference/analyze.html">analyze</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">45</span>,<span class="fl">12</span>,<span class="fl">67</span>,<span class="fl">34</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">19</span>,<span class="fl">38</span>,<span class="fl">22</span>,<span class="fl">51</span>,<span class="fl">29</span><span class="op">)</span>,</span>
 <span>        check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
@@ -241,15 +246,52 @@
 <span><span class="co"># Interpret any p-value</span></span>
 <span><span class="fu"><a href="reference/interpret_p.html">interpret_p</a></span><span class="op">(</span><span class="fl">0.03</span>, context <span class="op">=</span> <span class="st">"treatment vs control group"</span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level3">
+<h3 id="what-an-assumption-check-actually-looks-like">What an assumption check actually looks like<a class="anchor" aria-label="anchor" href="#what-an-assumption-check-actually-looks-like"></a>
+</h3>
+<p>Every relevant <code>_interpret()</code> function prints its assumption checks automatically, whether or not anything is wrong:</p>
+<pre><code>  Assumption Checks:
+    Normality (Group 1)    : PASSED   (Shapiro-Wilk p = 0.342)
+    Normality (Group 2)    : WARNING  (Shapiro-Wilk p = 0.012, may not be normal)
+    Equal variances        : PASSED   (Levene's p = 0.501)
+
+  NOTE: Assumption checks are diagnostic tools and may be
+  influenced by sample size and other characteristics of the
+  data. Passing a check does not prove that an assumption is
+  satisfied, and a warning does not automatically invalidate
+  the analysis. Interpret these results alongside your
+  knowledge of the data.</code></pre>
+<p>Checks are labelled one of three ways: - <strong>PASSED</strong> : the package tested this and found no evidence of a problem - <strong>WARNING</strong> : the package detected something worth your attention - <strong>NOTE</strong> : something relevant to interpretation that the package cannot test automatically (independence of observations, for example, is a property of how the data was collected, not something computable from the numbers themselves)</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="why-statease">Why statease?<a class="anchor" aria-label="anchor" href="#why-statease"></a>
 </h2>
-<p>Most R output gives you numbers. statease gives you <strong>numbers + meaning</strong>. Perfect for: - Students learning statistics - Researchers who want fast readable output - Educators teaching statistical concepts</p>
+<p>Most R output gives you numbers. statease gives you numbers, a plain-English interpretation, and by default, the assumption context needed to read that interpretation responsibly. It’s built for: - Students learning statistics - Researchers who want fast, readable output without skipping diagnostics - Educators teaching statistical concepts</p>
 </div>
 <div class="section level2">
 <h2 id="changelog">Changelog<a class="anchor" aria-label="anchor" href="#changelog"></a>
 </h2>
+<div class="section level3">
+<h3 id="v140">v1.4.0<a class="anchor" aria-label="anchor" href="#v140"></a>
+</h3>
+<ul>
+<li>Assumption checks are now printed by default in every relevant <code>_interpret()</code> function, rather than requiring a separate call to <code><a href="reference/check_assumptions.html">check_assumptions()</a></code>
+</li>
+<li>Added a <code>context</code> argument across all inferential functions and <code><a href="reference/analyze.html">analyze()</a></code>, letting users describe their study design and have it echoed back alongside the interpretation</li>
+<li>Added a numerical separation diagnostic to <code><a href="reference/logistic_interpret.html">logistic_interpret()</a></code>
+</li>
+<li>
+<code><a href="reference/reg_interpret.html">reg_interpret()</a></code> and <code><a href="reference/mlr_interpret.html">mlr_interpret()</a></code> now check homoscedasticity and residual independence in addition to normality; <code><a href="reference/mlr_interpret.html">mlr_interpret()</a></code> also checks multicollinearity (VIF)</li>
+<li>
+<code><a href="reference/check_assumptions.html">check_assumptions()</a></code>’s regression logic now shares its diagnostic calculations with <code><a href="reference/reg_interpret.html">reg_interpret()</a></code> and <code><a href="reference/mlr_interpret.html">mlr_interpret()</a></code>, rather than three separate implementations</li>
+<li>Fixed a boundary bug in <code><a href="reference/power_interpret.html">power_interpret()</a></code> where an effect size exactly equal to a Cohen’s convention threshold was labelled one category too high</li>
+<li>Fixed a bug where <code><a href="reference/anova2_interpret.html">anova2_interpret()</a></code>’s printed report did not display the Sum of Squares type</li>
+<li>Fixed a bug where <code><a href="reference/chisq_interpret.html">chisq_interpret()</a></code> triggered R’s internal chi-squared approximation warning twice</li>
+<li>Fixed a bug where <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>/<code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm()</a></code> fitted inside a wrapper function could cause <code><a href="https://rdrr.io/pkg/car/man/ncvTest.html" class="external-link">car::ncvTest()</a></code> to fail silently when computing homoscedasticity</li>
+<li>Several formatting fixes in non-parametric test output</li>
+</ul>
+</div>
 <div class="section level3">
 <h3 id="v130">v1.3.0<a class="anchor" aria-label="anchor" href="#v130"></a>
 </h3>

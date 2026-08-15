@@ -23,7 +23,8 @@ analyze(
   power = 0.8,
   n_groups = 2,
   n_predictors = 1,
-  check = FALSE
+  check = FALSE,
+  context = NULL
 )
 ```
 
@@ -103,6 +104,11 @@ analyze(
 - check:
 
   Logical. TRUE to run assumption checks before analysis. Default FALSE.
+
+- context:
+
+  Optional description of the study design or sampling method, echoed
+  back in the report. Default NULL.
 
 ## Value
 

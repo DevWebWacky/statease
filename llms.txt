@@ -4,13 +4,34 @@
 Total](https://cranlogs.r-pkg.org/badges/grand-total/statease)![CRAN
 Version](https://www.r-pkg.org/badges/version/statease)
 
-> Simplified statistical analysis with plain-English interpretation for
-> R
+> Statistical analysis with plain-English interpretation for R
 
 ## Overview
 
-**statease** is an R package that runs a wide range of statistical
-analyses and tells you in plain English what the results mean.
+**statease** runs common statistical tests and returns each result
+together with a plain-English interpretation, the effect size, the
+significance decision, and, as of v1.4.0, a set of assumption checks
+relevant to that specific test, shown by default rather than as an
+optional extra step.
+
+statease does not replace statistical judgment. It cannot know your
+study design, whether your sample was randomly selected, or whether an
+assumption violation matters for your particular use case, no automated
+tool can. What it does is surface the diagnostic information a careful
+analyst would normally have to compute separately (normality, variance
+homogeneity, multicollinearity, and several others depending on the
+test), clearly labelled as **PASSED**, **WARNING**, or **NOTE**, so that
+information is in front of you at the moment you read the result rather
+than something you have to remember to go check yourself.
+
+You can also describe your study design in a sentence, and statease will
+echo it back alongside the interpretation as a reminder to read the
+result in that context:
+
+``` r
+
+ttest_interpret(x, y, context = "observational sample, not randomized")
+```
 
 ## Installation
 
@@ -40,22 +61,22 @@ App](https://devwebwacky.shinyapps.io/statease/)
 |----|----|
 | [`analyze()`](https://devwebwacky.github.io/statease/reference/analyze.md) | Master function - auto-detects and runs the right test |
 | [`describe()`](https://devwebwacky.github.io/statease/reference/describe.md) | Descriptive statistics with interpretation |
-| [`ttest_interpret()`](https://devwebwacky.github.io/statease/reference/ttest_interpret.md) | T-tests with Cohen’s d and CI interpretation |
-| [`anova_interpret()`](https://devwebwacky.github.io/statease/reference/anova_interpret.md) | One-way ANOVA with Tukey post-hoc and eta squared |
-| [`anova2_interpret()`](https://devwebwacky.github.io/statease/reference/anova2_interpret.md) | Two-way ANOVA with Type II/III SS |
+| [`ttest_interpret()`](https://devwebwacky.github.io/statease/reference/ttest_interpret.md) | T-tests, with normality and variance checks by default |
+| [`anova_interpret()`](https://devwebwacky.github.io/statease/reference/anova_interpret.md) | One-way ANOVA with Tukey post-hoc, eta squared, and assumption checks |
+| [`anova2_interpret()`](https://devwebwacky.github.io/statease/reference/anova2_interpret.md) | Two-way ANOVA with Type II/III SS and assumption checks |
 | [`manova_interpret()`](https://devwebwacky.github.io/statease/reference/manova_interpret.md) | MANOVA with Pillai’s trace and follow-up ANOVAs |
-| [`chisq_interpret()`](https://devwebwacky.github.io/statease/reference/chisq_interpret.md) | Chi-square test with Cramer’s V effect size |
+| [`chisq_interpret()`](https://devwebwacky.github.io/statease/reference/chisq_interpret.md) | Chi-square test with Cramer’s V and expected-frequency checks |
 | [`fisher_interpret()`](https://devwebwacky.github.io/statease/reference/fisher_interpret.md) | Fisher’s Exact Test with Odds Ratio |
 | [`mcnemar_interpret()`](https://devwebwacky.github.io/statease/reference/mcnemar_interpret.md) | McNemar’s Test for paired categorical data |
-| [`cor_interpret()`](https://devwebwacky.github.io/statease/reference/cor_interpret.md) | Correlation analysis (Pearson, Spearman, Kendall) |
-| [`reg_interpret()`](https://devwebwacky.github.io/statease/reference/reg_interpret.md) | Simple linear regression with diagnostics |
-| [`mlr_interpret()`](https://devwebwacky.github.io/statease/reference/mlr_interpret.md) | Multiple linear regression with diagnostics |
-| [`logistic_interpret()`](https://devwebwacky.github.io/statease/reference/logistic_interpret.md) | Logistic regression with odds ratios |
+| [`cor_interpret()`](https://devwebwacky.github.io/statease/reference/cor_interpret.md) | Correlation (Pearson, Spearman, Kendall) with linearity notes |
+| [`reg_interpret()`](https://devwebwacky.github.io/statease/reference/reg_interpret.md) | Simple linear regression with normality, homoscedasticity, and independence checks |
+| [`mlr_interpret()`](https://devwebwacky.github.io/statease/reference/mlr_interpret.md) | Multiple linear regression, adding multicollinearity (VIF) checks |
+| [`logistic_interpret()`](https://devwebwacky.github.io/statease/reference/logistic_interpret.md) | Logistic regression with odds ratios and a separation diagnostic |
 | [`mannwhitney_interpret()`](https://devwebwacky.github.io/statease/reference/mannwhitney_interpret.md) | Mann-Whitney U test (non-parametric) |
 | [`wilcoxon_interpret()`](https://devwebwacky.github.io/statease/reference/wilcoxon_interpret.md) | Wilcoxon Signed Rank test (non-parametric) |
 | [`kruskal_interpret()`](https://devwebwacky.github.io/statease/reference/kruskal_interpret.md) | Kruskal-Wallis test with post-hoc comparisons |
 | [`friedman_interpret()`](https://devwebwacky.github.io/statease/reference/friedman_interpret.md) | Friedman Test with Kendall’s W |
-| [`check_assumptions()`](https://devwebwacky.github.io/statease/reference/check_assumptions.md) | Automated assumption checking before analysis |
+| [`check_assumptions()`](https://devwebwacky.github.io/statease/reference/check_assumptions.md) | Run the same assumption checks on their own, before choosing a test |
 | [`power_interpret()`](https://devwebwacky.github.io/statease/reference/power_interpret.md) | Statistical power analysis and sample size calculation |
 | [`interpret_p()`](https://devwebwacky.github.io/statease/reference/interpret_p.md) | Standalone p-value interpreter |
 
@@ -70,11 +91,12 @@ library(statease)
 # Descriptive statistics
 analyze(x = c(23, 45, 12, 67, 34), var_name = "Exam Scores")
 
-# Independent samples t-test (auto-detected)
+# Independent samples t-test (auto-detected), with a study design note
 analyze(x = c(23,45,12,67,34), y = c(19,38,22,51,29),
-        var_name = "Scores")
+        var_name = "Scores",
+        context = "convenience sample, not randomly assigned")
 
-# Check assumptions first
+# Check assumptions before deciding on a test
 analyze(x = c(23,45,12,67,34), y = c(19,38,22,51,29),
         check = TRUE)
 
@@ -121,13 +143,82 @@ analyze(test_type = "ttest.two", effect_size = 0.5)
 interpret_p(0.03, context = "treatment vs control group")
 ```
 
+### What an assumption check actually looks like
+
+Every relevant `_interpret()` function prints its assumption checks
+automatically, whether or not anything is wrong:
+
+      Assumption Checks:
+        Normality (Group 1)    : PASSED   (Shapiro-Wilk p = 0.342)
+        Normality (Group 2)    : WARNING  (Shapiro-Wilk p = 0.012, may not be normal)
+        Equal variances        : PASSED   (Levene's p = 0.501)
+
+      NOTE: Assumption checks are diagnostic tools and may be
+      influenced by sample size and other characteristics of the
+      data. Passing a check does not prove that an assumption is
+      satisfied, and a warning does not automatically invalidate
+      the analysis. Interpret these results alongside your
+      knowledge of the data.
+
+Checks are labelled one of three ways: - **PASSED** : the package tested
+this and found no evidence of a problem - **WARNING** : the package
+detected something worth your attention - **NOTE** : something relevant
+to interpretation that the package cannot test automatically
+(independence of observations, for example, is a property of how the
+data was collected, not something computable from the numbers
+themselves)
+
 ## Why statease?
 
-Most R output gives you numbers. statease gives you **numbers +
-meaning**. Perfect for: - Students learning statistics - Researchers who
-want fast readable output - Educators teaching statistical concepts
+Most R output gives you numbers. statease gives you numbers, a
+plain-English interpretation, and by default, the assumption context
+needed to read that interpretation responsibly. It’s built for: -
+Students learning statistics - Researchers who want fast, readable
+output without skipping diagnostics - Educators teaching statistical
+concepts
 
 ## Changelog
+
+### v1.4.0
+
+- Assumption checks are now printed by default in every relevant
+  `_interpret()` function, rather than requiring a separate call to
+  [`check_assumptions()`](https://devwebwacky.github.io/statease/reference/check_assumptions.md)
+- Added a `context` argument across all inferential functions and
+  [`analyze()`](https://devwebwacky.github.io/statease/reference/analyze.md),
+  letting users describe their study design and have it echoed back
+  alongside the interpretation
+- Added a numerical separation diagnostic to
+  [`logistic_interpret()`](https://devwebwacky.github.io/statease/reference/logistic_interpret.md)
+- [`reg_interpret()`](https://devwebwacky.github.io/statease/reference/reg_interpret.md)
+  and
+  [`mlr_interpret()`](https://devwebwacky.github.io/statease/reference/mlr_interpret.md)
+  now check homoscedasticity and residual independence in addition to
+  normality;
+  [`mlr_interpret()`](https://devwebwacky.github.io/statease/reference/mlr_interpret.md)
+  also checks multicollinearity (VIF)
+- [`check_assumptions()`](https://devwebwacky.github.io/statease/reference/check_assumptions.md)’s
+  regression logic now shares its diagnostic calculations with
+  [`reg_interpret()`](https://devwebwacky.github.io/statease/reference/reg_interpret.md)
+  and
+  [`mlr_interpret()`](https://devwebwacky.github.io/statease/reference/mlr_interpret.md),
+  rather than three separate implementations
+- Fixed a boundary bug in
+  [`power_interpret()`](https://devwebwacky.github.io/statease/reference/power_interpret.md)
+  where an effect size exactly equal to a Cohen’s convention threshold
+  was labelled one category too high
+- Fixed a bug where
+  [`anova2_interpret()`](https://devwebwacky.github.io/statease/reference/anova2_interpret.md)’s
+  printed report did not display the Sum of Squares type
+- Fixed a bug where
+  [`chisq_interpret()`](https://devwebwacky.github.io/statease/reference/chisq_interpret.md)
+  triggered R’s internal chi-squared approximation warning twice
+- Fixed a bug where
+  [`lm()`](https://rdrr.io/r/stats/lm.html)/[`glm()`](https://rdrr.io/r/stats/glm.html)
+  fitted inside a wrapper function could cause
+  [`car::ncvTest()`](https://rdrr.io/pkg/car/man/ncvTest.html) to fail
+  silently when computing homoscedasticity
+- Several formatting fixes in non-parametric test output
 
 ### v1.3.0
 

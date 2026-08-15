@@ -16,7 +16,7 @@
 #' result <- mannwhitney_interpret(x, y)
 #' print(result)
 mannwhitney_interpret <- function(x, y, conf.level = 0.95,
-                                  var_name = "Variable") {
+                                  var_name = "Variable", context = NULL) {
 
   # --- Guard clauses ---
   if (!is.numeric(x)) stop("x must be a numeric vector.")
@@ -36,11 +36,22 @@ mannwhitney_interpret <- function(x, y, conf.level = 0.95,
   }
 
   # --- Run test ---
-  result <- wilcox.test(x, y, paired = FALSE,
-                        conf.int = TRUE, conf.level = conf.level)
+  result <- suppressWarnings(wilcox.test(x, y, paired = FALSE,
+                                         conf.int = TRUE, conf.level = conf.level))
   w_val  <- result$statistic
   p_val  <- result$p.value
   ci     <- result$conf.int
+
+  assumption_checks <- list(
+    "Sample size (Group 1)" = list(status = "NOTE",
+                                   detail = sprintf("n = %d", length(x_clean))),
+    "Sample size (Group 2)" = list(status = "NOTE",
+                                   detail = sprintf("n = %d", length(y_clean))),
+    "Test method used" = list(status = "NOTE",
+                              detail = result$method),
+    "Independence" = list(status = "NOTE",
+                          detail = "assumed from study design, not testable from data")
+  )
 
   # --- Effect size r = Z / sqrt(N) ---
   n_total <- length(x_clean) + length(y_clean)
@@ -90,6 +101,8 @@ mannwhitney_interpret <- function(x, y, conf.level = 0.95,
     ci           = ci,
     r_effect     = r_effect,
     effect_label = effect_label,
+    assumption_checks = assumption_checks,
+    context           = context,
     sig_label    = sig_label,
     direction    = direction,
     conf.level   = conf.level,
@@ -114,6 +127,16 @@ print.statease_mannwhitney <- function(x, ...) {
               as.integer(x$conf.level * 100), x$ci[1], x$ci[2]))
   cat(sprintf("  Effect size  : %.3f (%s)\n", x$r_effect, x$effect_label))
   cat("-----------------------------------------------------------------\n")
+  cat("  Assumption Checks:\n")
+  for (name in names(x$assumption_checks)) {
+    ac <- x$assumption_checks[[name]]
+    cat(sprintf("    %-24s: %-8s (%s)\n", name, ac$status, ac$detail))
+  }
+  cat("\n  NOTE: These are contextual notes rather than pass/fail checks.\n")
+  cat("  They describe aspects of the data and test method relevant to\n")
+  cat("  interpretation, but are not automatically verifiable by the\n")
+  cat("  package.\n")
+  cat("-----------------------------------------------------------------\n")
   cat("  Interpretation:\n")
   cat(sprintf("  The result is %s.\n", x$sig_label))
   cat(sprintf("  %s\n", x$direction))
@@ -121,6 +144,11 @@ print.statease_mannwhitney <- function(x, ...) {
               x$effect_label, x$r_effect))
   cat("  Note: Mann-Whitney tests stochastic superiority,\n")
   cat("  not differences in medians.\n")
+  if (!is.null(x$context)) {
+    cat(sprintf("\n  NOTE: You described this analysis as: \"%s\".\n", x$context))
+    cat("  The interpretation should be considered in the context you\n")
+    cat("  provided.\n")
+  }
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)
 }
@@ -144,8 +172,7 @@ print.statease_mannwhitney <- function(x, ...) {
 #' result <- wilcoxon_interpret(x, y)
 #' print(result)
 wilcoxon_interpret <- function(x, y, conf.level = 0.95,
-                               var_name = "Variable") {
-
+                               var_name = "Variable", context = NULL) {
   # --- Guard clauses ---
   if (!is.numeric(x)) stop("x must be a numeric vector.")
   if (!is.numeric(y)) stop("y must be a numeric vector.")
@@ -166,11 +193,20 @@ wilcoxon_interpret <- function(x, y, conf.level = 0.95,
   }
 
   # --- Run test ---
-  result <- wilcox.test(x, y, paired = TRUE,
-                        conf.int = TRUE, conf.level = conf.level)
+  result <- suppressWarnings(wilcox.test(x, y, paired = TRUE,
+                                         conf.int = TRUE, conf.level = conf.level))
   v_val  <- result$statistic
   p_val  <- result$p.value
   ci     <- result$conf.int
+
+  assumption_checks <- list(
+    "Sample size (pairs)" = list(status = "NOTE",
+                                 detail = sprintf("n = %d", length(x_clean))),
+    "Test method used" = list(status = "NOTE",
+                              detail = result$method),
+    "Independence of pairs" = list(status = "NOTE",
+                                   detail = "assumed from study design, not testable from data")
+  )
 
   # --- Effect size ---
   n_total  <- length(x_clean)
@@ -217,6 +253,8 @@ wilcoxon_interpret <- function(x, y, conf.level = 0.95,
     v_val        = v_val,
     p_val        = p_val,
     ci           = ci,
+    assumption_checks = assumption_checks,
+    context           = context,
     r_effect     = r_effect,
     effect_label = effect_label,
     sig_label    = sig_label,
@@ -244,15 +282,31 @@ print.statease_wilcoxon <- function(x, ...) {
               as.integer(x$conf.level * 100), x$ci[1], x$ci[2]))
   cat(sprintf("  Effect size  : %.3f (%s)\n", x$r_effect, x$effect_label))
   cat("-----------------------------------------------------------------\n")
+  cat("  Assumption Checks:\n")
+  for (name in names(x$assumption_checks)) {
+    ac <- x$assumption_checks[[name]]
+    cat(sprintf("    %-24s: %-8s (%s)\n", name, ac$status, ac$detail))
+  }
+  cat("\n  NOTE: These are contextual notes rather than pass/fail checks.\n")
+  cat("  They describe aspects of the data and test method relevant to\n")
+  cat("  interpretation, but are not automatically verifiable by the\n")
+  cat("  package.\n")
+  cat("-----------------------------------------------------------------\n")
   cat("  Interpretation:\n")
   cat(sprintf("  The result is %s.\n", x$sig_label))
   cat(sprintf("  %s\n", x$direction))
   cat(sprintf("  Effect size is %s (r = %.3f).\n",
               x$effect_label, x$r_effect))
   cat("  Note: Wilcoxon test compares groups using ranked values.\n")
-  cat("  A significant result sugegsts one group tends to have larger or smaller observation than the other.\n")
-  cat("  This can be interpreted as evidence of stochastic superiority, but only under typical distribution assumptions.")
+  cat("  A significant result suggests one group tends to have larger or smaller observation than the other.\n")
+  cat("  This can be interpreted as evidence of stochastic superiority, but only under typical distribution assumptions.\n")
   cat("  It does not specifically test differences in medians.\n")
+
+  if (!is.null(x$context)) {
+    cat(sprintf("\n  NOTE: You described this analysis as: \"%s\".\n", x$context))
+    cat("  The interpretation should be considered in the context you\n")
+    cat("  provided.\n")
+  }
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)
 }
@@ -276,7 +330,7 @@ print.statease_wilcoxon <- function(x, ...) {
 #' )
 #' result <- kruskal_interpret(score ~ group, data = df)
 #' print(result)
-kruskal_interpret <- function(formula, data, conf.level = 0.95) {
+kruskal_interpret <- function(formula, data, conf.level = 0.95, context = NULL) {
 
   # --- Guard clauses ---
   if (!inherits(formula, "formula")) {
@@ -316,6 +370,14 @@ kruskal_interpret <- function(formula, data, conf.level = 0.95) {
   if (any(group_ns < 5)) {
     warning("One or more groups have very small sample sizes (n < 5).")
   }
+
+  assumption_checks <- list(
+    "Minimum group size" = list(status = "NOTE",
+                                detail = sprintf("smallest group n = %d; consider this when assessing the chi-square approximation",
+                                                 min(group_ns))),
+    "Independence" = list(status = "NOTE",
+                          detail = "assumed from study design, not testable from data")
+  )
 
   # --- Group medians ---
   group_medians <- tapply(data[[outcome]], data[[group_var]],
@@ -379,6 +441,8 @@ kruskal_interpret <- function(formula, data, conf.level = 0.95) {
     group_medians = group_medians,
     h_val         = h_val,
     df            = df,
+    assumption_checks = assumption_checks,
+    context           = context,
     p_val         = p_val,
     eta_sq        = eta_sq,
     effect_label  = effect_label,
@@ -412,8 +476,17 @@ print.statease_kruskal <- function(x, ...) {
   cat(sprintf("  Eta squared  : %.4f (%s effect)\n",
               x$eta_sq, x$effect_label))
   cat("-----------------------------------------------------------------\n")
+  cat("  Assumption Checks:\n")
+  for (name in names(x$assumption_checks)) {
+    ac <- x$assumption_checks[[name]]
+    cat(sprintf("    %-24s: %-8s (%s)\n", name, ac$status, ac$detail))
+  }
+  cat("\n  NOTE: These are contextual notes rather than pass/fail checks.\n")
+  cat("  They describe aspects of the data and test method relevant to\n")
+  cat("  interpretation, but are not automatically verifiable by the\n")
+  cat("  package.\n")
+  cat("-----------------------------------------------------------------\n")
   cat("  Interpretation:\n")
-  cat(sprintf("  The result is %s.\n", x$sig_label))
   cat(sprintf("  The result is %s.\n", x$sig_label))
   cat(sprintf("  Effect size is %s (eta^2 = %.4f).\n",
               x$effect_label, x$eta_sq))
@@ -434,6 +507,11 @@ print.statease_kruskal <- function(x, ...) {
     cat("\n  Post-hoc tests not run (overall result not significant).\n")
   }
 
+  if (!is.null(x$context)) {
+    cat(sprintf("\n  NOTE: You described this analysis as: \"%s\".\n", x$context))
+    cat("  The interpretation should be considered in the context you\n")
+    cat("  provided.\n")
+  }
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)
 }

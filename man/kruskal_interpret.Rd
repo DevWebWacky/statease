@@ -4,7 +4,7 @@
 \alias{kruskal_interpret}
 \title{Kruskal-Wallis Test with Plain-English Interpretation}
 \usage{
-kruskal_interpret(formula, data, conf.level = 0.95)
+kruskal_interpret(formula, data, conf.level = 0.95, context = NULL)
 }
 \arguments{
 \item{formula}{A formula of the form outcome ~ group}

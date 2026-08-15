@@ -17,7 +17,7 @@
 #' )
 #' result <- friedman_interpret(score ~ time | subject, data = df)
 #' print(result)
-friedman_interpret <- function(formula, data, conf.level = 0.95) {
+friedman_interpret <- function(formula, data, conf.level = 0.95, context = NULL) {
 
   #Guard clauses
   if (!inherits(formula, "formula")) {
@@ -164,12 +164,12 @@ friedman_interpret <- function(formula, data, conf.level = 0.95) {
     }
   }
 
-  # Independence warning
-  independence_warning <- paste(
-    "The Friedman Test assumes that the blocks",
-    "(subjects) are independent of each other.",
-    "Violation of this assumption may affect",
-    "the validity of the results.")
+  assumption_checks <- list(
+    "Sample size (subjects)" = list(status = "NOTE",
+                                    detail = sprintf("n = %d", n_subj)),
+    "Independence of blocks" = list(status = "NOTE",
+                                    detail = "assumed from study design, not testable from data")
+  )
 
   output <- list(
     outcome              = outcome,
@@ -188,7 +188,8 @@ friedman_interpret <- function(formula, data, conf.level = 0.95) {
     result_label         = result_label,
     posthoc              = posthoc,
     normality_note       = normality_note,
-    independence_warning = independence_warning,
+    assumption_checks   = assumption_checks,
+    context             = context,
     conf.level           = conf.level,
     alpha                = alpha
   )
@@ -200,7 +201,7 @@ friedman_interpret <- function(formula, data, conf.level = 0.95) {
 #' @export
 print.statease_friedman <- function(x, ...) {
   cat("\n")
-  cat("-- statease Friedman Test Report \n")
+  cat("-- statease Friedman Test Report -------------------------------\n")
   cat(sprintf("  Outcome      : %s\n", x$outcome))
   cat(sprintf("  Time/Group   : %s (%d levels)\n",
               x$time_var, x$n_groups))
@@ -217,6 +218,16 @@ print.statease_friedman <- function(x, ...) {
   cat(sprintf("  p-value      : %.4f\n", x$p_val))
   cat(sprintf("  Kendall's W  : %.4f (%s effect)\n",
               x$kendall_w, x$w_label))
+  cat("-----------------------------------------------------------------\n")
+  cat("  Assumption Checks:\n")
+  for (name in names(x$assumption_checks)) {
+    ac <- x$assumption_checks[[name]]
+    cat(sprintf("    %-24s: %-8s (%s)\n", name, ac$status, ac$detail))
+  }
+  cat("\n  NOTE: These are contextual notes rather than pass/fail checks.\n")
+  cat("  They describe aspects of the data and test method relevant to\n")
+  cat("  interpretation, but are not automatically verifiable by the\n")
+  cat("  package.\n")
   cat("-----------------------------------------------------------------\n")
   cat("  Interpretation:\n")
   cat(sprintf("  The result is %s.\n", x$sig_label))
@@ -241,11 +252,13 @@ print.statease_friedman <- function(x, ...) {
     cat("\n  Post-hoc tests not run (overall result not significant).\n")
   }
 
-  cat("\n")
-  cat(sprintf("  WARNING: %s\n", x$independence_warning))
-
   if (!is.null(x$normality_note)) {
     cat(sprintf("\n  %s\n", x$normality_note))
+  }
+  if (!is.null(x$context)) {
+    cat(sprintf("\n  NOTE: You described this analysis as: \"%s\".\n", x$context))
+    cat("  The interpretation should be considered in the context you\n")
+    cat("  provided.\n")
   }
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)

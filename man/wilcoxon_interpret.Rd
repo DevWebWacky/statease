@@ -4,7 +4,13 @@
 \alias{wilcoxon_interpret}
 \title{Wilcoxon Signed Rank Test with Plain-English Interpretation}
 \usage{
-wilcoxon_interpret(x, y, conf.level = 0.95, var_name = "Variable")
+wilcoxon_interpret(
+  x,
+  y,
+  conf.level = 0.95,
+  var_name = "Variable",
+  context = NULL
+)
 }
 \arguments{
 \item{x}{A numeric vector (first measurement)}

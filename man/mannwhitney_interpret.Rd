@@ -4,7 +4,13 @@
 \alias{mannwhitney_interpret}
 \title{Mann-Whitney U Test with Plain-English Interpretation}
 \usage{
-mannwhitney_interpret(x, y, conf.level = 0.95, var_name = "Variable")
+mannwhitney_interpret(
+  x,
+  y,
+  conf.level = 0.95,
+  var_name = "Variable",
+  context = NULL
+)
 }
 \arguments{
 \item{x}{A numeric vector (group 1)}

@@ -4,7 +4,7 @@
 \alias{friedman_interpret}
 \title{Friedman Test with Plain-English Interpretation}
 \usage{
-friedman_interpret(formula, data, conf.level = 0.95)
+friedman_interpret(formula, data, conf.level = 0.95, context = NULL)
 }
 \arguments{
 \item{formula}{A formula of the form outcome ~ time | subject}

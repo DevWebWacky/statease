@@ -14,6 +14,8 @@
 #' @param var2_name Optional name for second variable in correlation.
 #' @param method Correlation method: "pearson", "spearman", or "kendall".
 #'   Default "pearson".
+#' @param context Optional description of the study design or sampling
+#'   method, echoed back in the report. Default NULL.
 #' @param test_type For power analysis: one of "ttest.one", "ttest.two",
 #'   "ttest.paired", "anova", "correlation", "chisq", "regression".
 #' @param effect_size For power analysis: the expected effect size.
@@ -56,7 +58,8 @@ analyze <- function(x = NULL, y = NULL, data = NULL,
                     method = "pearson",
                     test_type = NULL, effect_size = NULL,
                     power = 0.80, n_groups = 2,
-                    n_predictors = 1, check = FALSE) {
+                    n_predictors = 1, check = FALSE,
+                    context = NULL) {
 
   #ROUTE 0: Power Analysis
   if (!is.null(test_type) && !is.null(effect_size)) {
@@ -126,12 +129,12 @@ analyze <- function(x = NULL, y = NULL, data = NULL,
       if (!is.numeric(data[[group1]]) && !is.numeric(data[[group2]])) {
         message("[statease] Two grouping variables detected -> Running Two-Way ANOVA")
         result <- anova2_interpret(formula, data = data,
-                                   conf.level = conf.level)
+                                   conf.level = conf.level, context = context)
         print(result)
       } else {
         message("[statease] Multiple numeric predictors -> Running Multiple Linear Regression")
         result <- mlr_interpret(formula, data = data,
-                                conf.level = conf.level)
+                                conf.level = conf.level, context = context)
         print(result)
       }
 
@@ -143,7 +146,7 @@ analyze <- function(x = NULL, y = NULL, data = NULL,
       if (is.numeric(data[[group_var]])) {
         message("[statease] Numeric predictor detected -> Running Simple Linear Regression")
         result <- reg_interpret(formula, data = data,
-                                conf.level = conf.level)
+                                conf.level = conf.level, context = context)
         print(result)
 
         # Categorical predictor
@@ -158,7 +161,7 @@ analyze <- function(x = NULL, y = NULL, data = NULL,
             y_grp <- data[[vars[1]]][data[[group_var]] == grp_levels[2]]
             result <- mannwhitney_interpret(x_grp, y_grp,
                                             conf.level = conf.level,
-                                            var_name   = vars[1])
+                                            var_name   = vars[1], context = context)
             print(result)
           } else {
             message("[statease] Two groups detected -> Running Independent T-Test")
@@ -167,19 +170,19 @@ analyze <- function(x = NULL, y = NULL, data = NULL,
             y_grp <- data[[vars[1]]][data[[group_var]] == grp_levels[2]]
             result <- ttest_interpret(x_grp, y_grp,
                                       conf.level = conf.level,
-                                      var_name   = vars[1])
+                                      var_name   = vars[1], context = context)
             print(result)
           }
         } else {
           if (nonparam) {
             message("[statease] 3+ groups + nonparam = TRUE -> Running Kruskal-Wallis Test")
             result <- kruskal_interpret(formula, data = data,
-                                        conf.level = conf.level)
+                                        conf.level = conf.level, context = context)
             print(result)
           } else {
             message("[statease] 3+ groups detected -> Running One-Way ANOVA")
             result <- anova_interpret(formula, data = data,
-                                      conf.level = conf.level)
+                                      conf.level = conf.level, context = context)
             print(result)
           }
         }
@@ -188,12 +191,12 @@ analyze <- function(x = NULL, y = NULL, data = NULL,
       stop("Could not determine the right analysis. Check your formula.")
     }
 
-    # ── ROUTE 2: Two categorical vectors → Chi-square ──────────
+    # ROUTE 2: Two categorical vectors Chi-square
   } else if (!is.null(x) && !is.null(y) &&
              (is.character(x) || is.factor(x)) &&
              (is.character(y) || is.factor(y))) {
     message("[statease] Two categorical vectors detected -> Running Chi-Square Test")
-    result <- chisq_interpret(x, y, conf.level = conf.level)
+    result <- chisq_interpret(x, y, conf.level = conf.level, context = context)
     print(result)
 
     #ROUTE 3: Two numeric vectors
@@ -205,26 +208,26 @@ analyze <- function(x = NULL, y = NULL, data = NULL,
       result <- cor_interpret(x, y, method = method,
                               conf.level = conf.level,
                               var1_name  = var1_name,
-                              var2_name  = var2_name)
+                              var2_name  = var2_name, context = context)
       print(result)
 
     } else if (nonparam && paired) {
       message("[statease] Paired + nonparam = TRUE -> Running Wilcoxon Signed Rank Test")
       result <- wilcoxon_interpret(x, y, conf.level = conf.level,
-                                   var_name = var_name)
+                                   var_name = var_name, context = context)
       print(result)
 
     } else if (nonparam) {
       message("[statease] nonparam = TRUE -> Running Mann-Whitney U Test")
       result <- mannwhitney_interpret(x, y, conf.level = conf.level,
-                                      var_name = var_name)
+                                      var_name = var_name, context = context)
       print(result)
 
     } else {
       message("[statease] Two numeric vectors detected -> Running T-Test")
       result <- ttest_interpret(x, y, mu = mu, paired = paired,
                                 conf.level = conf.level,
-                                var_name   = var_name)
+                                var_name   = var_name, context = context)
       print(result)
     }
 
@@ -242,7 +245,7 @@ analyze <- function(x = NULL, y = NULL, data = NULL,
         x2 <- x[y == grp_levels[2]]
         result <- mannwhitney_interpret(x1, x2,
                                         conf.level = conf.level,
-                                        var_name   = var_name)
+                                        var_name   = var_name, context = context)
         print(result)
       } else {
         message("[statease] Numeric + 2-level group detected -> Running T-Test")
@@ -251,7 +254,8 @@ analyze <- function(x = NULL, y = NULL, data = NULL,
         x2 <- x[y == grp_levels[2]]
         result <- ttest_interpret(x1, x2,
                                   conf.level = conf.level,
-                                  var_name   = var_name)
+                                  var_name   = var_name, context = context)
+
         print(result)
       }
 
@@ -259,16 +263,16 @@ analyze <- function(x = NULL, y = NULL, data = NULL,
       if (nonparam) {
         message("[statease] Numeric + 3+ groups + nonparam = TRUE -> Running Kruskal-Wallis")
         temp_df <- data.frame(outcome = x, group = as.factor(y))
-        result  <- kruskal_interpret(outcome ~ group,
-                                     data       = temp_df,
-                                     conf.level = conf.level)
+        result <- kruskal_interpret(outcome ~ group,
+                                    data       = temp_df,
+                                    conf.level = conf.level, context = context)
         print(result)
       } else {
         message("[statease] Numeric + 3+ level group detected -> Running One-Way ANOVA")
         temp_df <- data.frame(outcome = x, group = as.factor(y))
-        result  <- anova_interpret(outcome ~ group,
-                                   data       = temp_df,
-                                   conf.level = conf.level)
+        result <- anova_interpret(outcome ~ group,
+                                  data       = temp_df,
+                                  conf.level = conf.level, context = context)
         print(result)
       }
     } else {
@@ -281,7 +285,7 @@ analyze <- function(x = NULL, y = NULL, data = NULL,
       message("[statease] Single vector + mu detected -> Running One-Sample T-Test")
       result <- ttest_interpret(x, mu = mu,
                                 conf.level = conf.level,
-                                var_name   = var_name)
+                                var_name   = var_name, context = context)
       print(result)
     } else {
       message("[statease] Single numeric vector -> Running Descriptive Statistics")

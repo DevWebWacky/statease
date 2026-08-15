@@ -16,7 +16,7 @@
 #' )
 #' result <- reg_interpret(exam_score ~ study_hours, data = df)
 #' print(result)
-reg_interpret <- function(formula, data, conf.level = 0.95) {
+reg_interpret <- function(formula, data, conf.level = 0.95, context = NULL) {
 
   # --- Guard clauses ---
   if (!inherits(formula, "formula")) {
@@ -58,7 +58,8 @@ reg_interpret <- function(formula, data, conf.level = 0.95) {
   }
 
   # --- Run regression ---
-  model     <- lm(formula, data = data)
+  model          <- lm(formula, data = data)
+  model$call$data <- data
   model_sum <- summary(model)
   coefs     <- coef(model_sum)
   ci        <- confint(model, level = conf.level)
@@ -103,18 +104,42 @@ reg_interpret <- function(formula, data, conf.level = 0.95) {
     sprintf("not statistically significant (p = %.4f > alpha %.2f)", slope_p, alpha)
   }
 
-  # --- Residual diagnostics ---
+  # --- Assumption checks ---
   residuals     <- residuals(model)
   fitted_values <- fitted(model)
 
-  normality_note <- NULL
+  normality_note    <- NULL
+  assumption_checks <- list()
+
   if (length(residuals) >= 3 && length(residuals) <= 5000) {
     sw <- shapiro.test(residuals)
+    assumption_checks[["Normality (residuals)"]] <- list(
+      status = if (sw$p.value >= 0.05) "PASSED" else "WARNING",
+      detail = sprintf("Shapiro-Wilk p = %.3f%s", sw$p.value,
+                       if (sw$p.value < 0.05) ", may not be normal" else "")
+    )
     if (sw$p.value < 0.05) {
       normality_note <- sprintf(
         "WARNING: Residuals may not be normally distributed (Shapiro-Wilk p = %.4f).",
         sw$p.value)
     }
+  }
+
+  hsc <- .se_check_homoscedasticity(model)
+  if (!is.null(hsc)) {
+    assumption_checks[["Homoscedasticity"]] <- list(
+      status = hsc$status,
+      detail = sprintf("non-constant variance test p = %.3f", hsc$p)
+    )
+  }
+
+  ind <- .se_check_independence(model)
+  if (!is.null(ind)) {
+    assumption_checks[["Residual independence"]] <- list(
+      status = ind$status,
+      detail = sprintf("Durbin-Watson DW = %.2f, p = %.3f%s", ind$dw, ind$p,
+                       if (ind$status == "WARNING") ", possible autocorrelation" else "")
+    )
   }
 
   output <- list(
@@ -124,6 +149,8 @@ reg_interpret <- function(formula, data, conf.level = 0.95) {
     intercept      = intercept,
     slope          = slope,
     slope_se       = slope_se,
+    assumption_checks = assumption_checks,
+    context           = context,
     slope_t        = slope_t,
     slope_p        = slope_p,
     ci             = ci,
@@ -172,14 +199,26 @@ print.statease_reg <- function(x, ...) {
   cat(sprintf("  F-statistic  : %.3f (df = %.0f, %.0f)  p = %.4f\n",
               x$f_val, x$f_df1, x$f_df2, x$f_p))
   cat("-----------------------------------------------------------------\n")
+  cat("  Assumption Checks:\n")
+  for (name in names(x$assumption_checks)) {
+    ac <- x$assumption_checks[[name]]
+    cat(sprintf("    %-24s: %-8s (%s)\n", name, ac$status, ac$detail))
+  }
+  cat("\n  NOTE: These checks are heuristics based on statistical tests\n")
+  cat("  and sample size. Passing does not prove an assumption is met;\n")
+  cat("  failing does not automatically invalidate the result. Interpret\n")
+  cat("  alongside your knowledge of the data.\n")
+  cat("-----------------------------------------------------------------\n")
   cat("  Interpretation:\n")
   cat(sprintf("  The predictor %s is %s.\n", x$predictor, x$sig_label))
   cat(sprintf("  The slope is %s.\n", x$slope_direction))
   cat(sprintf("  R-squared = %.4f: %s explains %.1f%% of the\n",
               x$r_squared, x$predictor, x$r_squared * 100))
   cat(sprintf("  variance in %s (%s effect).\n", x$outcome, x$r_sq_label))
-  if (!is.null(x$normality_note)) {
-    cat(sprintf("\n  %s\n", x$normality_note))
+  if (!is.null(x$context)) {
+    cat(sprintf("\n  NOTE: You described this analysis as: \"%s\".\n", x$context))
+    cat("  The interpretation should be considered in the context you\n")
+    cat("  provided.\n")
   }
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)

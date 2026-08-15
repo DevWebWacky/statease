@@ -10,7 +10,8 @@ cor_interpret(
   method = "pearson",
   conf.level = 0.95,
   var1_name = "Variable 1",
-  var2_name = "Variable 2"
+  var2_name = "Variable 2",
+  context = NULL
 )
 }
 \arguments{

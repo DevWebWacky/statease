@@ -237,25 +237,25 @@ check_assumptions <- function(test, x = NULL, y = NULL,
       stop("formula and data are required for regression assumption checks.")
     }
 
-    model <- lm(formula, data = data)
-    res   <- residuals(model)
+    model          <- lm(formula, data = data)
+    model$call$data <- data   # bake data into the call so car:: functions
+    # that internally refit (e.g. ncvTest) work
+    # correctly when lm() is called inside a
+    # wrapper function
+    res <- residuals(model)
 
     results[[length(results) + 1]] <- check_normality(res, "residuals")
     results[[length(results) + 1]] <- sample_size_note(nrow(model$model))
 
-    # Homoscedasticity
-    bp <- tryCatch(
-      car::ncvTest(model),
-      error = function(e) NULL
-    )
-    if (!is.null(bp)) {
-      status <- if (bp$p >= 0.05) "PASSED" else "WARNING"
+    # Homoscedasticity — shared helper, same source as reg_interpret()/mlr_interpret()
+    hsc <- .se_check_homoscedasticity(model)
+    if (!is.null(hsc)) {
       results[[length(results) + 1]] <- list(
         assumption = "Homoscedasticity",
-        status     = status,
+        status     = hsc$status,
         detail     = sprintf(
-          "Non-constant variance test: p = %.4f. %s", bp$p,
-          if (status == "PASSED") {
+          "Non-constant variance test: p = %.4f. %s", hsc$p,
+          if (hsc$status == "PASSED") {
             "Homoscedasticity assumption appears satisfied."
           } else {
             "Evidence suggests heteroscedasticity (non-constant variance)."
@@ -264,20 +264,16 @@ check_assumptions <- function(test, x = NULL, y = NULL,
       )
     }
 
-    # Independence of residuals
-    dw <- tryCatch(
-      car::durbinWatsonTest(model),
-      error = function(e) NULL
-    )
-    if (!is.null(dw)) {
-      status <- if (dw$p >= 0.05) "PASSED" else "WARNING"
+    # Independence of residuals — shared helper
+    ind <- .se_check_independence(model)
+    if (!is.null(ind)) {
       results[[length(results) + 1]] <- list(
         assumption = "Independence of residuals",
-        status     = status,
+        status     = ind$status,
         detail     = sprintf(
           "Durbin-Watson test: DW = %.3f, p = %.4f. %s",
-          dw$dw, dw$p,
-          if (status == "PASSED") {
+          ind$dw, ind$p,
+          if (ind$status == "PASSED") {
             "No strong evidence of autocorrelation in residuals."
           } else {
             "Evidence suggests autocorrelation in residuals."
@@ -286,19 +282,17 @@ check_assumptions <- function(test, x = NULL, y = NULL,
       )
     }
 
-    # Multicollinearity (VIF) for multiple regression
+    # Multicollinearity (VIF) for multiple regression — shared helper
     n_predictors <- length(all.vars(formula)) - 1
     if (n_predictors > 1) {
-      vif_vals <- tryCatch(car::vif(model), error = function(e) NULL)
-      if (!is.null(vif_vals)) {
-        max_vif <- max(vif_vals)
-        status  <- if (max_vif < 5) "PASSED" else "WARNING"
+      vif_check <- .se_check_vif(model)
+      if (!is.null(vif_check)) {
         results[[length(results) + 1]] <- list(
           assumption = "Multicollinearity (VIF)",
-          status     = status,
+          status     = vif_check$status,
           detail     = sprintf(
-            "Maximum VIF = %.2f. %s", max_vif,
-            if (status == "PASSED") {
+            "Maximum VIF = %.2f. %s", vif_check$max_vif,
+            if (vif_check$status == "PASSED") {
               "No strong evidence of multicollinearity."
             } else {
               "Evidence of multicollinearity (VIF >= 5). Consider removing or combining correlated predictors."
@@ -308,6 +302,7 @@ check_assumptions <- function(test, x = NULL, y = NULL,
       }
     }
   }
+
 
   output <- list(
     test    = test,

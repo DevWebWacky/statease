@@ -4,7 +4,7 @@
 \alias{reg_interpret}
 \title{Simple Linear Regression with Plain-English Interpretation}
 \usage{
-reg_interpret(formula, data, conf.level = 0.95)
+reg_interpret(formula, data, conf.level = 0.95, context = NULL)
 }
 \arguments{
 \item{formula}{A formula of the form outcome ~ predictor}

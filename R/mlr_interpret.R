@@ -17,7 +17,7 @@
 #' )
 #' result <- mlr_interpret(exam_score ~ study_hours + attendance, data = df)
 #' print(result)
-mlr_interpret <- function(formula, data, conf.level = 0.95) {
+mlr_interpret <- function(formula, data, conf.level = 0.95, context = NULL) {
 
   # --- Guard clauses ---
   if (!inherits(formula, "formula")) {
@@ -60,7 +60,8 @@ mlr_interpret <- function(formula, data, conf.level = 0.95) {
   }
 
   # --- Run regression ---
-  model     <- lm(formula, data = data)
+  model          <- lm(formula, data = data)
+  model$call$data <- data
   model_sum <- summary(model)
   coefs     <- coef(model_sum)
   ci        <- confint(model, level = conf.level)
@@ -124,16 +125,48 @@ mlr_interpret <- function(formula, data, conf.level = 0.95) {
     )
   }
 
-  # --- Residual diagnostics ---
-  res            <- residuals(model)
-  normality_note <- NULL
+  # --- Assumption checks ---
+  res <- residuals(model)
+  normality_note    <- NULL
+  assumption_checks <- list()
+
   if (length(res) >= 3 && length(res) <= 5000) {
     sw <- shapiro.test(res)
+    assumption_checks[["Normality (residuals)"]] <- list(
+      status = if (sw$p.value >= 0.05) "PASSED" else "WARNING",
+      detail = sprintf("Shapiro-Wilk p = %.3f%s", sw$p.value,
+                       if (sw$p.value < 0.05) ", may not be normal" else "")
+    )
     if (sw$p.value < 0.05) {
       normality_note <- sprintf(
         "WARNING: Residuals may not be normally distributed (Shapiro-Wilk p = %.4f).",
         sw$p.value)
     }
+  }
+
+  hsc <- .se_check_homoscedasticity(model)
+  if (!is.null(hsc)) {
+    assumption_checks[["Homoscedasticity"]] <- list(
+      status = hsc$status,
+      detail = sprintf("non-constant variance test p = %.3f", hsc$p)
+    )
+  }
+
+  ind <- .se_check_independence(model)
+  if (!is.null(ind)) {
+    assumption_checks[["Residual independence"]] <- list(
+      status = ind$status,
+      detail = sprintf("Durbin-Watson DW = %.2f, p = %.3f%s", ind$dw, ind$p,
+                       if (ind$status == "WARNING") ", possible autocorrelation" else "")
+    )
+  }
+
+  vif_check <- .se_check_vif(model)
+  if (!is.null(vif_check)) {
+    assumption_checks[["Multicollinearity (VIF)"]] <- list(
+      status = vif_check$status,
+      detail = sprintf("max VIF = %.1f, threshold = 5", vif_check$max_vif)
+    )
   }
 
   output <- list(
@@ -148,6 +181,8 @@ mlr_interpret <- function(formula, data, conf.level = 0.95) {
     f_df1             = f_df1,
     f_df2             = f_df2,
     f_p               = f_p,
+    assumption_checks = assumption_checks,
+    context           = context,
     model_sig         = model_sig,
     predictor_results = predictor_results,
     conf.level        = conf.level,
@@ -187,7 +222,17 @@ print.statease_mlr <- function(x, ...) {
               x$f_val, x$f_df1, x$f_df2, x$f_p))
   cat(sprintf("  The overall model is %s.\n", x$model_sig))
   cat("-----------------------------------------------------------------\n")
-  cat("  Individual Predictors:\n")
+  cat("  Assumption Checks:\n")
+  for (name in names(x$assumption_checks)) {
+    ac <- x$assumption_checks[[name]]
+    cat(sprintf("    %-24s: %-8s (%s)\n", name, ac$status, ac$detail))
+  }
+  cat("\n  NOTE: These checks are heuristics based on statistical tests\n")
+  cat("  and sample size. Passing does not prove an assumption is met;\n")
+  cat("  failing does not automatically invalidate the result. Interpret\n")
+  cat("  alongside your knowledge of the data.\n")
+  cat("-----------------------------------------------------------------\n")
+  cat("  Interpretation:\n")
   for (pred in x$predictors) {
     pr <- x$predictor_results[[pred]]
     cat(sprintf("\n  %s\n", pred))
@@ -221,8 +266,10 @@ print.statease_mlr <- function(x, ...) {
     cat(sprintf("  Non-significant predictors: %s\n",
                 paste(names(nonsig_preds), collapse = ", ")))
   }
-  if (!is.null(x$normality_note)) {
-    cat(sprintf("\n  %s\n", x$normality_note))
+  if (!is.null(x$context)) {
+    cat(sprintf("\n  NOTE: You described this analysis as: \"%s\".\n", x$context))
+    cat("  The interpretation should be considered in the context you\n")
+    cat("  provided.\n")
   }
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)

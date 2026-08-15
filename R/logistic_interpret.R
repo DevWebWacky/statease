@@ -17,7 +17,7 @@
 #' )
 #' result <- logistic_interpret(passed ~ study_hours + attendance, data = df)
 #' print(result)
-logistic_interpret <- function(formula, data, conf.level = 0.95) {
+logistic_interpret <- function(formula, data, conf.level = 0.95, context = NULL) {
 
   # --- Guard clauses ---
   if (!inherits(formula, "formula")) {
@@ -56,7 +56,8 @@ logistic_interpret <- function(formula, data, conf.level = 0.95) {
   }
 
   # --- Run logistic regression ---
-  model     <- glm(formula, data = data, family = binomial())
+  model          <- glm(formula, data = data, family = binomial())
+  model$call$data <- data
   model_sum <- summary(model)
   coefs     <- coef(model_sum)
   ci <- tryCatch(
@@ -135,6 +136,33 @@ logistic_interpret <- function(formula, data, conf.level = 0.95) {
     )
   }
 
+  # --- Assumption checks ---
+  assumption_checks <- list()
+
+  n_predictors <- length(predictors)
+  if (n_predictors > 1) {
+    vif_check <- .se_check_vif(model)
+    if (!is.null(vif_check)) {
+      assumption_checks[["Multicollinearity (VIF)"]] <- list(
+        status = vif_check$status,
+        detail = sprintf("max VIF = %.1f, threshold = 5", vif_check$max_vif)
+      )
+    }
+  }
+
+  sep_check <- .se_check_separation(model)
+  assumption_checks[["Complete separation"]] <- list(
+    status = sep_check$status,
+    detail = sep_check$detail
+  )
+
+  assumption_checks[["Linearity of the logit"]] <- list(
+    status = "NOTE",
+    detail = paste("not automatically tested; consider a diagnostic",
+                   "such as the Box-Tidwell test or component-plus-residual",
+                   "plots for continuous predictors")
+  )
+
   output <- list(
     outcome           = outcome,
     predictors        = predictors,
@@ -143,6 +171,8 @@ logistic_interpret <- function(formula, data, conf.level = 0.95) {
     nagelkerke        = nagelkerke,
     r_sq_label        = r_sq_label,
     chi_model         = chi_model,
+    assumption_checks = assumption_checks,
+    context           = context,
     df_model          = df_model,
     p_model           = p_model,
     model_sig         = model_sig,
@@ -183,6 +213,18 @@ print.statease_logistic <- function(x, ...) {
     cat(sprintf("    Interpretation: %s.\n", pr$or_interpret))
   }
   cat("-----------------------------------------------------------------\n")
+  cat("  Assumption Checks:\n")
+  for (name in names(x$assumption_checks)) {
+    ac <- x$assumption_checks[[name]]
+    cat(sprintf("    %-24s: %-8s (%s)\n", name, ac$status, ac$detail))
+  }
+  cat("\n  NOTE: Assumption checks are diagnostic tools and may be\n")
+  cat("  influenced by sample size and other characteristics of the\n")
+  cat("  data. Passing a check does not prove that an assumption is\n")
+  cat("  satisfied, and a warning does not automatically invalidate\n")
+  cat("  the analysis. Interpret these results alongside your\n")
+  cat("  knowledge of the data.\n")
+  cat("-----------------------------------------------------------------\n")
   cat("  Interpretation:\n")
   cat(sprintf("  The model is %s.\n", x$model_sig))
   cat(sprintf("  Nagelkerke R2 = %.4f suggests a %s amount of\n",
@@ -202,6 +244,11 @@ print.statease_logistic <- function(x, ...) {
   if (length(nonsig_preds) > 0) {
     cat(sprintf("  Non-significant predictors: %s\n",
                 paste(names(nonsig_preds), collapse = ", ")))
+  }
+  if (!is.null(x$context)) {
+    cat(sprintf("\n  NOTE: You described this analysis as: \"%s\".\n", x$context))
+    cat("  The interpretation should be considered in the context you\n")
+    cat("  provided.\n")
   }
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)

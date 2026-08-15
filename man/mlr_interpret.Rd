@@ -4,7 +4,7 @@
 \alias{mlr_interpret}
 \title{Multiple Linear Regression with Plain-English Interpretation}
 \usage{
-mlr_interpret(formula, data, conf.level = 0.95)
+mlr_interpret(formula, data, conf.level = 0.95, context = NULL)
 }
 \arguments{
 \item{formula}{A formula of the form outcome ~ predictor1 + predictor2 + ...}

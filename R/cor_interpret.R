@@ -20,7 +20,7 @@
 #' print(result)
 cor_interpret <- function(x, y, method = "pearson", conf.level = 0.95,
                           var1_name = "Variable 1",
-                          var2_name = "Variable 2") {
+                          var2_name = "Variable 2", context = NULL) {
 
   # --- Guard clauses ---
   if (!is.numeric(x)) stop("x must be a numeric vector.")
@@ -44,16 +44,36 @@ cor_interpret <- function(x, y, method = "pearson", conf.level = 0.95,
   }
 
   # --- Normality check for Pearson ---
-  normality_note <- NULL
+  # --- Normality check for Pearson ---
+  normality_note    <- NULL
+  assumption_checks <- list()
+
   if (method == "pearson") {
     sw_x <- shapiro.test(na.omit(x))
     sw_y <- shapiro.test(na.omit(y))
+
+    assumption_checks[["Normality (x)"]] <- list(
+      status = if (sw_x$p.value >= 0.05) "PASSED" else "WARNING",
+      detail = sprintf("Shapiro-Wilk p = %.3f, Pearson only%s", sw_x$p.value,
+                       if (sw_x$p.value < 0.05) ", may not be normal" else "")
+    )
+    assumption_checks[["Normality (y)"]] <- list(
+      status = if (sw_y$p.value >= 0.05) "PASSED" else "WARNING",
+      detail = sprintf("Shapiro-Wilk p = %.3f, Pearson only%s", sw_y$p.value,
+                       if (sw_y$p.value < 0.05) ", may not be normal" else "")
+    )
+
     if (sw_x$p.value < 0.05 || sw_y$p.value < 0.05) {
       normality_note <- paste("WARNING: One or both variables may not be",
                               "normally distributed.",
                               "Consider using method = 'spearman' instead.")
     }
   }
+
+  assumption_checks[["Linearity"]] <- list(
+    status = "NOTE",
+    detail = "visual inspection is recommended, not testable numerically"
+  )
 
   # --- Run correlation test ---
   result <- cor.test(x, y, method = method, conf.level = conf.level)
@@ -108,6 +128,8 @@ cor_interpret <- function(x, y, method = "pearson", conf.level = 0.95,
     direction      = direction,
     p_val          = p_val,
     ci             = ci,
+    assumption_checks = assumption_checks,
+    context           = context,
     sig_label      = sig_label,
     conf.level     = conf.level,
     normality_note = normality_note,
@@ -135,6 +157,16 @@ print.statease_cor <- function(x, ...) {
   cat(sprintf("  Strength     : %s\n", x$r_label))
   cat(sprintf("  Direction    : %s\n", x$direction))
   cat("-----------------------------------------------------------------\n")
+  cat("  Assumption Checks:\n")
+  for (name in names(x$assumption_checks)) {
+    ac <- x$assumption_checks[[name]]
+    cat(sprintf("    %-24s: %-8s (%s)\n", name, ac$status, ac$detail))
+  }
+  cat("\n  NOTE: These checks are heuristics based on statistical tests\n")
+  cat("  and sample size. Passing does not prove an assumption is met;\n")
+  cat("  failing does not automatically invalidate the result. Interpret\n")
+  cat("  alongside your knowledge of the data.\n")
+  cat("-----------------------------------------------------------------\n")
   cat("  Interpretation:\n")
   cat(sprintf("  The correlation is %s.\n", x$sig_label))
   cat(sprintf("  The relationship between %s and %s is\n",
@@ -144,7 +176,12 @@ print.statease_cor <- function(x, ...) {
     cat(sprintf("\n  %s\n", x$normality_note))
   }
   if (x$missing > 0) {
-    cat(sprintf("  WARNING: %d missing value(s) were excluded.\n", x$missing))
+    cat(sprintf("\n  WARNING: %d missing value(s) were excluded.\n", x$missing))
+  }
+  if (!is.null(x$context)) {
+    cat(sprintf("\n  NOTE: You described this analysis as: \"%s\".\n", x$context))
+    cat("  The interpretation should be considered in the context you\n")
+    cat("  provided.\n")
   }
   cat("-----------------------------------------------------------------\n\n")
   invisible(x)

@@ -495,6 +495,16 @@ print(result)
 #>   Strength     : negligible
 #>   Direction    : negative (as one variable increases, the other tends to decrease)
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Normality (x)           : PASSED   (Shapiro-Wilk p = 0.282, Pearson only)
+#>     Normality (y)           : WARNING  (Shapiro-Wilk p = 0.005, Pearson only, may not be normal)
+#>     Linearity               : NOTE     (visual inspection is recommended, not testable numerically)
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
+#> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The correlation is not statistically significant (p = 0.9720 > alpha 0.05).
 #>   The relationship between Pre-Test Score and Exam Score is
@@ -528,6 +538,14 @@ print(result)
 #>   p-value      : 0.4826
 #>   Strength     : negligible
 #>   Direction    : positive (as one variable increases, the other tends to increase)
+#> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Linearity               : NOTE     (visual inspection is recommended, not testable numerically)
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The correlation is not statistically significant (p = 0.4826 > alpha 0.05).
@@ -570,13 +588,21 @@ print(result)
 #>   Adj R-squared: -0.0113
 #>   F-statistic  : 0.001 (df = 1, 88)  p = 0.9720
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Normality (residuals)   : WARNING  (Shapiro-Wilk p = 0.006, may not be normal)
+#>     Homoscedasticity        : PASSED   (non-constant variance test p = 0.413)
+#>     Residual independence   : WARNING  (Durbin-Watson DW = 1.47, p = 0.010, possible autocorrelation)
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
+#> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The predictor pre_test is not statistically significant (p = 0.9720 > alpha 0.05).
 #>   The slope is negative - as pre_test increases by 1 unit, exam_score decreases by 0.005 units.
 #>   R-squared = 0.0000: pre_test explains 0.0% of the
 #>   variance in exam_score (negligible effect).
-#> 
-#>   WARNING: Residuals may not be normally distributed (Shapiro-Wilk p = 0.0056).
 #> -----------------------------------------------------------------
 ```
 
@@ -608,7 +634,18 @@ print(result)
 #>   F-statistic  : 0.022 (df = 2, 87)  p = 0.9782
 #>   The overall model is not statistically significant (p = 0.9782 > alpha 0.05).
 #> -----------------------------------------------------------------
-#>   Individual Predictors:
+#>   Assumption Checks:
+#>     Normality (residuals)   : WARNING  (Shapiro-Wilk p = 0.005, may not be normal)
+#>     Homoscedasticity        : PASSED   (non-constant variance test p = 0.105)
+#>     Residual independence   : WARNING  (Durbin-Watson DW = 1.48, p = 0.010, possible autocorrelation)
+#>     Multicollinearity (VIF) : PASSED   (max VIF = 1.0, threshold = 5)
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
+#> -----------------------------------------------------------------
+#>   Interpretation:
 #> 
 #>   pre_test
 #>     Coefficient  : 0.001  (SE = 0.141)
@@ -630,8 +667,6 @@ print(result)
 #>   Adjusted R-squared = -0.0225 accounting for
 #>   the number of predictors in the model.
 #>   Non-significant predictors: pre_test, age
-#> 
-#>   WARNING: Residuals may not be normally distributed (Shapiro-Wilk p = 0.0048).
 #> -----------------------------------------------------------------
 ```
 
@@ -677,6 +712,18 @@ print(result)
 #>     Odds Ratio   : 0.994
 #>     95% CI (OR) : [0.838, 1.180]
 #>     Interpretation: each unit increase in age decreases the odds by 0.6%.
+#> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Multicollinearity (VIF) : PASSED   (max VIF = 1.1, threshold = 5)
+#>     Complete separation     : PASSED   (no obvious numerical evidence of separation)
+#>     Linearity of the logit  : NOTE     (not automatically tested; consider a diagnostic such as the Box-Tidwell test or component-plus-residual plots for continuous predictors)
+#> 
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The model is not statistically significant (p = 0.1598 > alpha 0.05).
@@ -1023,13 +1070,21 @@ analyze(formula = exam_score ~ pre_test, data = tutorial_data)
 #>   Adj R-squared: -0.0113
 #>   F-statistic  : 0.001 (df = 1, 88)  p = 0.9720
 #> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Normality (residuals)   : WARNING  (Shapiro-Wilk p = 0.006, may not be normal)
+#>     Homoscedasticity        : PASSED   (non-constant variance test p = 0.413)
+#>     Residual independence   : WARNING  (Durbin-Watson DW = 1.47, p = 0.010, possible autocorrelation)
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
+#> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The predictor pre_test is not statistically significant (p = 0.9720 > alpha 0.05).
 #>   The slope is negative - as pre_test increases by 1 unit, exam_score decreases by 0.005 units.
 #>   R-squared = 0.0000: pre_test explains 0.0% of the
 #>   variance in exam_score (negligible effect).
-#> 
-#>   WARNING: Residuals may not be normally distributed (Shapiro-Wilk p = 0.0056).
 #> -----------------------------------------------------------------
 ```
 
@@ -1158,21 +1213,21 @@ print(result)
 #> statease McNemar's Test Report --------------------------------
 #>   N            : 90
 #>   Table size   : 2 x 2
-#>   Discordant   : 49 pairs
+#>   Discordant   : 56 pairs
 #> -----------------------------------------------------------------
 #>   Contingency Table:
 #>      y
 #> x     No Yes
-#>   No  14  39
-#>   Yes 10  27
+#>   No  12  43
+#>   Yes 13  22
 #> 
 #> -----------------------------------------------------------------
 #>   p-value      : 0.0001
-#>   Matched OR   : 3.900
-#>   95% CI      : [1.947, 7.812]
+#>   Matched OR   : 3.308
+#>   95% CI      : [1.779, 6.151]
 #> -----------------------------------------------------------------
 #>   Assumption Checks:
-#>     Discordant pairs (b+c)    : PASSED   (n = 49, adequate)
+#>     Discordant pairs (b+c)    : PASSED   (n = 56, adequate)
 #>     Sample independence       : NOTE     (assumed from study design, not testable from data)
 #> 
 #>   NOTE: These checks are heuristics based on the data structure.
@@ -1183,8 +1238,8 @@ print(result)
 #>   Interpretation:
 #>   The result is statistically significant (p = 0.0001 < alpha 0.05).
 #>   There is evidence of a significant difference in paired proportions between the two measurements.
-#>   Matched OR = 3.900: More subjects changed from the first category to the second category than vice versa.
-#>   95% CI [1.947, 7.812] excludes 1: Evidence of a significant difference in paired proportions between measurements.
+#>   Matched OR = 3.308: More subjects changed from the first category to the second category than vice versa.
+#>   95% CI [1.779, 6.151] excludes 1: Evidence of a significant difference in paired proportions between measurements.
 #> 
 #>   WARNING: McNemar's Test assumes that observations are paired and independent across pairs. Violation of this assumption may affect the validity of the results.
 #> 

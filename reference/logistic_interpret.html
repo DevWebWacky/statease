@@ -39,7 +39,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">logistic_interpret</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, conf.level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">logistic_interpret</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, conf.level <span class="op">=</span> <span class="fl">0.95</span>, context <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -105,6 +105,18 @@ display the formatted report.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Odds Ratio   : 0.105</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     95% CI (OR) : [0.000, Inf]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Interpretation: each unit increase in attendance decreases the odds by 89.5%.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Assumption Checks:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Multicollinearity (VIF) : WARNING  (max VIF = 42.1, threshold = 5)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Complete separation     : WARNING  (possible separation detected; coefficient estimates may be unreliable)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Linearity of the logit  : NOTE     (not automatically tested; consider a diagnostic such as the Box-Tidwell test or component-plus-residual plots for continuous predictors)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   NOTE: Assumption checks are diagnostic tools and may be</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   influenced by sample size and other characteristics of the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   data. Passing a check does not prove that an assumption is</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   satisfied, and a warning does not automatically invalidate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   the analysis. Interpret these results alongside your</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   knowledge of the data.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Interpretation:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   The model is statistically significant (p = 0.0000 &lt; alpha 0.05).</span>

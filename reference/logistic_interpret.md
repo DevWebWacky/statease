@@ -5,7 +5,7 @@ Logistic Regression with Plain-English Interpretation
 ## Usage
 
 ``` r
-logistic_interpret(formula, data, conf.level = 0.95)
+logistic_interpret(formula, data, conf.level = 0.95, context = NULL)
 ```
 
 ## Arguments
@@ -70,6 +70,18 @@ print(result)
 #>     Odds Ratio   : 0.105
 #>     95% CI (OR) : [0.000, Inf]
 #>     Interpretation: each unit increase in attendance decreases the odds by 89.5%.
+#> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Multicollinearity (VIF) : WARNING  (max VIF = 42.1, threshold = 5)
+#>     Complete separation     : WARNING  (possible separation detected; coefficient estimates may be unreliable)
+#>     Linearity of the logit  : NOTE     (not automatically tested; consider a diagnostic such as the Box-Tidwell test or component-plus-residual plots for continuous predictors)
+#> 
+#>   NOTE: Assumption checks are diagnostic tools and may be
+#>   influenced by sample size and other characteristics of the
+#>   data. Passing a check does not prove that an assumption is
+#>   satisfied, and a warning does not automatically invalidate
+#>   the analysis. Interpret these results alongside your
+#>   knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The model is statistically significant (p = 0.0000 < alpha 0.05).

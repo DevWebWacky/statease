@@ -5,7 +5,7 @@ Multiple Linear Regression with Plain-English Interpretation
 ## Usage
 
 ``` r
-mlr_interpret(formula, data, conf.level = 0.95)
+mlr_interpret(formula, data, conf.level = 0.95, context = NULL)
 ```
 
 ## Arguments
@@ -54,7 +54,18 @@ print(result)
 #>   F-statistic  : 322.885 (df = 2, 7)  p = 0.0000
 #>   The overall model is statistically significant (p = 0.0000 < alpha 0.05).
 #> -----------------------------------------------------------------
-#>   Individual Predictors:
+#>   Assumption Checks:
+#>     Normality (residuals)   : PASSED   (Shapiro-Wilk p = 0.759)
+#>     Homoscedasticity        : PASSED   (non-constant variance test p = 0.385)
+#>     Residual independence   : PASSED   (Durbin-Watson DW = 2.21, p = 0.710)
+#>     Multicollinearity (VIF) : WARNING  (max VIF = 10.0, threshold = 5)
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
+#> -----------------------------------------------------------------
+#>   Interpretation:
 #> 
 #>   study_hours
 #>     Coefficient  : 8.240  (SE = 1.106)

@@ -5,7 +5,7 @@ Simple Linear Regression with Plain-English Interpretation
 ## Usage
 
 ``` r
-reg_interpret(formula, data, conf.level = 0.95)
+reg_interpret(formula, data, conf.level = 0.95, context = NULL)
 ```
 
 ## Arguments
@@ -57,6 +57,16 @@ print(result)
 #>   R-squared    : 0.9887
 #>   Adj R-squared: 0.9873
 #>   F-statistic  : 699.184 (df = 1, 8)  p = 0.0000
+#> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Normality (residuals)   : PASSED   (Shapiro-Wilk p = 0.642)
+#>     Homoscedasticity        : PASSED   (non-constant variance test p = 0.363)
+#>     Residual independence   : PASSED   (Durbin-Watson DW = 1.84, p = 0.682)
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The predictor study_hours is statistically significant (p = 0.0000 < alpha 0.05).

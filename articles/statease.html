@@ -59,7 +59,7 @@
                         <h4 data-toc-skip class="author">Uwakmfon
 Paul</h4>
             
-            <h4 data-toc-skip class="date">2026-08-14</h4>
+            <h4 data-toc-skip class="date">2026-08-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/DevWebWacky/statease/blob/master/vignettes/statease.Rmd" class="external-link"><code>vignettes/statease.Rmd</code></a></small>
       <div class="d-none name"><code>statease.Rmd</code></div>
@@ -534,6 +534,16 @@ pass/fail outcome:</p>
 <span><span class="co">#&gt;   Strength     : negligible</span></span>
 <span><span class="co">#&gt;   Direction    : negative (as one variable increases, the other tends to decrease)</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Assumption Checks:</span></span>
+<span><span class="co">#&gt;     Normality (x)           : PASSED   (Shapiro-Wilk p = 0.282, Pearson only)</span></span>
+<span><span class="co">#&gt;     Normality (y)           : WARNING  (Shapiro-Wilk p = 0.005, Pearson only, may not be normal)</span></span>
+<span><span class="co">#&gt;     Linearity               : NOTE     (visual inspection is recommended, not testable numerically)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   NOTE: These checks are heuristics based on statistical tests</span></span>
+<span><span class="co">#&gt;   and sample size. Passing does not prove an assumption is met;</span></span>
+<span><span class="co">#&gt;   failing does not automatically invalidate the result. Interpret</span></span>
+<span><span class="co">#&gt;   alongside your knowledge of the data.</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
 <span><span class="co">#&gt;   Interpretation:</span></span>
 <span><span class="co">#&gt;   The correlation is not statistically significant (p = 0.9720 &gt; alpha 0.05).</span></span>
 <span><span class="co">#&gt;   The relationship between Pre-Test Score and Exam Score is</span></span>
@@ -565,6 +575,14 @@ pass/fail outcome:</p>
 <span><span class="co">#&gt;   p-value      : 0.4826</span></span>
 <span><span class="co">#&gt;   Strength     : negligible</span></span>
 <span><span class="co">#&gt;   Direction    : positive (as one variable increases, the other tends to increase)</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Assumption Checks:</span></span>
+<span><span class="co">#&gt;     Linearity               : NOTE     (visual inspection is recommended, not testable numerically)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   NOTE: These checks are heuristics based on statistical tests</span></span>
+<span><span class="co">#&gt;   and sample size. Passing does not prove an assumption is met;</span></span>
+<span><span class="co">#&gt;   failing does not automatically invalidate the result. Interpret</span></span>
+<span><span class="co">#&gt;   alongside your knowledge of the data.</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
 <span><span class="co">#&gt;   Interpretation:</span></span>
 <span><span class="co">#&gt;   The correlation is not statistically significant (p = 0.4826 &gt; alpha 0.05).</span></span>
@@ -605,13 +623,21 @@ pass/fail outcome:</p>
 <span><span class="co">#&gt;   Adj R-squared: -0.0113</span></span>
 <span><span class="co">#&gt;   F-statistic  : 0.001 (df = 1, 88)  p = 0.9720</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Assumption Checks:</span></span>
+<span><span class="co">#&gt;     Normality (residuals)   : WARNING  (Shapiro-Wilk p = 0.006, may not be normal)</span></span>
+<span><span class="co">#&gt;     Homoscedasticity        : PASSED   (non-constant variance test p = 0.413)</span></span>
+<span><span class="co">#&gt;     Residual independence   : WARNING  (Durbin-Watson DW = 1.47, p = 0.010, possible autocorrelation)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   NOTE: These checks are heuristics based on statistical tests</span></span>
+<span><span class="co">#&gt;   and sample size. Passing does not prove an assumption is met;</span></span>
+<span><span class="co">#&gt;   failing does not automatically invalidate the result. Interpret</span></span>
+<span><span class="co">#&gt;   alongside your knowledge of the data.</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
 <span><span class="co">#&gt;   Interpretation:</span></span>
 <span><span class="co">#&gt;   The predictor pre_test is not statistically significant (p = 0.9720 &gt; alpha 0.05).</span></span>
 <span><span class="co">#&gt;   The slope is negative - as pre_test increases by 1 unit, exam_score decreases by 0.005 units.</span></span>
 <span><span class="co">#&gt;   R-squared = 0.0000: pre_test explains 0.0% of the</span></span>
 <span><span class="co">#&gt;   variance in exam_score (negligible effect).</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   WARNING: Residuals may not be normally distributed (Shapiro-Wilk p = 0.0056).</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------</span></span></code></pre></div>
 <hr>
 </div>
@@ -640,7 +666,18 @@ pass/fail outcome:</p>
 <span><span class="co">#&gt;   F-statistic  : 0.022 (df = 2, 87)  p = 0.9782</span></span>
 <span><span class="co">#&gt;   The overall model is not statistically significant (p = 0.9782 &gt; alpha 0.05).</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
-<span><span class="co">#&gt;   Individual Predictors:</span></span>
+<span><span class="co">#&gt;   Assumption Checks:</span></span>
+<span><span class="co">#&gt;     Normality (residuals)   : WARNING  (Shapiro-Wilk p = 0.005, may not be normal)</span></span>
+<span><span class="co">#&gt;     Homoscedasticity        : PASSED   (non-constant variance test p = 0.105)</span></span>
+<span><span class="co">#&gt;     Residual independence   : WARNING  (Durbin-Watson DW = 1.48, p = 0.010, possible autocorrelation)</span></span>
+<span><span class="co">#&gt;     Multicollinearity (VIF) : PASSED   (max VIF = 1.0, threshold = 5)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   NOTE: These checks are heuristics based on statistical tests</span></span>
+<span><span class="co">#&gt;   and sample size. Passing does not prove an assumption is met;</span></span>
+<span><span class="co">#&gt;   failing does not automatically invalidate the result. Interpret</span></span>
+<span><span class="co">#&gt;   alongside your knowledge of the data.</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Interpretation:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   pre_test</span></span>
 <span><span class="co">#&gt;     Coefficient  : 0.001  (SE = 0.141)</span></span>
@@ -662,8 +699,6 @@ pass/fail outcome:</p>
 <span><span class="co">#&gt;   Adjusted R-squared = -0.0225 accounting for</span></span>
 <span><span class="co">#&gt;   the number of predictors in the model.</span></span>
 <span><span class="co">#&gt;   Non-significant predictors: pre_test, age</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   WARNING: Residuals may not be normally distributed (Shapiro-Wilk p = 0.0048).</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------</span></span></code></pre></div>
 <hr>
 </div>
@@ -706,6 +741,18 @@ pass/fail outcome:</p>
 <span><span class="co">#&gt;     Odds Ratio   : 0.994</span></span>
 <span><span class="co">#&gt;     95% CI (OR) : [0.838, 1.180]</span></span>
 <span><span class="co">#&gt;     Interpretation: each unit increase in age decreases the odds by 0.6%.</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Assumption Checks:</span></span>
+<span><span class="co">#&gt;     Multicollinearity (VIF) : PASSED   (max VIF = 1.1, threshold = 5)</span></span>
+<span><span class="co">#&gt;     Complete separation     : PASSED   (no obvious numerical evidence of separation)</span></span>
+<span><span class="co">#&gt;     Linearity of the logit  : NOTE     (not automatically tested; consider a diagnostic such as the Box-Tidwell test or component-plus-residual plots for continuous predictors)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   NOTE: Assumption checks are diagnostic tools and may be</span></span>
+<span><span class="co">#&gt;   influenced by sample size and other characteristics of the</span></span>
+<span><span class="co">#&gt;   data. Passing a check does not prove that an assumption is</span></span>
+<span><span class="co">#&gt;   satisfied, and a warning does not automatically invalidate</span></span>
+<span><span class="co">#&gt;   the analysis. Interpret these results alongside your</span></span>
+<span><span class="co">#&gt;   knowledge of the data.</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
 <span><span class="co">#&gt;   Interpretation:</span></span>
 <span><span class="co">#&gt;   The model is not statistically significant (p = 0.1598 &gt; alpha 0.05).</span></span>
@@ -1028,13 +1075,21 @@ use!</p>
 <span><span class="co">#&gt;   Adj R-squared: -0.0113</span></span>
 <span><span class="co">#&gt;   F-statistic  : 0.001 (df = 1, 88)  p = 0.9720</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt;   Assumption Checks:</span></span>
+<span><span class="co">#&gt;     Normality (residuals)   : WARNING  (Shapiro-Wilk p = 0.006, may not be normal)</span></span>
+<span><span class="co">#&gt;     Homoscedasticity        : PASSED   (non-constant variance test p = 0.413)</span></span>
+<span><span class="co">#&gt;     Residual independence   : WARNING  (Durbin-Watson DW = 1.47, p = 0.010, possible autocorrelation)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   NOTE: These checks are heuristics based on statistical tests</span></span>
+<span><span class="co">#&gt;   and sample size. Passing does not prove an assumption is met;</span></span>
+<span><span class="co">#&gt;   failing does not automatically invalidate the result. Interpret</span></span>
+<span><span class="co">#&gt;   alongside your knowledge of the data.</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
 <span><span class="co">#&gt;   Interpretation:</span></span>
 <span><span class="co">#&gt;   The predictor pre_test is not statistically significant (p = 0.9720 &gt; alpha 0.05).</span></span>
 <span><span class="co">#&gt;   The slope is negative - as pre_test increases by 1 unit, exam_score decreases by 0.005 units.</span></span>
 <span><span class="co">#&gt;   R-squared = 0.0000: pre_test explains 0.0% of the</span></span>
 <span><span class="co">#&gt;   variance in exam_score (negligible effect).</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   WARNING: Residuals may not be normally distributed (Shapiro-Wilk p = 0.0056).</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------</span></span></code></pre></div>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Auto MANOVA</span></span>
@@ -1155,21 +1210,21 @@ between two related measurements:</p>
 <span><span class="co">#&gt; statease McNemar's Test Report --------------------------------</span></span>
 <span><span class="co">#&gt;   N            : 90</span></span>
 <span><span class="co">#&gt;   Table size   : 2 x 2</span></span>
-<span><span class="co">#&gt;   Discordant   : 49 pairs</span></span>
+<span><span class="co">#&gt;   Discordant   : 56 pairs</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
 <span><span class="co">#&gt;   Contingency Table:</span></span>
 <span><span class="co">#&gt;      y</span></span>
 <span><span class="co">#&gt; x     No Yes</span></span>
-<span><span class="co">#&gt;   No  14  39</span></span>
-<span><span class="co">#&gt;   Yes 10  27</span></span>
+<span><span class="co">#&gt;   No  12  43</span></span>
+<span><span class="co">#&gt;   Yes 13  22</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
 <span><span class="co">#&gt;   p-value      : 0.0001</span></span>
-<span><span class="co">#&gt;   Matched OR   : 3.900</span></span>
-<span><span class="co">#&gt;   95% CI      : [1.947, 7.812]</span></span>
+<span><span class="co">#&gt;   Matched OR   : 3.308</span></span>
+<span><span class="co">#&gt;   95% CI      : [1.779, 6.151]</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
 <span><span class="co">#&gt;   Assumption Checks:</span></span>
-<span><span class="co">#&gt;     Discordant pairs (b+c)    : PASSED   (n = 49, adequate)</span></span>
+<span><span class="co">#&gt;     Discordant pairs (b+c)    : PASSED   (n = 56, adequate)</span></span>
 <span><span class="co">#&gt;     Sample independence       : NOTE     (assumed from study design, not testable from data)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   NOTE: These checks are heuristics based on the data structure.</span></span>
@@ -1180,8 +1235,8 @@ between two related measurements:</p>
 <span><span class="co">#&gt;   Interpretation:</span></span>
 <span><span class="co">#&gt;   The result is statistically significant (p = 0.0001 &lt; alpha 0.05).</span></span>
 <span><span class="co">#&gt;   There is evidence of a significant difference in paired proportions between the two measurements.</span></span>
-<span><span class="co">#&gt;   Matched OR = 3.900: More subjects changed from the first category to the second category than vice versa.</span></span>
-<span><span class="co">#&gt;   95% CI [1.947, 7.812] excludes 1: Evidence of a significant difference in paired proportions between measurements.</span></span>
+<span><span class="co">#&gt;   Matched OR = 3.308: More subjects changed from the first category to the second category than vice versa.</span></span>
+<span><span class="co">#&gt;   95% CI [1.779, 6.151] excludes 1: Evidence of a significant difference in paired proportions between measurements.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   WARNING: McNemar's Test assumes that observations are paired and independent across pairs. Violation of this assumption may affect the validity of the results.</span></span>
 <span><span class="co">#&gt; </span></span>

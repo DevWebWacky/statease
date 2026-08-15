@@ -11,7 +11,8 @@ cor_interpret(
   method = "pearson",
   conf.level = 0.95,
   var1_name = "Variable 1",
-  var2_name = "Variable 2"
+  var2_name = "Variable 2",
+  context = NULL
 )
 ```
 
@@ -66,6 +67,16 @@ print(result)
 #>   95% CI      : [0.9612, 0.9980]
 #>   Strength     : very large
 #>   Direction    : positive (as one variable increases, the other tends to increase)
+#> -----------------------------------------------------------------
+#>   Assumption Checks:
+#>     Normality (x)           : PASSED   (Shapiro-Wilk p = 0.703, Pearson only)
+#>     Normality (y)           : PASSED   (Shapiro-Wilk p = 0.426, Pearson only)
+#>     Linearity               : NOTE     (visual inspection is recommended, not testable numerically)
+#> 
+#>   NOTE: These checks are heuristics based on statistical tests
+#>   and sample size. Passing does not prove an assumption is met;
+#>   failing does not automatically invalidate the result. Interpret
+#>   alongside your knowledge of the data.
 #> -----------------------------------------------------------------
 #>   Interpretation:
 #>   The correlation is statistically significant (p = 0.0000 < alpha 0.05).

@@ -32,6 +32,11 @@ wilcoxon_interpret(
 
   Optional label for the report. Default "Variable"
 
+- context:
+
+  Optional description of the study design or sampling method, echoed
+  back in the printed report. Default NULL.
+
 ## Value
 
 An object of class `statease_wilcoxon` containing test results and

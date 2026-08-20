@@ -30,6 +30,11 @@ anova2_interpret(formula, data, type = 2, conf.level = 0.95, context = NULL)
 
   Confidence level. Default 0.95.
 
+- context:
+
+  Optional description of the study design or sampling method, echoed
+  back in the printed report. Default NULL.
+
 ## Value
 
 An object of class `statease_anova2` containing two-way ANOVA results

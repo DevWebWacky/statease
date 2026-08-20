@@ -43,6 +43,11 @@ cor_interpret(
 
   Optional name for second variable. Default "Variable 2"
 
+- context:
+
+  Optional description of the study design or sampling method, echoed
+  back in the printed report. Default NULL.
+
 ## Value
 
 An object of class `statease_cor` containing correlation results and

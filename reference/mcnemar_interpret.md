@@ -22,6 +22,11 @@ mcnemar_interpret(x, y, conf.level = 0.95, context = NULL)
 
   Confidence level. Default 0.95.
 
+- context:
+
+  Optional description of the study design or sampling method, echoed
+  back in the printed report. Default NULL.
+
 ## Value
 
 An object of class `statease_mcnemar` containing test results and

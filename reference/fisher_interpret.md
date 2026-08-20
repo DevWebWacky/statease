@@ -33,6 +33,11 @@ fisher_interpret(
   Logical. Whether to use simulation to compute p-values for larger
   tables. Default FALSE.
 
+- context:
+
+  Optional description of the study design or sampling method, echoed
+  back in the printed report. Default NULL.
+
 ## Value
 
 An object of class `statease_fisher` containing test results and

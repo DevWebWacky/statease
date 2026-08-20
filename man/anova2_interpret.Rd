@@ -15,6 +15,9 @@ anova2_interpret(formula, data, type = 2, conf.level = 0.95, context = NULL)
 used when an interaction term is detected in the formula.}
 
 \item{conf.level}{Confidence level. Default 0.95.}
+
+\item{context}{Optional description of the study design or sampling
+method, echoed back in the printed report. Default NULL.}
 }
 \value{
 An object of class \code{statease_anova2} containing two-way

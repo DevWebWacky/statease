@@ -20,6 +20,9 @@ wilcoxon_interpret(
 \item{conf.level}{Confidence level. Default 0.95.}
 
 \item{var_name}{Optional label for the report. Default "Variable"}
+
+\item{context}{Optional description of the study design or sampling
+method, echoed back in the printed report. Default NULL.}
 }
 \value{
 An object of class \code{statease_wilcoxon} containing

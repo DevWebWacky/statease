@@ -4,6 +4,8 @@
 #' @param y A factor or character vector (second categorical variable)
 #' @param correct Logical. Apply Yates continuity correction. Default TRUE.
 #' @param conf.level Confidence level. Default 0.95.
+#' @param context Optional description of the study design or sampling
+#'   method, echoed back in the printed report. Default NULL.
 #'
 #' @return An object of class \code{statease_chisq} containing test
 #'   results and interpretation. Use \code{print()} to display the

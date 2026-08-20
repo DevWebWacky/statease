@@ -5,6 +5,8 @@
 #' @param method Correlation method: "pearson", "spearman", or "kendall".
 #'   Default "pearson".
 #' @param conf.level Confidence level. Default 0.95.
+#' @param context Optional description of the study design or sampling
+#'   method, echoed back in the printed report. Default NULL.
 #' @param var1_name Optional name for first variable. Default "Variable 1"
 #' @param var2_name Optional name for second variable. Default "Variable 2"
 #'

@@ -3,6 +3,8 @@
 #' @param x A numeric vector (group 1)
 #' @param y A numeric vector (group 2)
 #' @param conf.level Confidence level. Default 0.95.
+#' @param context Optional description of the study design or sampling
+#'   method, echoed back in the printed report. Default NULL.
 #' @param var_name Optional label for the report. Default "Variable"
 #'
 #' @return An object of class \code{statease_mannwhitney} containing
@@ -159,6 +161,8 @@ print.statease_mannwhitney <- function(x, ...) {
 #' @param x A numeric vector (first measurement)
 #' @param y A numeric vector (second measurement)
 #' @param conf.level Confidence level. Default 0.95.
+#' @param context Optional description of the study design or sampling
+#'   method, echoed back in the printed report. Default NULL.
 #' @param var_name Optional label for the report. Default "Variable"
 #'
 #' @return An object of class \code{statease_wilcoxon} containing
@@ -317,6 +321,8 @@ print.statease_wilcoxon <- function(x, ...) {
 #' @param formula A formula of the form outcome ~ group
 #' @param data A data frame containing the variables
 #' @param conf.level Confidence level. Default 0.95.
+#' @param context Optional description of the study design or sampling
+#'   method, echoed back in the printed report. Default NULL.
 #'
 #' @return An object of class \code{statease_kruskal} containing
 #'   test results and interpretation. Use \code{print()} to display

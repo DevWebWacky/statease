@@ -3,6 +3,8 @@
 #' @param x A factor or character vector (first measurement)
 #' @param y A factor or character vector (second measurement)
 #' @param conf.level Confidence level. Default 0.95.
+#' @param context Optional description of the study design or sampling
+#'   method, echoed back in the printed report. Default NULL.
 #'
 #' @return An object of class \code{statease_mcnemar} containing test
 #'   results and interpretation. Use \code{print()} to display the

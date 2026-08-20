@@ -21,6 +21,9 @@ fisher_interpret(
 
 \item{simulate.p.value}{Logical. Whether to use simulation to
 compute p-values for larger tables. Default FALSE.}
+
+\item{context}{Optional description of the study design or sampling
+method, echoed back in the printed report. Default NULL.}
 }
 \value{
 An object of class \code{statease_fisher} containing test

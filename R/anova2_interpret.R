@@ -10,6 +10,8 @@
 #' @param type ANOVA type: 2 or 3. Default is 2. Type 3 is automatically
 #'   used when an interaction term is detected in the formula.
 #' @param conf.level Confidence level. Default 0.95.
+#' @param context Optional description of the study design or sampling
+#'   method, echoed back in the printed report. Default NULL.
 #'
 #' @return An object of class \code{statease_anova2} containing two-way
 #'   ANOVA results and interpretation. Use \code{print()} to display

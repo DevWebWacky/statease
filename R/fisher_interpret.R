@@ -3,6 +3,8 @@
 #' @param x A factor or character vector (first categorical variable)
 #' @param y A factor or character vector (second categorical variable)
 #' @param conf.level Confidence level. Default 0.95.
+#' @param context Optional description of the study design or sampling
+#'   method, echoed back in the printed report. Default NULL.
 #' @param simulate.p.value Logical. Whether to use simulation to
 #'   compute p-values for larger tables. Default FALSE.
 #'

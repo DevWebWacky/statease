@@ -3,6 +3,8 @@
 #' @param formula A formula of the form outcome ~ predictor
 #' @param data A data frame containing the variables
 #' @param conf.level Confidence level. Default 0.95.
+#' @param context Optional description of the study design or sampling
+#'   method, echoed back in the printed report. Default NULL.
 #'
 #' @return An object of class \code{statease_reg} containing regression
 #'   results and interpretation. Use \code{print()} to display the

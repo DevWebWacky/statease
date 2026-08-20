@@ -27,6 +27,9 @@ Default "pearson".}
 \item{var1_name}{Optional name for first variable. Default "Variable 1"}
 
 \item{var2_name}{Optional name for second variable. Default "Variable 2"}
+
+\item{context}{Optional description of the study design or sampling
+method, echoed back in the printed report. Default NULL.}
 }
 \value{
 An object of class \code{statease_cor} containing correlation

@@ -5,6 +5,8 @@
 #' @param mu Hypothesised mean for one-sample t-test. Default 0.
 #' @param paired Logical. TRUE for paired t-test. Default FALSE.
 #' @param conf.level Confidence level. Default 0.95.
+#' @param context Optional description of the study design or sampling
+#'   method, echoed back in the printed report. Default NULL.
 #' @param var_name Optional label for the report. Default "Variable"
 #'
 #' @return An object of class \code{statease_ttest} containing test

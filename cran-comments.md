@@ -6,13 +6,17 @@
   This is a local network issue and not related to the package itself.
 
 ## Comments to CRAN
-This is a submission of statease v1.3.0.
+This is a submission of statease v1.4.0.
 
-New functions added in this version:
-1. fisher_interpret() - Fisher's Exact Test with Odds Ratio
-2. mcnemar_interpret() - McNemar's Test for paired categorical data
-3. friedman_interpret() - Friedman Test with Kendall's W and post-hoc
-4. check_assumptions() - Automated assumption checking before analysis
-5. power_interpret() - Statistical power analysis and sample size calculation
-6. run_app() - Interactive Shiny app for point-and-click analysis
-7. analyze() updated with 'check' and 'test_type' arguments
+Changes in this version:
+1. Assumption checks (normality, variance homogeneity, multicollinearity,
+   and others depending on the test) are now printed by default in
+   every relevant interpretation function, rather than requiring a
+   separate check_assumptions() call.
+2. Added a context argument across all inferential functions and
+   analyze(), letting users describe their study design and have it
+   echoed back alongside the interpretation.
+3. Bug fixes: a boundary-labelling issue in power_interpret(), a
+   display bug in anova2_interpret(), a duplicated internal warning
+   in chisq_interpret(), and a silent failure in homoscedasticity
+   checking when lm()/glm() is fit inside a wrapper function.
